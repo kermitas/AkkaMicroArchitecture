@@ -5,4 +5,4 @@ Simple Akka micro architecture that will speed up your process of starting new p
 
 Please see /documentation folder.
 
-Usage sample is in ama-sample project.
+Sample usage is in ama-sample project.
