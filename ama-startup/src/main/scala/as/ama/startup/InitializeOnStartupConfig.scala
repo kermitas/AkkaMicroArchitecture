@@ -3,6 +3,9 @@ package as.ama.startup
 import scala.collection.JavaConverters._
 import com.typesafe.config.Config
 
+/**
+ * Configuration read from JSON (HOCON) file.
+ */
 object InitializeOnStartupConfig {
 
   final val actorInitializationTimeoutInMsConfigKey = "actorInitializationTimeoutInMs"

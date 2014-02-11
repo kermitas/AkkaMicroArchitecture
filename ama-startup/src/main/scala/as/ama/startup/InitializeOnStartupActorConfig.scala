@@ -2,6 +2,9 @@ package as.ama.startup
 
 import com.typesafe.config.{ ConfigFactory, Config }
 
+/**
+ * Configuration read from JSON (HOCON) file.
+ */
 object InitializeOnStartupActorConfig {
 
   final val clazzNameConfigKey = "class"

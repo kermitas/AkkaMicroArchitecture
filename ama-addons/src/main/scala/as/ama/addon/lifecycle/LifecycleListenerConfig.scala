@@ -2,6 +2,9 @@ package as.ama.addon.lifecycle
 
 import com.typesafe.config.Config
 
+/**
+ * Configuration read from JSON (HOCON) file.
+ */
 object LifecycleListenerConfig {
 
   final val automaticallyShutdownJVMAfterTimeInMsConfigKey = "automaticallyShutdownJVMAfterTimeInMs"

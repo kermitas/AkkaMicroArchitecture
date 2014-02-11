@@ -26,7 +26,6 @@ object Sample {
  *       }
  *     }
  *
- *
  * Your actor will be initialized by AkkaMicroArchitecture with arguments:
  * commandLineArguments: Array[String], config: Config, broadcaster: ActorRef
  *

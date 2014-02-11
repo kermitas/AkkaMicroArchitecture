@@ -16,6 +16,13 @@ object StartupInitializer extends Serializable {
   def classifier = new StartupInitializerClassifier
 }
 
+/**
+ * Will instantiate actors defined on ama.initializeOnStartup.actors list (in reference.conf or application.conf).
+ *
+ * Please see documentation folder for diagrams with detailed message flows.
+ *
+ * Please see ama-sample for basic usage.
+ */
 class StartupInitializer extends Actor with ActorLogging {
 
   import StartupInitializer._

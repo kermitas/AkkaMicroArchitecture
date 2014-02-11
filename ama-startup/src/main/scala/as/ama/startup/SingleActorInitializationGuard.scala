@@ -12,6 +12,14 @@ object SingleActorInitializationGuard {
   case object InitializationTimeout extends IncomingMessage
 }
 
+/**
+ * Will take care of single actor initialization.
+ *
+ * Correctly initialized actor should publish InitializationResult(Right(...)) on broadcaster.
+ *
+ * Incorrectly initialized actor should publish InitializationResult(Left(exception)) on broadcaster.
+ * If it will not publish timeout will be reached.
+ */
 class SingleActorInitializationGuard extends Actor with ActorLogging {
 
   import SingleActorInitializationGuard._
