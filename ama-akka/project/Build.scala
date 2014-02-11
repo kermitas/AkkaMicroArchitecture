@@ -6,15 +6,17 @@ object Build extends Build {
 
   lazy val projectSettings = Defaults.defaultSettings ++ Seq (
     name := "ama-akka",
-    version := "0.1.0",
+    version := "0.4.0",
     organization := "as.ama",
     scalaVersion := "2.10.3",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
-    resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-    resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases/",
-    resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
+    resolvers += Classpaths.typesafeReleases,
+    resolvers += Classpaths.typesafeSnapshots,
     libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0-RC2"
   ) ++ scalariformSettings ++ formattingPreferences
+
+//    resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases/",
+//    resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
 
   def formattingPreferences = {
     import scalariform.formatter.preferences._
