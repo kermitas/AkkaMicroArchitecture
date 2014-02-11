@@ -10,6 +10,8 @@ resolvers += "sbt-pack repository" at "http://repo1.maven.org/maven2/"
 
 addSbtPlugin("org.xerial.sbt" % "sbt-pack" % "0.4.2")
 
+// have to include scala-reflect again because sbt-pack uses older Scala
+
 libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.10.3"
 
 // ===============
