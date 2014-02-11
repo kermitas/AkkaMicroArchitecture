@@ -1,0 +1,1 @@
+AkkaMicroArchitecture: ama-sample project

@@ -1,0 +1,1 @@
+AkkaMicroArchitecture: ama-startup project
