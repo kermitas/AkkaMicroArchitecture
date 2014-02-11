@@ -12,10 +12,6 @@ object Build extends Build {
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
   ) ++ scalariformSettings ++ formattingPreferences
 
-//    resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-//    resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases/",
-//    resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
-
   def formattingPreferences = {
     import scalariform.formatter.preferences._
     ScalariformKeys.preferences := FormattingPreferences()

@@ -15,9 +15,6 @@ object Build extends Build {
     libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0-RC2"
   ) ++ scalariformSettings ++ formattingPreferences
 
-//    resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases/",
-//    resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
-
   def formattingPreferences = {
     import scalariform.formatter.preferences._
     ScalariformKeys.preferences := FormattingPreferences()

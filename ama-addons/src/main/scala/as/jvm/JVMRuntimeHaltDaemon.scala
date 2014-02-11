@@ -1,5 +1,11 @@
 package as.jvm
 
+/**
+ * Will execute Runtime.halt after delay.
+ *
+ * @param delayInMs time to wait before Runtime.halt execution
+ * @param exitCode exit code passed to Runtime.halt
+ */
 class JVMRuntimeHaltDaemon(delayInMs: Int, exitCode: Int) extends Thread {
   setDaemon(true)
 
@@ -7,7 +13,6 @@ class JVMRuntimeHaltDaemon(delayInMs: Int, exitCode: Int) extends Thread {
     println(s"${classOf[JVMRuntimeHaltDaemon].getSimpleName}: will kill JVM in ${delayInMs}ms with exit code $exitCode")
     Thread.sleep(delayInMs)
     println(s"${classOf[JVMRuntimeHaltDaemon].getSimpleName}: ${delayInMs}ms is over, killing JVM with exit code $exitCode.")
-    System.exit(exitCode)
-
+    Runtime.getRuntime.halt(exitCode)
   }
 }

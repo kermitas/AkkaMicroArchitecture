@@ -21,11 +21,6 @@ object Build extends Build {
     packMain := Map("run" -> mc)
   ) ++ scalariformSettings ++ formattingPreferences
 
-//    resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-//    resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases/",
-//    resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
-//    resolvers += "sbt-pack repository" at "http://repo1.maven.org/maven2/",
-
   def formattingPreferences = {
     import scalariform.formatter.preferences._
     ScalariformKeys.preferences := FormattingPreferences()

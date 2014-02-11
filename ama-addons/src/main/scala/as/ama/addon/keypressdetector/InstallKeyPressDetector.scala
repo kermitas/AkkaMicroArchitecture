@@ -10,6 +10,16 @@ object InstallKeyPressDetector {
   final val checkIfKeyWasPressedTimeIntervalInMsConfigKey = "checkIfKeyWasPressedTimeIntervalInMs"
 }
 
+/**
+ * Install KeyPressedDetector.
+ *
+ * This actor is ready to be automatically initialized during ama startup. Should be defined on ama.initializeOnStartup.actors list
+ * in application.conf, by default is defined in reference.conf (in ama-core project).
+ *
+ * @param commandLineArguments entered as arguments to program or defined in application.conf configuration file
+ * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
+ * @param broadcaster main, pub-sub communication bus
+ */
 class InstallKeyPressDetector(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
 
   import InstallKeyPressDetector._
@@ -17,7 +27,7 @@ class InstallKeyPressDetector(commandLineArguments: Array[String], config: Confi
   override def preStart() {
     try {
       val keyPressDetector = context.system.actorOf(Props[KeyPressedDetector], classOf[KeyPressedDetector].getSimpleName)
-      val keyPressedAction = new KeyPressedAction(broadcaster, new LifecycleListener.ShutdownSystem(Right("Key was pressed.")))
+      val keyPressedAction = new KeyPressedAction(broadcaster)
       val checkIfKeyWasPressedTimeIntervalInMs = config.getInt(checkIfKeyWasPressedTimeIntervalInMsConfigKey)
 
       keyPressDetector ! new KeyPressedDetector.Init(keyPressedAction, checkIfKeyWasPressedTimeIntervalInMs)

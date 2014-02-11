@@ -1,5 +1,11 @@
 package as.jvm
 
+/**
+ * Will execute System.exit after delay.
+ *
+ * @param delayInMs time to wait before System.exit execution
+ * @param exitCode exit code passed to System.exit
+ */
 class JVMSystemExitDaemon(delayInMs: Int, exitCode: Int) extends Thread {
   setDaemon(true)
 

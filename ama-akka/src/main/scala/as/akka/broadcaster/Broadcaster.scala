@@ -12,6 +12,15 @@ object Broadcaster {
   case class Unregister(listener: ActorRef) extends IncomingMessages
 }
 
+/**
+ * Publish-subscribe actor.
+ *
+ * To register please send Register message with classifier and listener where all classified messages will be forwarded.
+ *
+ * To unregister use Unregister or UnregisterClassifier messages.
+ *
+ * For more details please see ama-sample project.
+ */
 class Broadcaster extends Actor with ActorLogging {
 
   import Broadcaster._

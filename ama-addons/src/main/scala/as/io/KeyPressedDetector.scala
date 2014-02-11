@@ -5,19 +5,31 @@ import scala.concurrent.duration._
 import akka.actor._
 
 object KeyPressedDetector {
-  sealed trait State
+  sealed trait State extends Serializable
   case object Uninitialized extends State
   case object WaitingForAKey extends State
 
-  sealed trait StateData
+  sealed trait StateData extends Serializable
   case object UninitializedStateData extends StateData
-  case class WaitingForAKeyStateData(runnableToExecuteOnKeyPress: Runnable) extends StateData
+  case class WaitingForAKeyStateData(executeOnKeyPress: ExecuteOnKeyPress) extends StateData
 
   sealed trait Messages extends Serializable
   sealed trait IncomingMessages extends Messages
-  case class Init(runnableToExecuteOnKeyPress: Runnable, checkIfKeyWasPressedTimeIntervalInMs: Int) extends IncomingMessages
+
+  /**
+   * Send this message to actor to init.
+   *
+   * @param executeOnKeyPress this is callback (will be executed on key press)
+   * @param checkIfKeyWasPressedTimeIntervalInMs time interval between checks if key was pressed
+   */
+  case class Init(executeOnKeyPress: ExecuteOnKeyPress, checkIfKeyWasPressedTimeIntervalInMs: Int) extends IncomingMessages
 }
 
+/**
+ * Will execute executeOnKeyPress once key was pressed.
+ *
+ * Send Init message to initialize and start listening for a keys.
+ */
 class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPressedDetector.StateData] {
 
   import KeyPressedDetector._
@@ -25,25 +37,33 @@ class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPre
   startWith(Uninitialized, UninitializedStateData)
 
   when(Uninitialized) {
-    case Event(Init(runnableToExecuteOnKeyPress, checkIfKeyWasPressedTimeIntervalInMs), UninitializedStateData) ⇒ {
+    case Event(Init(executeOnKeyPress, checkIfKeyWasPressedTimeIntervalInMs), UninitializedStateData) ⇒ {
       setStateTimeout(WaitingForAKey, Some(checkIfKeyWasPressedTimeIntervalInMs millisecond))
-      goto(WaitingForAKey) using new WaitingForAKeyStateData(runnableToExecuteOnKeyPress)
+      goto(WaitingForAKey) using new WaitingForAKeyStateData(executeOnKeyPress)
     }
   }
 
   when(WaitingForAKey) {
     case Event(StateTimeout, stateData: WaitingForAKeyStateData) ⇒ {
-      if (wasKeyPressed()) {
-        log.debug("Detected key press")
-        try {
-          stateData.runnableToExecuteOnKeyPress.run()
-        } catch {
-          case e: Exception ⇒
+
+      readLine() match {
+
+        case Some(line) ⇒ {
+          log.debug(s"Detected key press: $line")
+
+          val continue = try {
+            stateData.executeOnKeyPress.keyWasPressedNotification(line)
+          } catch {
+            case e: Exception ⇒ false
+          }
+
+          if (continue)
+            stay using stateData
+          else
+            stop(FSM.Normal)
         }
 
-        stop(FSM.Normal)
-      } else {
-        stay using stateData
+        case None ⇒ stay using stateData
       }
     }
   }
@@ -71,11 +91,16 @@ class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPre
 
   initialize
 
-  protected def wasKeyPressed(): Boolean = {
+  protected def readLine(): Option[String] = {
     try {
-      System.in.available > 0
+      val line = Console.readLine()
+
+      if (line != null && line.length > 0)
+        Some(line)
+      else
+        None
     } catch {
-      case e: Exception ⇒ false
+      case e: Exception ⇒ None
     }
   }
 }

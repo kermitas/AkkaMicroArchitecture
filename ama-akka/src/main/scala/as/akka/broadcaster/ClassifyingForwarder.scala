@@ -2,6 +2,11 @@ package as.akka.broadcaster
 
 import akka.actor._
 
+/**
+ * For each subscriber instance of ClassifyingForwarder actor will be created.
+ *
+ * It is responsible to ask classifier and if message is accepted then it forwards it.
+ */
 class ClassifyingForwarder extends Actor with ActorLogging {
 
   import Broadcaster._
