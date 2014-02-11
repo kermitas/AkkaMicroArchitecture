@@ -2,6 +2,9 @@ package as.ama
 
 import com.typesafe.config.Config
 
+/**
+ * Configuration read from JSON (HOCON) file.
+ */
 object CommandLineConfig {
 
   final val overrideOriginallyPassedArgumentsConfigKey = "overrideOriginallyPassedArguments"

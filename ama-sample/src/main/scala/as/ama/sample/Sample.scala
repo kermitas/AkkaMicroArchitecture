@@ -17,6 +17,7 @@ object Sample {
  * If you want that your actor should be initialized during AkkaMicroArchitecture startup
  * please define it under ama.initializeOnStartup.actors (please see application.conf):
  *
+ * {{{
  *       {
  *       class = "as.ama.sample.Sample"
  *       initializationOrder = 1000
@@ -25,6 +26,7 @@ object Sample {
  *           test = "Alice"
  *       }
  *     }
+ * }}}
  *
  * Your actor will be initialized by AkkaMicroArchitecture with arguments:
  * commandLineArguments: Array[String], config: Config, broadcaster: ActorRef

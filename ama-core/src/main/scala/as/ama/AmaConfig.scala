@@ -3,6 +3,9 @@ package as.ama
 import com.typesafe.config.Config
 import as.ama.startup.InitializeOnStartupConfig
 
+/**
+ * Configuration read from JSON (HOCON) file.
+ */
 object AmaConfig {
 
   final val commandLineConfigKey = "commandLine"

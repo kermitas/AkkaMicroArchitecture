@@ -6,6 +6,9 @@ object BroadcasterMessagesLogger {
   def classifier = new BroadcasterMessagesLoggerClassifier
 }
 
+/**
+ * Will log all messages published on broadcaster.
+ */
 class BroadcasterMessagesLogger extends Actor with ActorLogging {
 
   override def receive = {

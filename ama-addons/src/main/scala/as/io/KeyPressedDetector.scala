@@ -95,7 +95,7 @@ class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPre
     try {
       val line = Console.readLine()
 
-      if (line != null && line.length > 0)
+      if (line != null)
         Some(line)
       else
         None

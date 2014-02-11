@@ -11,6 +11,14 @@ object MainActor {
   case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String]) extends IncomingMessage
 }
 
+/**
+ * MainActor (simillar to main class on JVM).
+ *
+ * Resposibilities:
+ * - start and register BroadcasterMessagesLogger if needed
+ * - start and register InitializationController (that will shutdown system when any of automatically initialized actors will fail to initialize)
+ * - start and register StartupInitializer (that will read configuration and initialize acotrs defined there)
+ */
 class MainActor extends Actor with ActorLogging {
 
   import MainActor._

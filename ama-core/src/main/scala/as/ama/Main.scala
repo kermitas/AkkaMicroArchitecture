@@ -3,6 +3,16 @@ package as.ama
 import akka.actor._
 import com.typesafe.config._
 
+/**
+ * Main JVM class.
+ *
+ * Responsibilities:
+ * - read configuration (and log it when needed)
+ * - use original arguments passed from command line or those overwritten by those in configuration
+ * - start actor system
+ * - start MainActor
+ * - send initial message to MainActor
+ */
 object Main {
 
   final val mainConfigKey = "ama"

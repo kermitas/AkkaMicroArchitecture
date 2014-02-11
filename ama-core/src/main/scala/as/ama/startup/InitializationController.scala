@@ -10,6 +10,11 @@ object InitializationController {
   def props(broadcaster: ActorRef) = Props(new InitializationController(broadcaster))
 }
 
+/**
+ * Main role is to shutdown system if any of automatically initialized actors will fail.
+ *
+ * @param broadcaster
+ */
 class InitializationController(broadcaster: ActorRef) extends Actor with ActorLogging {
 
   override def receive = {
