@@ -4,14 +4,14 @@ import scala.language.postfixOps
 import scala.concurrent.duration._
 import akka.actor._
 
-object KeyPressedDetector {
+object InputStreamListener {
   sealed trait State extends Serializable
   case object Uninitialized extends State
   case object WaitingForAKey extends State
 
   sealed trait StateData extends Serializable
   case object UninitializedStateData extends StateData
-  case class WaitingForAKeyStateData(executeOnKeyPress: ExecuteOnKeyPress) extends StateData
+  case class WaitingForAKeyStateData(inputStreamListenerCallback: InputStreamListenerCallback) extends StateData
 
   sealed trait Messages extends Serializable
   sealed trait IncomingMessages extends Messages
@@ -19,27 +19,27 @@ object KeyPressedDetector {
   /**
    * Send this message to actor to init.
    *
-   * @param executeOnKeyPress this is callback (will be executed on key press)
+   * @param inputStreamListenerCallback this is callback (will be executed on key press)
    * @param checkIfKeyWasPressedTimeIntervalInMs time interval between checks if key was pressed
    */
-  case class Init(executeOnKeyPress: ExecuteOnKeyPress, checkIfKeyWasPressedTimeIntervalInMs: Int) extends IncomingMessages
+  case class Init(inputStreamListenerCallback: InputStreamListenerCallback, checkIfKeyWasPressedTimeIntervalInMs: Int) extends IncomingMessages
 }
 
 /**
- * Will execute executeOnKeyPress once key was pressed.
+ * Will execute inputStreamListenerCallback when something will be available on input stream (System.in).
  *
  * Send Init message to initialize and start listening for a keys.
  */
-class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPressedDetector.StateData] {
+class InputStreamListener extends Actor with FSM[InputStreamListener.State, InputStreamListener.StateData] {
 
-  import KeyPressedDetector._
+  import InputStreamListener._
 
   startWith(Uninitialized, UninitializedStateData)
 
   when(Uninitialized) {
-    case Event(Init(executeOnKeyPress, checkIfKeyWasPressedTimeIntervalInMs), UninitializedStateData) ⇒ {
+    case Event(Init(inputStreamListenerCallback, checkIfKeyWasPressedTimeIntervalInMs), UninitializedStateData) ⇒ {
       setStateTimeout(WaitingForAKey, Some(checkIfKeyWasPressedTimeIntervalInMs millisecond))
-      goto(WaitingForAKey) using new WaitingForAKeyStateData(executeOnKeyPress)
+      goto(WaitingForAKey) using new WaitingForAKeyStateData(inputStreamListenerCallback)
     }
   }
 
@@ -52,7 +52,7 @@ class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPre
           log.debug(s"Detected key press: $line")
 
           val continue = try {
-            stateData.executeOnKeyPress.keyWasPressedNotification(line)
+            stateData.inputStreamListenerCallback.inputStreamNotification(line)
           } catch {
             case e: Exception ⇒ false
           }
@@ -91,6 +91,12 @@ class KeyPressedDetector extends Actor with FSM[KeyPressedDetector.State, KeyPre
 
   initialize
 
+  /**
+   * Will try to read input stream safely.
+   *
+   * @return text that was provided (mostly to console);
+   *         never null, if just [enter] was hit then empty string will be returned; if there were no text then None will be returned
+   */
   protected def readLine(): Option[String] = {
     try {
       val line = Console.readLine()

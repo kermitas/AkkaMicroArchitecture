@@ -1,4 +1,4 @@
-package as.ama.addon.keypressdetector
+package as.ama.addon.inputstream
 
 import akka.actor._
 import as.io._
@@ -6,12 +6,12 @@ import as.ama.startup.InitializationResult
 import as.ama.addon.lifecycle._
 import com.typesafe.config.Config
 
-object InstallKeyPressDetector {
+object InstallInputStreamListener {
   final val checkIfKeyWasPressedTimeIntervalInMsConfigKey = "checkIfKeyWasPressedTimeIntervalInMs"
 }
 
 /**
- * Install KeyPressedDetector.
+ * Install InputStreamListener.
  *
  * This actor is ready to be automatically initialized during ama startup. Should be defined on ama.initializeOnStartup.actors list
  * in application.conf, by default is defined in reference.conf (in ama-core project).
@@ -20,17 +20,17 @@ object InstallKeyPressDetector {
  * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
  * @param broadcaster main, pub-sub communication bus
  */
-class InstallKeyPressDetector(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
+class InstallInputStreamListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
 
-  import InstallKeyPressDetector._
+  import InstallInputStreamListener._
 
   override def preStart() {
     try {
-      val keyPressDetector = context.system.actorOf(Props[KeyPressedDetector], classOf[KeyPressedDetector].getSimpleName)
-      val keyPressedAction = new KeyPressedAction(broadcaster)
+      val inputStreamListener = context.system.actorOf(Props[InputStreamListener], classOf[InputStreamListener].getSimpleName)
+      val inputStreamAction = new InputStreamListenerCallbackImpl(broadcaster)
       val checkIfKeyWasPressedTimeIntervalInMs = config.getInt(checkIfKeyWasPressedTimeIntervalInMsConfigKey)
 
-      keyPressDetector ! new KeyPressedDetector.Init(keyPressedAction, checkIfKeyWasPressedTimeIntervalInMs)
+      inputStreamListener ! new InputStreamListener.Init(inputStreamAction, checkIfKeyWasPressedTimeIntervalInMs)
 
       broadcaster ! new InitializationResult(Right(None))
     } catch {

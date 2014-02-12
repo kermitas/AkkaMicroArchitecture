@@ -12,8 +12,6 @@ object InitializationController {
 
 /**
  * Main role is to shutdown system if any of automatically initialized actors will fail.
- *
- * @param broadcaster
  */
 class InitializationController(broadcaster: ActorRef) extends Actor with ActorLogging {
 
