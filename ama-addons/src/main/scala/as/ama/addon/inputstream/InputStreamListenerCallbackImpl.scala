@@ -24,8 +24,7 @@ class InputStreamListenerCallbackImpl(listener: ActorRef) extends InputStreamLis
    * (and will continue to listen for next input).
    */
   override def inputStreamNotification(inputText: String): Boolean = {
-    val filteredInputText = if (inputText == null) "" else inputText
-    listener ! new InputStreamText(filteredInputText)
+    listener ! new InputStreamText(inputText)
     true
   }
 }

@@ -49,7 +49,7 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
       readLine() match {
 
         case Some(line) ⇒ {
-          log.debug(s"Detected key press: $line")
+          log.debug(s"Read input stream (${line.length} characters):$line")
 
           val continue = try {
             stateData.inputStreamListenerCallback.inputStreamNotification(line)

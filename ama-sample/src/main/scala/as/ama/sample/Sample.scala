@@ -6,6 +6,8 @@ import akka.actor._
 import as.ama.startup.InitializationResult
 import as.akka.broadcaster._
 import com.typesafe.config.Config
+import as.ama.addon.inputstream.InputStreamListenerCallbackImpl
+import as.ama.addon.lifecycle.LifecycleListener
 
 object Sample {
   sealed trait Message extends Serializable
@@ -65,6 +67,17 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
 
     // any string published on broadcaster is forwarded to us
     case s: String ⇒ log.info(s"Received string '$s' from broadcaster.")
+
+    // received text from console
+    case InputStreamListenerCallbackImpl.InputStreamText(inputText) ⇒ {
+      log.info(s"Input text (${inputText.length} characters):$inputText")
+
+      if (inputText.isEmpty) {
+        log.info("Empty input string means that we will finish!")
+        broadcaster ! new LifecycleListener.ShutdownSystem(Right("[enter] was pressed in console"))
+        context.stop(self)
+      }
+    }
 
     // we are also interested in TestMessage (please see SampleClassifier)
     case TestMessage ⇒ {
