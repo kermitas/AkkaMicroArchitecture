@@ -16,7 +16,7 @@ object Build extends Build {
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots,
-    libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.0-RC2",
+    libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.0-RC3",
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.0.13",
     packMain := Map("run" -> mc)
   ) ++ scalariformSettings ++ formattingPreferences

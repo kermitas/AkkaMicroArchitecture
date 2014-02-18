@@ -12,7 +12,7 @@ object Build extends Build {
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots,
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0-RC2"
+    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0-RC3"
   ) ++ scalariformSettings ++ formattingPreferences
 
   def formattingPreferences = {
