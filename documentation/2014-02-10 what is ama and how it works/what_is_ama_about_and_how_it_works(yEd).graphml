@@ -626,7 +626,7 @@ published here<y:LabelModel>
               <y:Geometry height="26.0" width="192.52951812366712" x="989.8950170992878" y="1642.5221012641116"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="177.126953125" x="7.701282499333615" y="4.015625">BroadcasterMessagesLogger<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="177.126953125" x="7.701282499333502" y="4.015625">BroadcasterMessagesLogger<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -741,7 +741,7 @@ startup.<y:LabelModel>
           <y:Geometry height="95.58518635394421" width="248.0947820895522" x="-428.7842001763507" y="2419.555069281168"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="87.8125" modelName="custom" textColor="#000000" visible="true" width="224.640625" x="11.727078544776077" y="3.886343176972332">They are defined in reference.conf
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="87.8125" modelName="custom" textColor="#000000" visible="true" width="224.640625" x="11.727078544776134" y="3.8863431769718773">They are defined in reference.conf
 in ama-main project (as a files
 located in ama-addons).
 
@@ -2015,7 +2015,6 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       </data>
     </edge>
     <edge id="e36" source="n36" target="n2::n14">
-      <data key="d9"/>
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2025,7 +2024,6 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       </data>
     </edge>
     <edge id="e37" source="n36" target="n2::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2035,31 +2033,28 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       </data>
     </edge>
     <edge id="n2::e32" source="n2::n2" target="n2::n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#0000FF" type="line" width="1.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
         </y:QuadCurveEdge>
       </data>
     </edge>
     <edge id="n2::e33" source="n2::n14" target="n2::n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#0000FF" type="line" width="1.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
         </y:QuadCurveEdge>
       </data>
     </edge>
     <edge id="n2::e34" source="n2::n3" target="n2::n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#0000FF" type="line" width="1.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
         </y:QuadCurveEdge>
       </data>
