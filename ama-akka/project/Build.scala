@@ -1,33 +1,39 @@
 import sbt._
 import Keys._
-import com.typesafe.sbt.SbtScalariform._
 
 object Build extends Build {
 
-  lazy val projectSettings = Defaults.defaultSettings ++ Seq (
+  lazy val projectSettings = Seq (
     name := "ama-akka",
-    version := "0.4.0",
+    version := "0.4.1",
     organization := "as.ama",
     scalaVersion := "2.10.3",
+    offline := true,
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots,
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0-RC3"
-  ) ++ scalariformSettings ++ formattingPreferences
-
-  def formattingPreferences = {
-    import scalariform.formatter.preferences._
-    ScalariformKeys.preferences := FormattingPreferences()
-      .setPreference(RewriteArrowSymbols, true)
-      .setPreference(AlignParameters, true)
-      .setPreference(AlignSingleLineCaseStatements, true)
-      .setPreference(MultilineScaladocCommentsStartOnFirstLine, false)
-      .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, false)
-  }
+    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0"
+  ) ++ ScalariformSettings.projectSettings
 
   lazy val amaAkka = Project(
       id = "ama-akka",
       base = file("."),
       settings = projectSettings
     )
+}
+
+object ScalariformSettings {
+
+  lazy val projectSettings = {
+    import com.typesafe.sbt.SbtScalariform._
+    import scalariform.formatter.preferences._
+
+    scalariformSettings ++ {
+      ScalariformKeys.preferences := FormattingPreferences()
+        .setPreference(AlignParameters, true)
+        .setPreference(AlignSingleLineCaseStatements, true)
+        .setPreference(MultilineScaladocCommentsStartOnFirstLine, false)
+        .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, false)
+    }
+  }
 }
