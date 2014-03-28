@@ -10,7 +10,7 @@ object Build extends Build {
   )
 
   lazy val root = Project(
-      id = "ama_all",
+      id = "akkamicroarchitecture",
       base = file("."),
       settings = projectSettings
     ).aggregate(ama_core).dependsOn(ama_core)
