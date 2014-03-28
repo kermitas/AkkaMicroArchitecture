@@ -4,21 +4,21 @@ import Keys._
 object Build extends Build {
 
   lazy val projectSettings = Seq (
-    name := "ama-addons",
+    name := "ama-core",
     version := "0.4.1",
-    organization := "as.ama",
+    organization := "as",
     scalaVersion := "2.10.3",
-    offline := true,
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
   ) ++ ScalariformSettings.projectSettings
 
-  lazy val amaAddons = Project(
-      id = "ama-addons",
+  lazy val root = Project(
+      id = "ama_core",
       base = file("."),
       settings = projectSettings
-    ).aggregate(amaStartup).dependsOn(amaStartup)
+    ).aggregate(ama_addons).dependsOn(ama_addons)
 
-  lazy val amaStartup = RootProject(file("../ama-startup"))
+  lazy val ama_addons = RootProject(file("../ama_addons"))
+
 }
 
 object ScalariformSettings {

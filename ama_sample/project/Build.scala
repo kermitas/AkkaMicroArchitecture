@@ -8,9 +8,8 @@ object Build extends Build {
   lazy val projectSettings = Seq (
     name := "ama-sample",
     version := "0.4.1",
-    organization := "as.ama",
+    organization := "as",
     scalaVersion := "2.10.3",
-    offline := true,
     mainClass in (Compile,run) := Some(mc),
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,
@@ -19,15 +18,13 @@ object Build extends Build {
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.1"
   ) ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings
 
-  lazy val amaSample = Project(
-      id = "ama-sample",
+  lazy val root = Project(
+      id = "ama_sample",
       base = file("."),
       settings = projectSettings
-    ).dependsOn(amaCore, amaStartup, amaAkka).aggregate(amaCore, amaStartup, amaAkka)
+    ).dependsOn(ama_all).aggregate(ama_all)
 
-  lazy val amaCore = RootProject(file("../ama-core"))
-  lazy val amaStartup = RootProject(file("../ama-startup"))
-  lazy val amaAkka = RootProject(file("../ama-akka"))
+  lazy val ama_all = RootProject(file("../"))
 }
 
 object PackSettings {

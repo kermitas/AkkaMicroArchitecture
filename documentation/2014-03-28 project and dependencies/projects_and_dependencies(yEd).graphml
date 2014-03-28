@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
-  <!--Created by yEd 3.12-->
+  <!--Created by yEd 3.12.2-->
   <key for="graphml" id="d0" yfiles.type="resources"/>
   <key for="port" id="d1" yfiles.type="portgraphics"/>
   <key for="port" id="d2" yfiles.type="portgeometry"/>
@@ -17,7 +17,7 @@
     <node id="n0">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
-          <y:Geometry height="31.12197636697283" width="80.0" x="164.07218601582883" y="478.3349047858683"/>
+          <y:Geometry height="31.12197636697283" width="80.0" x="164.07218601582883" y="537.4217327305532"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="78.35546875" x="0.822265625" y="6.576613183486415">ama-sample<y:LabelModel>
@@ -33,7 +33,7 @@
     <node id="n1">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
-          <y:Geometry height="31.12197636697283" width="80.0" x="307.4031773366562" y="414.6928371029985"/>
+          <y:Geometry height="31.12197636697283" width="80.0" x="164.07218601582883" y="422.04033102943004"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="60.982421875" x="9.5087890625" y="6.576613183486415">ama-core<y:LabelModel>
@@ -49,7 +49,7 @@
     <node id="n2">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
-          <y:Geometry height="31.12197636697283" width="80.0" x="290.22219895078797" y="261.9556011134073"/>
+          <y:Geometry height="31.12197636697283" width="80.0" x="160.848276527675" y="261.9556011134073"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="77.8984375" x="1.05078125" y="6.576613183486415">ama-startup<y:LabelModel>
@@ -81,7 +81,7 @@
     <node id="n4">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
-          <y:Geometry height="31.12197636697283" width="80.0" x="374.00854698748503" y="349.441125663865"/>
+          <y:Geometry height="31.12197636697283" width="80.0" x="164.07218601582883" y="349.441125663865"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="78.513671875" x="0.7431640625" y="6.576613183486415">ama-addons<y:LabelModel>
@@ -115,10 +115,10 @@ Broadcaster intrastructure.<y:LabelModel>
     <node id="n6">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="66.87039706422001" width="288.6845508405547" x="493.7496490034823" y="244.02993794051145"/>
+          <y:Geometry height="66.87039706422001" width="297.6845508405547" x="493.7496490034823" y="244.02993794051145"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="custom" textColor="#000000" visible="true" width="287.552734375" x="0.5659082327773604" y="10.482073532110007">Responsible for staring up actors defined in
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="custom" textColor="#000000" visible="true" width="287.552734375" x="5.06590823277736" y="10.482073532110007">Responsible for staring up actors defined in
 reference.conf (ama-core) and application.conf
 (ama-sample or your project).<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -134,7 +134,7 @@ reference.conf (ama-core) and application.conf
     <node id="n7">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="39.496490862385144" width="189.026290877252" x="495.10621281654994" y="408.7993839994406"/>
+          <y:Geometry height="39.496490862385144" width="189.026290877252" x="495.10621281654994" y="420.27661299803276"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="custom" textColor="#000000" visible="true" width="189.0859375" x="-0.029823311374002515" y="3.779495431192572">Main project. You have to
@@ -155,7 +155,7 @@ include it as your dependency.<y:LabelModel>
           <y:Geometry height="72.78907948623828" width="137.37600801486667" x="495.3335581307593" y="328.2595972182162"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" textColor="#000000" visible="true" width="129.66015625" x="3.857925882433392" y="6.4570397431191395">Addons like:
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" textColor="#000000" visible="true" width="129.66015625" x="3.857925882433335" y="6.4570397431191395">Addons like:
 - lifecycle listener
 - key listener
 - JVM shutdown hook<y:LabelModel>
@@ -172,10 +172,10 @@ include it as your dependency.<y:LabelModel>
     <node id="n9">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.618467229357975" width="110.04276060202267" x="496.9981875619516" y="479.0010401539962"/>
+          <y:Geometry height="30.618467229357975" width="110.04276060202267" x="493.13740540887505" y="537.6734872993607"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="104.46484375" x="2.788958426011277" y="6.324858614678988">Simple example.<y:LabelModel>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="104.46484375" x="2.788958426011334" y="6.324858614678988">Simple example.<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -189,7 +189,7 @@ include it as your dependency.<y:LabelModel>
     <node id="n10">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="783.5280111397501" y="90.61147370494245"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="794.5280111397501" y="90.61147370494245"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -206,7 +206,7 @@ include it as your dependency.<y:LabelModel>
     <node id="n11">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="783.7393142193614" y="549.4794699576596"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="794.7393142193614" y="604.4794699576596"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -223,7 +223,7 @@ include it as your dependency.<y:LabelModel>
     <node id="n12">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="54.64376792353778" y="549.0176551383242"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="54.64376792353778" y="604.0176551383242"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -271,7 +271,41 @@ include it as your dependency.<y:LabelModel>
         </y:GenericNode>
       </data>
     </node>
-    <edge id="e0" source="n0" target="n3">
+    <node id="n15">
+      <data key="d6">
+        <y:GenericNode configuration="com.yworks.flowchart.document">
+          <y:Geometry height="31.12197636697283" width="80.0" x="164.07218601582883" y="483.16230739640287"/>
+          <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="48.748046875" x="15.6259765625" y="6.576613183486415">ama-all<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+        </y:GenericNode>
+      </data>
+    </node>
+    <node id="n16">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="38.176917284403316" width="244.04276060202267" x="493.13740540887505" y="479.6348369376876"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="custom" textColor="#000000" visible="true" width="235.298828125" x="4.371966238511277" y="3.119708642201658">Umbrella SBT project placed in root
+folder (you can use it as dependency).<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Shape type="rectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="e0" source="n0" target="n15">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -280,7 +314,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e1" source="n0" target="n1">
+    <edge id="e1" source="n1" target="n4">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -289,7 +323,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e2" source="n0" target="n2">
+    <edge id="e2" source="n4" target="n2">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -298,7 +332,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e3" source="n1" target="n4">
+    <edge id="e3" source="n2" target="n3">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -307,25 +341,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e4" source="n4" target="n2">
-      <data key="d10">
-        <y:BezierEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-        </y:BezierEdge>
-      </data>
-    </edge>
-    <edge id="e5" source="n2" target="n3">
-      <data key="d10">
-        <y:BezierEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-        </y:BezierEdge>
-      </data>
-    </edge>
-    <edge id="e6" source="n5" target="n3">
+    <edge id="e4" source="n5" target="n3">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -334,7 +350,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e7" source="n6" target="n2">
+    <edge id="e5" source="n6" target="n2">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -343,7 +359,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e8" source="n7" target="n1">
+    <edge id="e6" source="n7" target="n1">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -352,7 +368,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e9" source="n8" target="n4">
+    <edge id="e7" source="n8" target="n4">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -361,7 +377,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e10" source="n9" target="n0">
+    <edge id="e8" source="n9" target="n0">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -370,7 +386,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e11" source="n14" target="n10">
+    <edge id="e9" source="n14" target="n10">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="2.227639243695151" sy="0.2708826388252419" tx="0.0" ty="0.0"/>
@@ -379,7 +395,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e12" source="n10" target="n11">
+    <edge id="e10" source="n10" target="n11">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -388,7 +404,7 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e13" source="n12" target="n14">
+    <edge id="e11" source="n12" target="n14">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="1.6872416968375035" ty="1.4347486417609616"/>
@@ -397,12 +413,32 @@ include it as your dependency.<y:LabelModel>
         </y:BezierEdge>
       </data>
     </edge>
-    <edge id="e14" source="n11" target="n12">
+    <edge id="e12" source="n11" target="n12">
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
+        </y:BezierEdge>
+      </data>
+    </edge>
+    <edge id="e13" source="n15" target="n1">
+      <data key="d9"/>
+      <data key="d10">
+        <y:BezierEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+        </y:BezierEdge>
+      </data>
+    </edge>
+    <edge id="e14" source="n16" target="n15">
+      <data key="d9"/>
+      <data key="d10">
+        <y:BezierEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#808080" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
         </y:BezierEdge>
       </data>
     </edge>
