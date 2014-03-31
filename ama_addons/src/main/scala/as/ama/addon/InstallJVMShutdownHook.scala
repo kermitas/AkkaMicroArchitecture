@@ -20,7 +20,7 @@ object InstallJVMShutdownHook {
  * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
  * @param broadcaster main, pub-sub communication bus
  */
-class InstallJVMShutdownHook(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
+class InstallJVMShutdownHook(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Actor with ActorLogging {
 
   import InstallJVMShutdownHook._
 

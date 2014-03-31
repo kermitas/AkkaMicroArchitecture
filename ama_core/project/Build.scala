@@ -5,7 +5,7 @@ object Build extends Build {
 
   lazy val projectSettings = Seq (
     name := "ama-core",
-    version := "0.4.1",
+    version := "0.4.2",
     organization := "as",
     scalaVersion := "2.10.3",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")

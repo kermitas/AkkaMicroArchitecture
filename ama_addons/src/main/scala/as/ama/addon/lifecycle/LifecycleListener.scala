@@ -12,6 +12,10 @@ object LifecycleListener {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
   case class ShutdownSystem(reason: Either[Exception, String]) extends IncomingMessage
+
+  /**
+   * Used when ShutdownSystem message will be placed on Akka's event bus (to be processed just after all log messages etc.)
+   */
   case class WrappedShutdown(shutdown: ShutdownSystem) extends IncomingMessage
 }
 
@@ -25,7 +29,7 @@ object LifecycleListener {
  * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
  * @param broadcaster main, pub-sub communication bus
  */
-class LifecycleListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
+class LifecycleListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Actor with ActorLogging {
 
   import LifecycleListener._
 

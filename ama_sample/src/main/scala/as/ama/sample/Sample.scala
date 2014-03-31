@@ -34,7 +34,7 @@ object Sample {
  * commandLineArguments: Array[String], config: Config, broadcaster: ActorRef
  *
  */
-class Sample(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
+class Sample(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Actor with ActorLogging {
 
   import Sample._
 
@@ -53,6 +53,9 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
 
       // for a test purposes we are publishing 'test' key from configuration (please see application.conf)
       broadcaster ! s"==================> Config: test = ${config.getString("test")}. <=================="
+
+      // for a test purposes we are publishing keys from runtimeProperties
+      broadcaster ! s"==================> Config: runtimeProperties keys = ${runtimeProperties.keySet.mkString(",")}. <=================="
 
       // remember always to send back how your initialization goes
       broadcaster ! new InitializationResult(Right(None))

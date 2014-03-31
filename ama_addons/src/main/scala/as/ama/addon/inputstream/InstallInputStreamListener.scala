@@ -20,7 +20,7 @@ object InstallInputStreamListener {
  * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
  * @param broadcaster main, pub-sub communication bus
  */
-class InstallInputStreamListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Actor with ActorLogging {
+class InstallInputStreamListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Actor with ActorLogging {
 
   import InstallInputStreamListener._
 
@@ -43,7 +43,6 @@ class InstallInputStreamListener(commandLineArguments: Array[String], config: Co
   override def postRestart(throwable: Throwable) = preStart()
 
   override def receive = {
-
     case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
   }
 }

@@ -11,6 +11,6 @@ import akka.actor.{ Actor, Props, ActorRef }
  * @param config configuration for this single actor, defined in configuration (reference.conf or application.conf)
  * @param broadcaster main, pub-sub communication bus
  */
-class PropsCreator(clazzName: String, commandLineArguments: Array[String], config: Config, broadcaster: ActorRef) extends Serializable {
-  def create: Props = Props(Class.forName(clazzName).getConstructor(classOf[Array[String]], classOf[Config], classOf[ActorRef]).newInstance(commandLineArguments, config, broadcaster).asInstanceOf[Actor])
+class PropsCreator(clazzName: String, commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Serializable {
+  def create: Props = Props(Class.forName(clazzName).getConstructor(classOf[Array[String]], classOf[Config], classOf[ActorRef], classOf[Map[String, Any]]).newInstance(commandLineArguments, config, broadcaster, runtimeProperties).asInstanceOf[Actor])
 }

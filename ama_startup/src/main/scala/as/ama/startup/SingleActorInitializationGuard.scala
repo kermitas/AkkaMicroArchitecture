@@ -30,13 +30,15 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
   protected var initializeOnStartupActorConfig: InitializeOnStartupActorConfig = _
   protected var initializeOnStartupConfig: InitializeOnStartupConfig = _
   protected var createdActor: ActorRef = _
+  protected var runtimePropertiesBuilder: RuntimePropertiesBuilder = _
 
   override def receive = {
-    case (broadcaster: ActorRef, commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializeOnStartupConfig: InitializeOnStartupConfig) ⇒ { //}, initialConfiguration: StartupInitializer.InitialConfiguration) ⇒ {
+    case (broadcaster: ActorRef, commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializeOnStartupConfig: InitializeOnStartupConfig, runtimePropertiesBuilder: RuntimePropertiesBuilder) ⇒ { //}, initialConfiguration: StartupInitializer.InitialConfiguration) ⇒ {
       this.broadcaster = broadcaster
       this.commandLineArguments = commandLineArguments
       this.initializeOnStartupActorConfig = initializeOnStartupActorConfig
       this.initializeOnStartupConfig = initializeOnStartupConfig
+      this.runtimePropertiesBuilder = runtimePropertiesBuilder
 
       broadcaster ! new Broadcaster.Register(self, new SingleActorInitializationGuardClassifier)
 
@@ -59,7 +61,9 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
 
   protected def instantiateActor {
     try {
-      createdActor = context.system.actorOf(new PropsCreator(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, broadcaster).create, initializeOnStartupActorConfig.clazzName)
+      val runtimeProperties = runtimePropertiesBuilder.createRuntimeProperties(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, broadcaster)
+
+      createdActor = context.system.actorOf(new PropsCreator(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, broadcaster, runtimeProperties).create, initializeOnStartupActorConfig.clazzName)
 
       cancellableTimeout = context.system.scheduler.scheduleOnce(initializeOnStartupConfig.actorInitializationTimeoutInMs milliseconds, self, InitializationTimeout)(context.dispatcher)
     } catch {

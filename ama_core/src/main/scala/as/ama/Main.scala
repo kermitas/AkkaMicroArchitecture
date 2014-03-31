@@ -2,6 +2,7 @@ package as.ama
 
 import akka.actor._
 import com.typesafe.config._
+import as.ama.startup.RuntimePropertiesBuilder
 
 /**
  * Main JVM class.
@@ -37,11 +38,25 @@ object Main {
     println("Starting actor system...")
     val actorSystem = ActorSystem(amaConfig.akkaConfig.actorSystemName, config)
 
+    val runtimePropertiesBuilder: RuntimePropertiesBuilder = Class.forName(amaConfig.initializeOnStartupConfig.runtimePropertiesBuilderClassName).getConstructor().newInstance().asInstanceOf[RuntimePropertiesBuilder]
+
+    createMainActorAndSendInit(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder)
+  }
+
+  /**
+   * Having those arguments you can reuse this method to build new broadcaster-based systems on demand in given actorSystem
+   */
+  def createMainActorAndSendInit(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) {
+
     println(s"Creating ${classOf[MainActor].getSimpleName}...")
     val mainActor = actorSystem.actorOf(Props[MainActor], classOf[MainActor].getSimpleName)
 
     println("Starting main actor...")
-    mainActor ! new MainActor.Init(amaConfig, cmdArgs)
+    mainActor ! new MainActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder)
+  }
+
+  protected def prepareRuntimePropertiesBuilder = {
+
   }
 
   protected def prepareCommandLineArguments(originallyPassedCommandLineArguments: Array[String], commandLineConfig: CommandLineConfig): Array[String] = {

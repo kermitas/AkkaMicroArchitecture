@@ -46,7 +46,7 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
   when(WaitingForAKey) {
     case Event(StateTimeout, stateData: WaitingForAKeyStateData) ⇒ {
 
-      readLine() match {
+      nonBlockingReadLine() match {
 
         case Some(line) ⇒ {
           log.debug(s"Read input stream (${line.length} characters):$line")
@@ -97,9 +97,9 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
    * @return text that was provided (mostly to console);
    *         never null, if just [enter] was hit then empty string will be returned; if there were no text then None will be returned
    */
-  protected def readLine(): Option[String] = {
+  protected def nonBlockingReadLine(): Option[String] = {
     try {
-      val line = Console.readLine()
+      val line = if (Console.in.ready()) Console.readLine() else null
 
       if (line != null)
         Some(line)

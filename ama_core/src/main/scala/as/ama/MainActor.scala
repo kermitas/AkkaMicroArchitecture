@@ -8,7 +8,7 @@ import as.ama.broadcaster.BroadcasterMessagesLogger
 object MainActor {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String]) extends IncomingMessage
+  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) extends IncomingMessage
 }
 
 /**
@@ -25,9 +25,9 @@ class MainActor extends Actor with ActorLogging {
 
   override def receive = {
 
-    case Init(amaConfig, commandLineArguments) ⇒ {
+    case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder) ⇒ {
       try {
-        initialize(amaConfig, commandLineArguments)
+        initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder)
       } catch {
         case e: Exception ⇒ {
           log.error(s"Problem while initializing ${classOf[Broadcaster].getSimpleName} and/or ${classOf[StartupInitializer].getSimpleName}.", e)
@@ -41,7 +41,7 @@ class MainActor extends Actor with ActorLogging {
     case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
   }
 
-  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String]) {
+  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) {
     log.debug(s"Command line arguments count ${commandLineArguments.length}: ${commandLineArguments.mkString(",")}")
 
     val broadcaster = context.system.actorOf(Props[Broadcaster], classOf[Broadcaster].getSimpleName)
@@ -57,7 +57,7 @@ class MainActor extends Actor with ActorLogging {
     val startupInitializer = context.system.actorOf(Props[StartupInitializer], classOf[StartupInitializer].getSimpleName)
     broadcaster ! new Broadcaster.Register(startupInitializer, StartupInitializer.classifier)
 
-    broadcaster ! new StartupInitializer.InitialConfiguration(commandLineArguments, amaConfig.initializeOnStartupConfig, broadcaster)
+    broadcaster ! new StartupInitializer.InitialConfiguration(commandLineArguments, amaConfig.initializeOnStartupConfig, broadcaster, runtimePropertiesBuilder)
   }
 }
 
