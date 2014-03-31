@@ -42,6 +42,8 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
 
   override def preStart() {
     try {
+      super.preStart()
+
       // asking broadcaster to register us with given classifier
       broadcaster ! new Broadcaster.Register(self, new SampleClassifier)
 
@@ -64,7 +66,10 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
     }
   }
 
-  override def postRestart(throwable: Throwable) = preStart()
+  override def postRestart(throwable: Throwable) = {
+    super.postRestart(throwable)
+    preStart()
+  }
 
   override def receive = {
 
