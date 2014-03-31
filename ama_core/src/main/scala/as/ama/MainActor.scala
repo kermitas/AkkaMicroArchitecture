@@ -25,11 +25,11 @@ class MainActor extends Actor with ActorLogging {
 
   override def receive = {
 
-    case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder) ⇒ {
+    case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder) => {
       try {
         initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder)
       } catch {
-        case e: Exception ⇒ {
+        case e: Exception => {
           log.error(s"Problem while initializing ${classOf[Broadcaster].getSimpleName} and/or ${classOf[StartupInitializer].getSimpleName}.", e)
           context.system.shutdown()
         }
@@ -38,7 +38,7 @@ class MainActor extends Actor with ActorLogging {
       }
     }
 
-    case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
+    case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
   protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) {

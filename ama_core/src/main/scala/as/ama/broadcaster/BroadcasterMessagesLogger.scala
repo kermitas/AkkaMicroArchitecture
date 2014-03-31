@@ -12,6 +12,6 @@ object BroadcasterMessagesLogger {
 class BroadcasterMessagesLogger extends Actor with ActorLogging {
 
   override def receive = {
-    case message ⇒ log.debug(s"Message published on broadcaster: $message")
+    case message => log.debug(s"Message published on broadcaster: $message")
   }
 }

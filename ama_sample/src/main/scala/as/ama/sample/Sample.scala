@@ -44,7 +44,7 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
     try {
       super.preStart()
 
-      // asking broadcaster to register us with given classifier
+      // notifying broadcaster to register us with given classifier
       broadcaster ! new Broadcaster.Register(self, new SampleClassifier)
 
       // scheduling TestMessage that will be send to broadcaster every 1 second repeatedly
@@ -62,7 +62,7 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
       // remember always to send back how your initialization goes
       broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception ⇒ broadcaster ! new InitializationResult(Left(new Exception("Problem while installing sample actor.", e)))
+      case e: Exception => broadcaster ! new InitializationResult(Left(new Exception("Problem while installing sample actor.", e)))
     }
   }
 
@@ -74,10 +74,10 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
   override def receive = {
 
     // any string published on broadcaster is forwarded to us
-    case s: String ⇒ log.info(s"Received string '$s' from broadcaster.")
+    case s: String => log.info(s"Received string '$s' from broadcaster.")
 
     // received text from console
-    case InputStreamListenerCallbackImpl.InputStreamText(inputText) ⇒ {
+    case InputStreamListenerCallbackImpl.InputStreamText(inputText) => {
       log.info(s"Input text (${inputText.length} characters):$inputText")
 
       if (inputText.isEmpty) {
@@ -88,11 +88,11 @@ class Sample(commandLineArguments: Array[String], config: Config, broadcaster: A
     }
 
     // we are also interested in TestMessage (please see SampleClassifier)
-    case TestMessage ⇒ {
+    case TestMessage => {
       count += 1
       log.info(s"Received test message for the $count time.")
     }
 
-    case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
+    case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 }

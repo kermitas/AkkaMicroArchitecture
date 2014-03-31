@@ -42,7 +42,7 @@ class LifecycleListener(commandLineArguments: Array[String], config: Config, bro
 
       broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception ⇒ broadcaster ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
+      case e: Exception => broadcaster ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
     }
   }
 
@@ -50,7 +50,7 @@ class LifecycleListener(commandLineArguments: Array[String], config: Config, bro
 
   override def receive = {
 
-    case shutdownSystem: ShutdownSystem ⇒ {
+    case shutdownSystem: ShutdownSystem => {
       if (lifecycleListenerConfig.onShutdownWaitForEventBusMessagesToBeProcessedInMs <= 0) {
         log.info("Performing immediate shutdown")
         performShutdown(shutdownSystem.reason)
@@ -62,22 +62,22 @@ class LifecycleListener(commandLineArguments: Array[String], config: Config, bro
       }
     }
 
-    case WrappedShutdown(shutdownSystem) ⇒ {
+    case WrappedShutdown(shutdownSystem) => {
       log.info("Delayed shutdown will be performed right now")
       performShutdown(shutdownSystem.reason)
       context.stop(self)
     }
 
-    case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
+    case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
   protected def performShutdown(reason: Either[Exception, String]) {
     val systemExitCode = reason match {
-      case Right(description) ⇒ {
+      case Right(description) => {
         log.info(s"Shutting down system with reason '$description'")
         0
       }
-      case Left(exception) ⇒ {
+      case Left(exception) => {
         log.error(exception, s"Shutting down system with '$exception'.")
         -1
       }

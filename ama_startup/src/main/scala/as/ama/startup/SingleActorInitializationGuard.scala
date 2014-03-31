@@ -33,7 +33,7 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
   protected var runtimePropertiesBuilder: RuntimePropertiesBuilder = _
 
   override def receive = {
-    case (broadcaster: ActorRef, commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializeOnStartupConfig: InitializeOnStartupConfig, runtimePropertiesBuilder: RuntimePropertiesBuilder) ⇒ { //}, initialConfiguration: StartupInitializer.InitialConfiguration) ⇒ {
+    case (broadcaster: ActorRef, commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializeOnStartupConfig: InitializeOnStartupConfig, runtimePropertiesBuilder: RuntimePropertiesBuilder) => { //}, initialConfiguration: StartupInitializer.InitialConfiguration) => {
       this.broadcaster = broadcaster
       this.commandLineArguments = commandLineArguments
       this.initializeOnStartupActorConfig = initializeOnStartupActorConfig
@@ -45,14 +45,14 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
       instantiateActor
     }
 
-    case initializationResult: InitializationResult ⇒ {
+    case initializationResult: InitializationResult => {
       if (sender().path.name.equals(initializeOnStartupActorConfig.clazzName)) {
         cancellableTimeout.cancel
         context.stop(self)
       }
     }
 
-    case InitializationTimeout ⇒ {
+    case InitializationTimeout => {
       val ite = new InitializationTimeoutException(s"Timeout (${initializeOnStartupConfig.actorInitializationTimeoutInMs} ms) while waiting for InitializationResult from ${initializeOnStartupActorConfig.clazzName}.")
       broadcaster ! new InitializationResult(Left(ite))
       context.stop(self)
@@ -67,7 +67,7 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
 
       cancellableTimeout = context.system.scheduler.scheduleOnce(initializeOnStartupConfig.actorInitializationTimeoutInMs milliseconds, self, InitializationTimeout)(context.dispatcher)
     } catch {
-      case e: Exception ⇒ {
+      case e: Exception => {
         log.error(e, s"Could not create actor ${initializeOnStartupActorConfig.clazzName}")
         broadcaster ! new InitializationResult(Left(e))
         context.stop(self)

@@ -37,24 +37,24 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
   startWith(Uninitialized, UninitializedStateData)
 
   when(Uninitialized) {
-    case Event(Init(inputStreamListenerCallback, checkIfKeyWasPressedTimeIntervalInMs), UninitializedStateData) ⇒ {
+    case Event(Init(inputStreamListenerCallback, checkIfKeyWasPressedTimeIntervalInMs), UninitializedStateData) => {
       setStateTimeout(WaitingForAKey, Some(checkIfKeyWasPressedTimeIntervalInMs millisecond))
       goto(WaitingForAKey) using new WaitingForAKeyStateData(inputStreamListenerCallback)
     }
   }
 
   when(WaitingForAKey) {
-    case Event(StateTimeout, stateData: WaitingForAKeyStateData) ⇒ {
+    case Event(StateTimeout, stateData: WaitingForAKeyStateData) => {
 
       nonBlockingReadLine() match {
 
-        case Some(line) ⇒ {
+        case Some(line) => {
           log.debug(s"Read input stream (${line.length} characters):$line")
 
           val continue = try {
             stateData.inputStreamListenerCallback.inputStreamNotification(line)
           } catch {
-            case e: Exception ⇒ false
+            case e: Exception => false
           }
 
           if (continue)
@@ -63,28 +63,28 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
             stop(FSM.Normal)
         }
 
-        case None ⇒ stay using stateData
+        case None => stay using stateData
       }
     }
   }
 
   onTransition {
-    case fromState -> toState ⇒ log.debug(s"Change state from $fromState to $toState")
+    case fromState -> toState => log.debug(s"Change state from $fromState to $toState")
   }
 
   whenUnhandled {
-    case Event(unknownMessage, stateData) ⇒ {
+    case Event(unknownMessage, stateData) => {
       log.warning(s"Received unknown message '$unknownMessage' (state data $stateData)")
       stay using stateData
     }
   }
 
   onTermination {
-    case StopEvent(stopType, state, stateData) ⇒ {
+    case StopEvent(stopType, state, stateData) => {
       stopType match {
-        case FSM.Normal         ⇒ log.info(s"Stopping (normal), state $state, data $stateData")
-        case FSM.Shutdown       ⇒ log.info(s"Stopping (shutdown), state $state, data $stateData")
-        case FSM.Failure(cause) ⇒ log.warning(s"Stopping (failure = $cause), state $state, data $stateData")
+        case FSM.Normal         => log.info(s"Stopping (normal), state $state, data $stateData")
+        case FSM.Shutdown       => log.info(s"Stopping (shutdown), state $state, data $stateData")
+        case FSM.Failure(cause) => log.warning(s"Stopping (failure = $cause), state $state, data $stateData")
       }
     }
   }
@@ -106,7 +106,7 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
       else
         None
     } catch {
-      case e: Exception ⇒ None
+      case e: Exception => None
     }
   }
 }

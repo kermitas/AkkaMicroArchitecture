@@ -29,13 +29,13 @@ class Broadcaster extends Actor with ActorLogging {
 
   override def receive = {
 
-    case register: Register ⇒ {
+    case register: Register => {
       val nextForwarderName = generateNextForwarderName(register.listener.path.name)
       //log.debug(s"Received message $register, creating forwarder with name '$nextForwarderName'")
       context.actorOf(Props[ClassifyingForwarder], nextForwarderName) ! register
     }
 
-    case message ⇒ {
+    case message => {
       //log.debug(s"Broadcasting message $message from ${sender()}")
       context.children.foreach(_.tell(message, sender()))
     }

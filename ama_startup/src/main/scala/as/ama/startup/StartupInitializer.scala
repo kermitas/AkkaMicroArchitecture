@@ -34,7 +34,7 @@ class StartupInitializer extends Actor with ActorLogging {
 
   override def receive = {
 
-    case initialConfiguration: InitialConfiguration ⇒ {
+    case initialConfiguration: InitialConfiguration => {
       this.initialConfiguration = initialConfiguration
 
       cancellableTimeout = context.system.scheduler.scheduleOnce(initialConfiguration.initializeOnStartupConfig.generalInitializationTimeoutInMs millis, self, InitializationTimeout)(context.dispatcher)
@@ -45,19 +45,19 @@ class StartupInitializer extends Actor with ActorLogging {
       initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs.foreach(initialConfiguration.broadcaster ! new PleaseInstantiate(_, initialConfiguration.broadcaster))
     }
 
-    case PleaseInstantiate(initializeOnStartupActorConfig, broadcaster) ⇒ {
+    case PleaseInstantiate(initializeOnStartupActorConfig, broadcaster) => {
       numberOfCreatedGuardians += 1
       val initializationGuard = context.actorOf(Props[SingleActorInitializationGuard], classOf[SingleActorInitializationGuard].getSimpleName + "-" + initializeOnStartupActorConfig.clazzName + "-" + numberOfCreatedGuardians)
       initializationGuard ! (broadcaster, initialConfiguration.commandLineArguments, initializeOnStartupActorConfig, initialConfiguration.initializeOnStartupConfig, initialConfiguration.runtimePropertiesBuilder)
     }
 
-    case InitializationTimeout ⇒ {
+    case InitializationTimeout => {
       val ite = new InitializationTimeoutException(s"General timeout (${initialConfiguration.initializeOnStartupConfig.generalInitializationTimeoutInMs} ms) while initializing actors on startup.")
       initialConfiguration.broadcaster ! new InitializationResult(Left(ite))
       context.stop(self)
     }
 
-    case initializationResult: InitializationResult ⇒ {
+    case initializationResult: InitializationResult => {
       numberOfCreatedSuccessfullyCreatedActors += 1
       if (numberOfCreatedGuardians == numberOfCreatedSuccessfullyCreatedActors) {
         cancellableTimeout.cancel()
@@ -66,6 +66,6 @@ class StartupInitializer extends Actor with ActorLogging {
       }
     }
 
-    case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
+    case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 }

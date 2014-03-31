@@ -34,7 +34,7 @@ class InstallInputStreamListener(commandLineArguments: Array[String], config: Co
 
       broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception ⇒ broadcaster ! new InitializationResult(Left(new Exception("Problem while installing key press detector.", e)))
+      case e: Exception => broadcaster ! new InitializationResult(Left(new Exception("Problem while installing key press detector.", e)))
     } finally {
       context.stop(self)
     }
@@ -43,6 +43,6 @@ class InstallInputStreamListener(commandLineArguments: Array[String], config: Co
   override def postRestart(throwable: Throwable) = preStart()
 
   override def receive = {
-    case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
+    case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 }

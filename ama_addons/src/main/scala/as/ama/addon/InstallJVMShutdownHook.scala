@@ -35,7 +35,7 @@ class InstallJVMShutdownHook(commandLineArguments: Array[String], config: Config
 
       broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception ⇒ broadcaster ! new InitializationResult(Left(new Exception("Problem while installing JVM shutdown hook.", e)))
+      case e: Exception => broadcaster ! new InitializationResult(Left(new Exception("Problem while installing JVM shutdown hook.", e)))
     } finally {
       context.stop(self)
     }
@@ -45,7 +45,7 @@ class InstallJVMShutdownHook(commandLineArguments: Array[String], config: Config
 
   override def receive = {
 
-    case message ⇒ log.warning(s"Unhandled $message send by ${sender()}")
+    case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
 }
