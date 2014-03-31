@@ -5,13 +5,15 @@ object Build extends Build {
 
   lazy val mc = "as.ama.Main" // here main class is set
 
-  lazy val projectSettings = Seq (
+  lazy val projectSettings = Seq(
     name := "ama-sample",
     version := "0.4.2",
     organization := "as",
     scalaVersion := "2.10.3",
     mainClass in (Compile,run) := Some(mc),
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
+    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
+    resolvers += Classpaths.typesafeReleases,
+    resolvers += Classpaths.typesafeSnapshots
   ) ++ AkkaSettings.projectSettings ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(
@@ -26,9 +28,6 @@ object Build extends Build {
 object AkkaSettings {
 
   lazy val projectSettings = Seq(
-    resolvers += Classpaths.typesafeReleases,
-    resolvers += Classpaths.typesafeSnapshots,
-
     libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.0",
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.1"
   )

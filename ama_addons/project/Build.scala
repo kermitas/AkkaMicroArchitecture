@@ -3,7 +3,7 @@ import Keys._
 
 object Build extends Build {
 
-  lazy val projectSettings = Seq (
+  lazy val projectSettings = Seq(
     name := "ama-addons",
     version := "0.4.2",
     organization := "as",
