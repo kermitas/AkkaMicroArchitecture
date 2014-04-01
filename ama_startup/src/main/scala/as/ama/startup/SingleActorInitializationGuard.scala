@@ -4,6 +4,7 @@ import scala.language.postfixOps
 import scala.concurrent.duration._
 import akka.actor._
 import as.akka.broadcaster._
+import as.akka.util.CreateActorExecuteInActorsContext
 
 object SingleActorInitializationGuard {
   sealed trait Message extends Serializable
@@ -29,16 +30,17 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
   protected var cancellableTimeout: Cancellable = _
   protected var initializeOnStartupActorConfig: InitializeOnStartupActorConfig = _
   protected var initializeOnStartupConfig: InitializeOnStartupConfig = _
-  protected var createdActor: ActorRef = _
   protected var runtimePropertiesBuilder: RuntimePropertiesBuilder = _
+  protected var amaRootActor: ActorRef = _
 
   override def receive = {
-    case (broadcaster: ActorRef, commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializeOnStartupConfig: InitializeOnStartupConfig, runtimePropertiesBuilder: RuntimePropertiesBuilder) => { //}, initialConfiguration: StartupInitializer.InitialConfiguration) => {
+    case (broadcaster: ActorRef, commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializeOnStartupConfig: InitializeOnStartupConfig, runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActor: ActorRef) => {
       this.broadcaster = broadcaster
       this.commandLineArguments = commandLineArguments
       this.initializeOnStartupActorConfig = initializeOnStartupActorConfig
       this.initializeOnStartupConfig = initializeOnStartupConfig
       this.runtimePropertiesBuilder = runtimePropertiesBuilder
+      this.amaRootActor = amaRootActor
 
       broadcaster ! new Broadcaster.Register(self, new SingleActorInitializationGuardClassifier)
 
@@ -63,7 +65,8 @@ class SingleActorInitializationGuard extends Actor with ActorLogging {
     try {
       val runtimeProperties = runtimePropertiesBuilder.createRuntimeProperties(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, broadcaster)
 
-      createdActor = context.system.actorOf(new PropsCreator(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, broadcaster, runtimeProperties).create, initializeOnStartupActorConfig.clazzName)
+      val props = new PropsCreator(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, broadcaster, runtimeProperties).create
+      amaRootActor ! new CreateActorExecuteInActorsContext(props, initializeOnStartupActorConfig.clazzName)
 
       cancellableTimeout = context.system.scheduler.scheduleOnce(initializeOnStartupConfig.actorInitializationTimeoutInMs milliseconds, self, InitializationTimeout)(context.dispatcher)
     } catch {

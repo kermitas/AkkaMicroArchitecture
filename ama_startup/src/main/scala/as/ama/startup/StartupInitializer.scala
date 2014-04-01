@@ -48,7 +48,7 @@ class StartupInitializer extends Actor with ActorLogging {
     case PleaseInstantiate(initializeOnStartupActorConfig, broadcaster) => {
       numberOfCreatedGuardians += 1
       val initializationGuard = context.actorOf(Props[SingleActorInitializationGuard], classOf[SingleActorInitializationGuard].getSimpleName + "-" + initializeOnStartupActorConfig.clazzName + "-" + numberOfCreatedGuardians)
-      initializationGuard ! (broadcaster, initialConfiguration.commandLineArguments, initializeOnStartupActorConfig, initialConfiguration.initializeOnStartupConfig, initialConfiguration.runtimePropertiesBuilder)
+      initializationGuard ! (broadcaster, initialConfiguration.commandLineArguments, initializeOnStartupActorConfig, initialConfiguration.initializeOnStartupConfig, initialConfiguration.runtimePropertiesBuilder, context.parent)
     }
 
     case InitializationTimeout => {

@@ -5,6 +5,7 @@ import as.io._
 import as.ama.startup.InitializationResult
 import as.ama.addon.lifecycle._
 import com.typesafe.config.Config
+import as.akka.util.CreateActorAndSendMessageExecuteInActorsContext
 
 object InstallInputStreamListener {
   final val checkIfKeyWasPressedTimeIntervalInMsConfigKey = "checkIfKeyWasPressedTimeIntervalInMs"
@@ -26,11 +27,11 @@ class InstallInputStreamListener(commandLineArguments: Array[String], config: Co
 
   override def preStart() {
     try {
-      val inputStreamListener = context.system.actorOf(Props[InputStreamListener], classOf[InputStreamListener].getSimpleName)
       val inputStreamAction = new InputStreamListenerCallbackImpl(broadcaster)
       val checkIfKeyWasPressedTimeIntervalInMs = config.getInt(checkIfKeyWasPressedTimeIntervalInMsConfigKey)
+      val initMessage = new InputStreamListener.Init(inputStreamAction, checkIfKeyWasPressedTimeIntervalInMs)
 
-      inputStreamListener ! new InputStreamListener.Init(inputStreamAction, checkIfKeyWasPressedTimeIntervalInMs)
+      context.parent ! new CreateActorAndSendMessageExecuteInActorsContext(Props[InputStreamListener], classOf[InputStreamListener].getSimpleName, initMessage, self)
 
       broadcaster ! new InitializationResult(Right(None))
     } catch {

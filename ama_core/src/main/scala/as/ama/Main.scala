@@ -20,6 +20,8 @@ object Main {
   final val renderConfigurationConfigKey = "renderConfiguration"
   final val commandLineArgumentsRegex = "\"(\\\"|[^\"])*?\"|[^\\s]+"
 
+  val amaRootActorNumber = new java.util.concurrent.atomic.AtomicInteger(0)
+
   def main(commandLineArguments: Array[String]) = {
 
     println("Reading configuration...")
@@ -48,11 +50,13 @@ object Main {
    */
   def createMainActorAndSendInit(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) {
 
-    println(s"Creating ${classOf[MainActor].getSimpleName}...")
-    val mainActor = actorSystem.actorOf(Props[MainActor], classOf[MainActor].getSimpleName)
+    val rootActorNumber = amaRootActorNumber.getAndIncrement
+
+    println(s"Creating ${classOf[AmaRootActor].getSimpleName}...")
+    val amaRootActor = actorSystem.actorOf(Props[AmaRootActor], classOf[AmaRootActor].getSimpleName + "-" + rootActorNumber)
 
     println("Starting main actor...")
-    mainActor ! new MainActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder)
+    amaRootActor ! new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder)
   }
 
   protected def prepareRuntimePropertiesBuilder = {
