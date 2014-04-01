@@ -5,9 +5,9 @@ object Build extends Build {
 
   lazy val projectSettings = Seq(
     name := "ama-startup",
-    version := "0.4.2",
+    version := "0.4.3",
     organization := "as",
-    scalaVersion := "2.10.3",
+    scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
   ) ++ ScalariformSettings.projectSettings
 

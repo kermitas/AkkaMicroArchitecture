@@ -129,7 +129,7 @@ fi
 
 
 PROG_NAME=run
-PROG_VERSION=0.4.2
+PROG_VERSION=0.4.3
 
 exec "$JAVACMD" \
      ${JVM_OPT} \

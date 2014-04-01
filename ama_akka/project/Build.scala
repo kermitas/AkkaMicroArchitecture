@@ -5,9 +5,9 @@ object Build extends Build {
 
   lazy val projectSettings = Seq(
     name := "ama-akka",
-    version := "0.4.2",
+    version := "0.4.3",
     organization := "as",
-    scalaVersion := "2.10.3",
+    scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots
@@ -23,7 +23,7 @@ object Build extends Build {
 object AkkaSettings {
 
   lazy val projectSettings = Seq(
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.0"
+    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.1"
   )
 }
 
