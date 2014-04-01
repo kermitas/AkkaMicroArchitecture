@@ -9,7 +9,7 @@ import as.akka.util.ExecuteInActorsContext
 object AmaRootActor {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) extends IncomingMessage
+  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) extends IncomingMessage // will send back newly created broadcaster (ActorRef)
 }
 
 /**
@@ -28,7 +28,8 @@ class AmaRootActor extends Actor with ActorLogging {
 
     case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder) => {
       try {
-        initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder)
+        val broadcaster = initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder)
+        sender() ! broadcaster
       } catch {
         case e: Exception => {
           log.error(s"Problem while initializing ${classOf[Broadcaster].getSimpleName} and/or ${classOf[StartupInitializer].getSimpleName}.", e)
@@ -42,7 +43,7 @@ class AmaRootActor extends Actor with ActorLogging {
     case message                      => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
-  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) {
+  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder): ActorRef = {
     log.debug(s"Command line arguments count ${commandLineArguments.length}: ${commandLineArguments.mkString(",")}")
 
     val broadcaster = context.actorOf(Props[Broadcaster], classOf[Broadcaster].getSimpleName)
@@ -59,5 +60,7 @@ class AmaRootActor extends Actor with ActorLogging {
     broadcaster ! new Broadcaster.Register(startupInitializer, StartupInitializer.classifier)
 
     broadcaster ! new StartupInitializer.InitialConfiguration(commandLineArguments, amaConfig.initializeOnStartupConfig, broadcaster, runtimePropertiesBuilder)
+
+    broadcaster
   }
 }

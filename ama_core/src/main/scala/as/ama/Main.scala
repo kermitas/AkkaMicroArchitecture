@@ -1,6 +1,10 @@
 package as.ama
 
+import scala.language.postfixOps
+import scala.concurrent.duration._
+import scala.concurrent.{ Future, Await }
 import akka.actor._
+import akka.pattern.ask
 import com.typesafe.config._
 import as.ama.startup.RuntimePropertiesBuilder
 
@@ -20,9 +24,11 @@ object Main {
   final val renderConfigurationConfigKey = "renderConfiguration"
   final val commandLineArgumentsRegex = "\"(\\\"|[^\"])*?\"|[^\\s]+"
 
+  final val amaRootActorInitializationTimeoutInSeconds = 10
+
   val amaRootActorNumber = new java.util.concurrent.atomic.AtomicInteger(0)
 
-  def main(commandLineArguments: Array[String]) = {
+  def main(commandLineArguments: Array[String]) {
 
     println("Reading configuration...")
     val config = ConfigFactory.load
@@ -42,21 +48,18 @@ object Main {
 
     val runtimePropertiesBuilder: RuntimePropertiesBuilder = Class.forName(amaConfig.initializeOnStartupConfig.runtimePropertiesBuilderClassName).getConstructor().newInstance().asInstanceOf[RuntimePropertiesBuilder]
 
-    createMainActorAndSendInit(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder)
+    createAmaRootActorAndSendInit(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds)
   }
 
   /**
    * Having those arguments you can reuse this method to build new broadcaster-based systems on demand in given actorSystem
+   *
+   * Returns future with reference to newly created broadcaster.
    */
-  def createMainActorAndSendInit(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) {
-
+  def createAmaRootActorAndSendInit(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds: Int): Future[ActorRef] = {
     val rootActorNumber = amaRootActorNumber.getAndIncrement
-
-    println(s"Creating ${classOf[AmaRootActor].getSimpleName}...")
     val amaRootActor = actorSystem.actorOf(Props[AmaRootActor], classOf[AmaRootActor].getSimpleName + "-" + rootActorNumber)
-
-    println("Starting main actor...")
-    amaRootActor ! new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder)
+    amaRootActor.ask(new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder))(amaRootActorInitializationTimeoutInSeconds seconds).mapTo[ActorRef]
   }
 
   protected def prepareRuntimePropertiesBuilder = {
