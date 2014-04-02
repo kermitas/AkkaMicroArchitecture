@@ -24,9 +24,7 @@ object Main {
   final val renderConfigurationConfigKey = "renderConfiguration"
   final val commandLineArgumentsRegex = "\"(\\\"|[^\"])*?\"|[^\\s]+"
 
-  final val amaRootActorInitializationTimeoutInSeconds = 10
-
-  val amaRootActorNumber = new java.util.concurrent.atomic.AtomicInteger(0)
+  val amaRootActorNumber = new java.util.concurrent.atomic.AtomicLong(0)
 
   def main(commandLineArguments: Array[String]) {
 
@@ -48,7 +46,9 @@ object Main {
 
     val runtimePropertiesBuilder: RuntimePropertiesBuilder = Class.forName(amaConfig.initializeOnStartupConfig.runtimePropertiesBuilderClassName).getConstructor().newInstance().asInstanceOf[RuntimePropertiesBuilder]
 
-    createAmaRootActorAndSendInit(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds)
+    val amaRootActorInitializationTimeoutInSeconds = 10 // this time is not so important here since we are doing nothing with returned future
+
+    startNewAmaRootActor(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds)
   }
 
   /**
@@ -56,14 +56,11 @@ object Main {
    *
    * Returns future with reference to newly created broadcaster.
    */
-  def createAmaRootActorAndSendInit(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds: Int): Future[ActorRef] = {
+  def startNewAmaRootActor(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds: Int): Future[ActorRef] = {
     val rootActorNumber = amaRootActorNumber.getAndIncrement
     val amaRootActor = actorSystem.actorOf(Props[AmaRootActor], classOf[AmaRootActor].getSimpleName + "-" + rootActorNumber)
-    amaRootActor.ask(new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder))(amaRootActorInitializationTimeoutInSeconds seconds).mapTo[ActorRef]
-  }
-
-  protected def prepareRuntimePropertiesBuilder = {
-
+    val initMessage = new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder)
+    amaRootActor.ask(initMessage)(amaRootActorInitializationTimeoutInSeconds seconds).mapTo[ActorRef]
   }
 
   protected def prepareCommandLineArguments(originallyPassedCommandLineArguments: Array[String], commandLineConfig: CommandLineConfig): Array[String] = {
