@@ -48,7 +48,7 @@ object Main {
 
     val amaRootActorInitializationTimeoutInSeconds = 10 // this time is not so important here since we are doing nothing with returned future
 
-    startNewAmaRootActor(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds)
+    startNewAmaRootActor(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds, None)
   }
 
   /**
@@ -56,10 +56,10 @@ object Main {
    *
    * Returns future with reference to newly created broadcaster.
    */
-  def startNewAmaRootActor(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds: Int): Future[ActorRef] = {
+  def startNewAmaRootActor(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds: Int, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): Future[ActorRef] = {
     val rootActorNumber = amaRootActorNumber.getAndIncrement
     val amaRootActor = actorSystem.actorOf(Props[AmaRootActor], classOf[AmaRootActor].getSimpleName + "-" + rootActorNumber)
-    val initMessage = new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder)
+    val initMessage = new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder, executeWithBroadcaster)
     amaRootActor.ask(initMessage)(amaRootActorInitializationTimeoutInSeconds seconds).mapTo[ActorRef]
   }
 

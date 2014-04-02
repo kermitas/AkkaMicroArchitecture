@@ -9,7 +9,7 @@ import as.akka.util.ExecuteInActorsContext
 object AmaRootActor {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder) extends IncomingMessage // will send back newly created broadcaster (ActorRef)
+  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]) extends IncomingMessage // will send back newly created broadcaster (ActorRef)
 }
 
 /**
@@ -26,9 +26,9 @@ class AmaRootActor extends Actor with ActorLogging {
 
   override def receive = {
 
-    case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder) => {
+    case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder, executeWithBroadcaster) => {
       try {
-        val broadcaster = initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder)
+        val broadcaster = initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder, executeWithBroadcaster)
         sender() ! broadcaster
       } catch {
         case e: Exception => {
@@ -43,10 +43,12 @@ class AmaRootActor extends Actor with ActorLogging {
     case message                      => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
-  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder): ActorRef = {
+  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): ActorRef = {
     log.debug(s"Command line arguments count ${commandLineArguments.length}: ${commandLineArguments.mkString(",")}")
 
     val broadcaster = context.actorOf(Props[Broadcaster], classOf[Broadcaster].getSimpleName)
+
+    executeWithBroadcaster map { _.execute(broadcaster) }
 
     if (amaConfig.logMessagesPublishedOnBroadcaster) {
       val broadcasterMessagesLogger = context.actorOf(Props[BroadcasterMessagesLogger], classOf[BroadcasterMessagesLogger].getSimpleName)
@@ -63,4 +65,11 @@ class AmaRootActor extends Actor with ActorLogging {
 
     broadcaster
   }
+}
+
+/**
+ * Allows access to newly created broadcaster just after it creation (so you can access it as first).
+ */
+trait ExecuteWithBroadcaster extends Serializable {
+  def execute(broacaster: ActorRef)
 }
