@@ -9,7 +9,7 @@ import as.akka.util.ExecuteInActorsContext
 object AmaRootActor {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]) extends IncomingMessage // will send back newly created broadcaster (ActorRef)
+  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], amaConfigBuilder: AmaConfigBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]) extends IncomingMessage // will send back newly created broadcaster (ActorRef)
 }
 
 /**
@@ -26,9 +26,9 @@ class AmaRootActor extends Actor with ActorLogging {
 
   override def receive = {
 
-    case Init(amaConfig, commandLineArguments, runtimePropertiesBuilder, executeWithBroadcaster) => {
+    case Init(amaConfig, commandLineArguments, amaConfigBuilder, executeWithBroadcaster) => {
       try {
-        val broadcaster = initialize(amaConfig, commandLineArguments, runtimePropertiesBuilder, executeWithBroadcaster)
+        val broadcaster = initialize(amaConfig, commandLineArguments, amaConfigBuilder, executeWithBroadcaster)
         sender() ! broadcaster
       } catch {
         case e: Exception => {
@@ -43,7 +43,7 @@ class AmaRootActor extends Actor with ActorLogging {
     case message                      => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
-  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): ActorRef = {
+  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], amaConfigBuilder: AmaConfigBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): ActorRef = {
     log.debug(s"Command line arguments count ${commandLineArguments.length}: ${commandLineArguments.mkString(",")}")
 
     val broadcaster = context.actorOf(Props[Broadcaster], classOf[Broadcaster].getSimpleName)
@@ -61,7 +61,7 @@ class AmaRootActor extends Actor with ActorLogging {
     val startupInitializer = context.actorOf(Props[StartupInitializer], classOf[StartupInitializer].getSimpleName)
     broadcaster ! new Broadcaster.Register(startupInitializer, StartupInitializer.classifier)
 
-    broadcaster ! new StartupInitializer.InitialConfiguration(commandLineArguments, amaConfig.initializeOnStartupConfig, broadcaster, runtimePropertiesBuilder)
+    broadcaster ! new StartupInitializer.InitialConfiguration(commandLineArguments, amaConfig.initializeOnStartupConfig, broadcaster, amaConfigBuilder)
 
     broadcaster
   }

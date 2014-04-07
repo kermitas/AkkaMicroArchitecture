@@ -8,7 +8,7 @@ object StartupInitializer extends Serializable {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
   sealed trait OutgoingMessage extends Message
-  case class InitialConfiguration(commandLineArguments: Array[String], initializeOnStartupConfig: InitializeOnStartupConfig, broadcaster: ActorRef, runtimePropertiesBuilder: RuntimePropertiesBuilder) extends IncomingMessage with OutgoingMessage
+  case class InitialConfiguration(commandLineArguments: Array[String], initializeOnStartupConfig: InitializeOnStartupConfig, broadcaster: ActorRef, amaConfigBuilder: AmaConfigBuilder) extends IncomingMessage with OutgoingMessage
   case class PleaseInstantiate(initializeOnStartupActorConfig: InitializeOnStartupActorConfig, broadcaster: ActorRef) extends IncomingMessage with OutgoingMessage
   case class AllActorsWereInstantiatedCorrectly(actorsCount: Int) extends OutgoingMessage
   case object InitializationTimeout extends IncomingMessage
@@ -48,7 +48,7 @@ class StartupInitializer extends Actor with ActorLogging {
     case PleaseInstantiate(initializeOnStartupActorConfig, broadcaster) => {
       numberOfCreatedGuardians += 1
       val initializationGuard = context.actorOf(Props[SingleActorInitializationGuard], classOf[SingleActorInitializationGuard].getSimpleName + "-" + initializeOnStartupActorConfig.clazzName + "-" + numberOfCreatedGuardians)
-      initializationGuard ! (broadcaster, initialConfiguration.commandLineArguments, initializeOnStartupActorConfig, initialConfiguration.initializeOnStartupConfig, initialConfiguration.runtimePropertiesBuilder, context.parent)
+      initializationGuard ! (broadcaster, initialConfiguration.commandLineArguments, initializeOnStartupActorConfig, initialConfiguration.initializeOnStartupConfig, initialConfiguration.amaConfigBuilder, context.parent)
     }
 
     case InitializationTimeout => {

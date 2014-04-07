@@ -6,7 +6,7 @@ import scala.concurrent.{ Future, Await }
 import akka.actor._
 import akka.pattern.ask
 import com.typesafe.config._
-import as.ama.startup.RuntimePropertiesBuilder
+import as.ama.startup.AmaConfigBuilder
 
 /**
  * Main JVM class.
@@ -44,11 +44,11 @@ object Main {
     println("Starting actor system...")
     val actorSystem = ActorSystem(amaConfig.akkaConfig.actorSystemName, config)
 
-    val runtimePropertiesBuilder: RuntimePropertiesBuilder = Class.forName(amaConfig.initializeOnStartupConfig.runtimePropertiesBuilderClassName).getConstructor().newInstance().asInstanceOf[RuntimePropertiesBuilder]
+    val amaConfigBuilder: AmaConfigBuilder = Class.forName(amaConfig.initializeOnStartupConfig.amaConfigBuilderClassName).getConstructor().newInstance().asInstanceOf[AmaConfigBuilder]
 
     val amaRootActorInitializationTimeoutInSeconds = 10 // this time is not so important here since we are doing nothing with returned future
 
-    startNewAmaRootActor(actorSystem, amaConfig, cmdArgs, runtimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds, None)
+    startNewAmaRootActor(actorSystem, amaConfig, cmdArgs, amaConfigBuilder, amaRootActorInitializationTimeoutInSeconds, None)
   }
 
   /**
@@ -56,10 +56,10 @@ object Main {
    *
    * Returns future with reference to newly created broadcaster.
    */
-  def startNewAmaRootActor(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], runtimePropertiesBuilder: RuntimePropertiesBuilder, amaRootActorInitializationTimeoutInSeconds: Int, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): Future[ActorRef] = {
+  def startNewAmaRootActor(actorSystem: ActorSystem, amaConfig: AmaConfig, cmdArgs: Array[String], amaConfigBuilder: AmaConfigBuilder, amaRootActorInitializationTimeoutInSeconds: Int, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): Future[ActorRef] = {
     val rootActorNumber = amaRootActorNumber.getAndIncrement
     val amaRootActor = actorSystem.actorOf(Props[AmaRootActor], classOf[AmaRootActor].getSimpleName + "-" + rootActorNumber)
-    val initMessage = new AmaRootActor.Init(amaConfig, cmdArgs, runtimePropertiesBuilder, executeWithBroadcaster)
+    val initMessage = new AmaRootActor.Init(amaConfig, cmdArgs, amaConfigBuilder, executeWithBroadcaster)
     amaRootActor.ask(initMessage)(amaRootActorInitializationTimeoutInSeconds seconds).mapTo[ActorRef]
   }
 

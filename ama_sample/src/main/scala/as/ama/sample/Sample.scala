@@ -22,7 +22,6 @@ object Sample {
  * {{{
  *       {
  *       class = "as.ama.sample.Sample"
- *       initializationOrder = 1000
  *
  *       config = {
  *           test = "Alice"
@@ -30,11 +29,10 @@ object Sample {
  *     }
  * }}}
  *
- * Your actor will be initialized by AkkaMicroArchitecture with arguments:
- * as.ama.startup.AmaConfig
- *
+ * Your actor will be initialized by AkkaMicroArchitecture with as.ama.startup.AmaConfig as an argument.
+ * This argument is crated by AmaConfigBuilder; AmaConfigBuilder can be provided by you.
  */
-class Sample(amaConfig: AmaConfig) extends Actor with ActorLogging {
+class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
 
   import Sample._
 
@@ -45,24 +43,24 @@ class Sample(amaConfig: AmaConfig) extends Actor with ActorLogging {
       super.preStart()
 
       // notifying broadcaster to register us with given classifier
-      amaConfig.broadcaster ! new Broadcaster.Register(self, new SampleClassifier)
+      testAmaConfig.broadcaster ! new Broadcaster.Register(self, new SampleClassifier)
 
       // scheduling TestMessage that will be send to broadcaster every 1 second repeatedly
-      context.system.scheduler.schedule(1 seconds, 1 seconds, amaConfig.broadcaster, TestMessage)(context.dispatcher)
+      context.system.scheduler.schedule(1 seconds, 1 seconds, testAmaConfig.broadcaster, TestMessage)(context.dispatcher)
 
       // for a test purposes we are publishing string on broadcaster
-      amaConfig.broadcaster ! s"==================> Hello from sample actor (via broadcaster), command line arguments: ${amaConfig.commandLineArguments.mkString(",")}. <=================="
+      testAmaConfig.broadcaster ! s"==================> Hello from sample actor (via broadcaster), command line arguments: ${testAmaConfig.commandLineArguments.mkString(",")}. <=================="
 
       // for a test purposes we are publishing 'test' key from configuration (please see application.conf)
-      amaConfig.broadcaster ! s"==================> Config: test = ${amaConfig.config.getString("test")}. <=================="
+      testAmaConfig.broadcaster ! s"==================> Config: test = ${testAmaConfig.config.getString("test")}. <=================="
 
       // for a test purposes we are publishing keys from runtimeProperties
-      amaConfig.broadcaster ! s"==================> Config: runtimeProperties keys = ${amaConfig.runtimeProperties.keySet.mkString(",")}. <=================="
+      testAmaConfig.broadcaster ! s"==================> Config: testString from amaConfig = ${testAmaConfig.testString}. <=================="
 
       // remember always to send back how your initialization goes
-      amaConfig.broadcaster ! new InitializationResult(Right(None))
+      testAmaConfig.broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception => amaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing sample actor.", e)))
+      case e: Exception => testAmaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing sample actor.", e)))
     }
   }
 
@@ -82,7 +80,7 @@ class Sample(amaConfig: AmaConfig) extends Actor with ActorLogging {
 
       if (inputText.isEmpty) {
         log.info("Empty input string means that we will finish!")
-        amaConfig.broadcaster ! new LifecycleListener.ShutdownSystem(Right("[enter] was pressed in console"))
+        testAmaConfig.broadcaster ! new LifecycleListener.ShutdownSystem(Right("[enter] was pressed in console"))
         context.stop(self)
       }
     }

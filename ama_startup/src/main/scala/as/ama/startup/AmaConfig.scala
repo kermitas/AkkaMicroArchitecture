@@ -8,4 +8,4 @@ import akka.actor.ActorRef
  * @param config configuration for this single actor, defined in configuration (reference.conf or application.conf)
  * @param broadcaster main, pub-sub communication bus
  */
-case class AmaConfig(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Serializable
+class AmaConfig(val commandLineArguments: Array[String], val config: Config, val broadcaster: ActorRef) extends Serializable

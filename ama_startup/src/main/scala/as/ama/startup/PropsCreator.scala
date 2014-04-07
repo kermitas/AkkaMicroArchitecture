@@ -1,19 +1,31 @@
 package as.ama.startup
 
-import com.typesafe.config.Config
-import akka.actor.{ Actor, Props, ActorRef }
+import akka.actor.{ Actor, Props }
+import java.lang.reflect.Constructor
 
 /**
  * Create Props (Akka initializer) needed by actor system to create instance of an actor.
  *
  * @param clazzName class name to instantiate
- * @param commandLineArguments entered as arguments to program or defined in configuration (reference.conf or application.conf)
- * @param config configuration for this single actor, defined in configuration (reference.conf or application.conf)
- * @param broadcaster main, pub-sub communication bus
  */
-class PropsCreator(clazzName: String, commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Serializable {
+class PropsCreator(clazzName: String, amaConfig: AmaConfig) extends Serializable {
   def create: Props = {
-    val amaConfig = new AmaConfig(commandLineArguments, config, broadcaster, runtimeProperties)
-    Props(Class.forName(clazzName).getConstructor(classOf[AmaConfig]).newInstance(amaConfig).asInstanceOf[Actor])
+    val cons = getConstructor(Class.forName(clazzName))
+    Props(cons.newInstance(amaConfig).asInstanceOf[Actor])
+  }
+
+  /**
+   * Will look for constructor that takes AmaConfig (it its subclass) as argument.
+   */
+  protected def getConstructor(clazz: Class[_]): Constructor[_] = {
+    clazz.getConstructors.find { cons =>
+      val parameterTypes = cons.getParameterTypes
+      if (parameterTypes.length == 1) {
+        parameterTypes(0).asSubclass(classOf[AmaConfig])
+        true
+      } else {
+        false
+      }
+    }.get
   }
 }
