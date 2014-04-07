@@ -13,8 +13,8 @@ object InputStreamListener {
   case object UninitializedStateData extends StateData
   case class WaitingForAKeyStateData(inputStreamListenerCallback: InputStreamListenerCallback) extends StateData
 
-  sealed trait Messages extends Serializable
-  sealed trait IncomingMessages extends Messages
+  sealed trait Message extends Serializable
+  sealed trait IncomingMessage extends Message
 
   /**
    * Send this message to actor to init.
@@ -22,7 +22,7 @@ object InputStreamListener {
    * @param inputStreamListenerCallback this is callback (will be executed on key press)
    * @param checkIfKeyWasPressedTimeIntervalInMs time interval between checks if key was pressed
    */
-  case class Init(inputStreamListenerCallback: InputStreamListenerCallback, checkIfKeyWasPressedTimeIntervalInMs: Int) extends IncomingMessages
+  case class Init(inputStreamListenerCallback: InputStreamListenerCallback, checkIfKeyWasPressedTimeIntervalInMs: Int) extends IncomingMessage
 }
 
 /**

@@ -5,11 +5,11 @@ import akka.actor._
 object Broadcaster {
   final val forwarderName = "Forwarder"
 
-  sealed trait Messages extends Serializable
-  sealed trait IncomingMessages extends Messages
-  case class Register(listener: ActorRef, classifier: Classifier) extends IncomingMessages
-  case class UnregisterClassifier(listener: ActorRef, classifier: Classifier) extends IncomingMessages
-  case class Unregister(listener: ActorRef) extends IncomingMessages
+  sealed trait Message extends Serializable
+  sealed trait IncomingMessage extends Message
+  case class Register(listener: ActorRef, classifier: Classifier) extends IncomingMessage
+  case class UnregisterClassifier(listener: ActorRef, classifier: Classifier) extends IncomingMessage
+  case class Unregister(listener: ActorRef) extends IncomingMessage
 }
 
 /**
