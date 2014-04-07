@@ -12,5 +12,8 @@ import akka.actor.{ Actor, Props, ActorRef }
  * @param broadcaster main, pub-sub communication bus
  */
 class PropsCreator(clazzName: String, commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Serializable {
-  def create: Props = Props(Class.forName(clazzName).getConstructor(classOf[Array[String]], classOf[Config], classOf[ActorRef], classOf[Map[String, Any]]).newInstance(commandLineArguments, config, broadcaster, runtimeProperties).asInstanceOf[Actor])
+  def create: Props = {
+    val amaConfig = new AmaConfig(commandLineArguments, config, broadcaster, runtimeProperties)
+    Props(Class.forName(clazzName).getConstructor(classOf[AmaConfig]).newInstance(amaConfig).asInstanceOf[Actor])
+  }
 }

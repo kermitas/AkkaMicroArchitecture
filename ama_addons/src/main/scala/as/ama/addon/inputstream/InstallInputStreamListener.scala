@@ -3,8 +3,7 @@ package as.ama.addon.inputstream
 import akka.actor._
 import as.io._
 import as.ama.startup.InitializationResult
-import as.ama.addon.lifecycle._
-import com.typesafe.config.Config
+import as.ama.startup.AmaConfig
 import as.akka.util.CreateActorAndSendMessageExecuteInActorsContext
 
 object InstallInputStreamListener {
@@ -16,26 +15,22 @@ object InstallInputStreamListener {
  *
  * This actor is ready to be automatically initialized during ama startup. Should be defined on ama.initializeOnStartup.actors list
  * in application.conf, by default is defined in reference.conf (in ama-core project).
- *
- * @param commandLineArguments entered as arguments to program or defined in application.conf configuration file
- * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
- * @param broadcaster main, pub-sub communication bus
  */
-class InstallInputStreamListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Actor with ActorLogging {
+class InstallInputStreamListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
 
   import InstallInputStreamListener._
 
   override def preStart() {
     try {
-      val inputStreamAction = new InputStreamListenerCallbackImpl(broadcaster)
-      val checkIfKeyWasPressedTimeIntervalInMs = config.getInt(checkIfKeyWasPressedTimeIntervalInMsConfigKey)
+      val inputStreamAction = new InputStreamListenerCallbackImpl(amaConfig.broadcaster)
+      val checkIfKeyWasPressedTimeIntervalInMs = amaConfig.config.getInt(checkIfKeyWasPressedTimeIntervalInMsConfigKey)
       val initMessage = new InputStreamListener.Init(inputStreamAction, checkIfKeyWasPressedTimeIntervalInMs)
 
       context.parent ! new CreateActorAndSendMessageExecuteInActorsContext(Props[InputStreamListener], classOf[InputStreamListener].getSimpleName, initMessage, self)
 
-      broadcaster ! new InitializationResult(Right(None))
+      amaConfig.broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception => broadcaster ! new InitializationResult(Left(new Exception("Problem while installing key press detector.", e)))
+      case e: Exception => amaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing key press detector.", e)))
     } finally {
       context.stop(self)
     }

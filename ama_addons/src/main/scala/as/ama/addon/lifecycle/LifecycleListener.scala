@@ -6,7 +6,7 @@ import akka.actor._
 import as.akka.broadcaster._
 import as.jvm._
 import as.ama.startup.InitializationResult
-import com.typesafe.config.Config
+import as.ama.startup.AmaConfig
 
 object LifecycleListener {
   sealed trait Message extends Serializable
@@ -24,12 +24,8 @@ object LifecycleListener {
  *
  * This actor is ready to be automatically initialized during ama startup. Should be defined on ama.initializeOnStartup.actors list
  * in application.conf, by default is defined in reference.conf (in ama-core project).
- *
- * @param commandLineArguments entered as arguments to program or defined in application.conf configuration file
- * @param config configuration defined in application.conf configuration file (for usage sample please see ama-sample project)
- * @param broadcaster main, pub-sub communication bus
  */
-class LifecycleListener(commandLineArguments: Array[String], config: Config, broadcaster: ActorRef, runtimeProperties: Map[String, Any]) extends Actor with ActorLogging {
+class LifecycleListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
 
   import LifecycleListener._
 
@@ -37,12 +33,12 @@ class LifecycleListener(commandLineArguments: Array[String], config: Config, bro
 
   override def preStart() {
     try {
-      lifecycleListenerConfig = LifecycleListenerConfig(config)
-      broadcaster ! new Broadcaster.Register(self, new LifecycleListenerClassifier)
+      lifecycleListenerConfig = LifecycleListenerConfig(amaConfig.config)
+      amaConfig.broadcaster ! new Broadcaster.Register(self, new LifecycleListenerClassifier)
 
-      broadcaster ! new InitializationResult(Right(None))
+      amaConfig.broadcaster ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception => broadcaster ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
+      case e: Exception => amaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
     }
   }
 
