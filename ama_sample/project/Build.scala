@@ -7,7 +7,7 @@ object Build extends Build {
 
   lazy val projectSettings = Seq(
     name := "ama-sample",
-    version := "0.4.3",
+    version := "0.4.4",
     organization := "as",
     scalaVersion := "2.10.4",
     mainClass in (Compile,run) := Some(mc),

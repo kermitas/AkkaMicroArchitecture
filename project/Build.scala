@@ -5,7 +5,7 @@ object Build extends Build {
 
   lazy val projectSettings =Seq(
     name := "ama-all",
-    version := "0.4.3",
+    version := "0.4.4",
     organization := "as"
   )
 
