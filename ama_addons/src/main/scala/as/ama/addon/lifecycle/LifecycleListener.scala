@@ -31,6 +31,9 @@ class LifecycleListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
 
   protected var lifecycleListenerConfig: LifecycleListenerConfig = _
 
+  /**
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   */
   override def preStart() {
     try {
       lifecycleListenerConfig = LifecycleListenerConfig(amaConfig.config)
@@ -41,8 +44,6 @@ class LifecycleListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
       case e: Exception => amaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
     }
   }
-
-  override def postRestart(throwable: Throwable) = preStart()
 
   override def receive = {
 

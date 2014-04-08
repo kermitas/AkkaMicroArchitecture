@@ -20,6 +20,9 @@ class InstallInputStreamListener(amaConfig: AmaConfig) extends Actor with ActorL
 
   import InstallInputStreamListener._
 
+  /**
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   */
   override def preStart() {
     try {
       val inputStreamAction = new InputStreamListenerCallbackImpl(amaConfig.broadcaster)
@@ -35,8 +38,6 @@ class InstallInputStreamListener(amaConfig: AmaConfig) extends Actor with ActorL
       context.stop(self)
     }
   }
-
-  override def postRestart(throwable: Throwable) = preStart()
 
   override def receive = {
     case message => log.warning(s"Unhandled $message send by ${sender()}")

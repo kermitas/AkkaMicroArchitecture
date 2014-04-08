@@ -38,10 +38,11 @@ class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
 
   protected var count = 0
 
+  /**
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   */
   override def preStart() {
     try {
-      super.preStart()
-
       // notifying broadcaster to register us with given classifier
       testAmaConfig.broadcaster ! new Broadcaster.Register(self, new SampleClassifier)
 
@@ -62,11 +63,6 @@ class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
     } catch {
       case e: Exception => testAmaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing sample actor.", e)))
     }
-  }
-
-  override def postRestart(throwable: Throwable) = {
-    super.postRestart(throwable)
-    preStart()
   }
 
   override def receive = {

@@ -20,6 +20,9 @@ class InstallJVMShutdownHook(amaConfig: AmaConfig) extends Actor with ActorLoggi
 
   import InstallJVMShutdownHook._
 
+  /**
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   */
   override def preStart() {
     try {
       val shutdownSystemMessage = new LifecycleListener.ShutdownSystem(Right("JVM shutdown hook was triggered"))
@@ -36,8 +39,6 @@ class InstallJVMShutdownHook(amaConfig: AmaConfig) extends Actor with ActorLoggi
       context.stop(self)
     }
   }
-
-  override def postRestart(throwable: Throwable) = preStart()
 
   override def receive = {
 
