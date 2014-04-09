@@ -39,7 +39,7 @@ class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
   protected var count = 0
 
   /**
-   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not override).
    */
   override def preStart() {
     try {

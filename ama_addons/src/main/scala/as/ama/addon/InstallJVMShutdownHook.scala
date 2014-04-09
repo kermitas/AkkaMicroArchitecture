@@ -21,7 +21,7 @@ class InstallJVMShutdownHook(amaConfig: AmaConfig) extends Actor with ActorLoggi
   import InstallJVMShutdownHook._
 
   /**
-   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not override).
    */
   override def preStart() {
     try {

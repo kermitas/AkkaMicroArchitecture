@@ -32,7 +32,7 @@ class LifecycleListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
   protected var lifecycleListenerConfig: LifecycleListenerConfig = _
 
   /**
-   * Will be executed when actor is created and also after actor restart (if postRestart() is not overrided).
+   * Will be executed when actor is created and also after actor restart (if postRestart() is not override).
    */
   override def preStart() {
     try {
