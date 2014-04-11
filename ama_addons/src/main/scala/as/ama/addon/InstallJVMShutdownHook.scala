@@ -41,7 +41,6 @@ class InstallJVMShutdownHook(amaConfig: AmaConfig) extends Actor with ActorLoggi
   }
 
   override def receive = {
-
     case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
