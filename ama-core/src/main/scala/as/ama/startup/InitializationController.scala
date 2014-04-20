@@ -17,9 +17,9 @@ class InitializationController(broadcaster: ActorRef) extends Actor with ActorLo
 
   override def receive = {
 
-    case initializationResult: InitializationResult => {
+    case ir: InitializationResult if ir.result.isLeft => {
       log.error("Will shut down system because one of automatically stated actors (during startup) failed.")
-      val e = new Exception("Shutting down system because of problem while startup initialization of one of actors.", initializationResult.result.left.get)
+      val e = new Exception("Shutting down system because of problem while startup initialization of one of actors.", ir.result.left.get)
       broadcaster ! new LifecycleListener.ShutdownSystem(Left(e))
       context.stop(self)
     }

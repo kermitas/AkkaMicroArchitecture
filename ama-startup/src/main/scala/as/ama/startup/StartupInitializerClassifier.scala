@@ -9,9 +9,9 @@ import as.akka.broadcaster.Classifier
 class StartupInitializerClassifier extends Classifier {
 
   override def map(message: Any, sender: ActorRef) = message match {
-    case ic: StartupInitializer.InitialConfiguration => Some(ic)
-    case pi: StartupInitializer.PleaseInstantiate => Some(pi)
-    case ir: InitializationResult if ir.result.isRight => Some(ir)
+    case a: StartupInitializer.InitialConfiguration => Some(a)
+    case a: StartupInitializer.PleaseInstantiate => Some(a)
+    case a: InitializationResult => Some(a)
     case _ => None
   }
 }
