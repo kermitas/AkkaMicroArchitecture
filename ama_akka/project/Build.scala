@@ -23,7 +23,7 @@ object Build extends Build {
 object AkkaSettings {
 
   lazy val projectSettings = Seq(
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.1"
+    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.2"
   )
 }
 

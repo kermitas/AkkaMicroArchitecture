@@ -28,8 +28,8 @@ object Build extends Build {
 object AkkaSettings {
 
   lazy val projectSettings = Seq(
-    libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.1",
-    libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.1"
+    libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.2",
+    libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
   )
 }
 
