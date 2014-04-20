@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import akka.actor._
 import as.ama.startup.InitializationResult
 import as.akka.broadcaster._
-import as.ama.addon.inputstream.InputStreamListenerCallbackImpl
+import as.ama.addon.inputstream.InputStreamText
 import as.ama.addon.lifecycle.ShutdownSystem
 
 object Sample {
@@ -70,7 +70,7 @@ class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
     case s: String => log.info(s"Received string '$s' from broadcaster.")
 
     // received text from console
-    case InputStreamListenerCallbackImpl.InputStreamText(inputText) => {
+    case InputStreamText(inputText) => {
       log.info(s"Input text (${inputText.length} characters):$inputText")
 
       if (inputText.isEmpty) {
