@@ -17,7 +17,7 @@ object Build extends Build {
   ) ++ AkkaSettings.projectSettings ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(
-      id = "ama_sample",
+      id = "ama-sample",
       base = file("."),
       settings = projectSettings
     ).dependsOn(ama_all).aggregate(ama_all)

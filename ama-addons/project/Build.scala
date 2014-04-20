@@ -4,27 +4,20 @@ import Keys._
 object Build extends Build {
 
   lazy val projectSettings = Seq(
-    name := "ama-akka",
+    name := "ama-addons",
     version := "0.4.4",
     organization := "as",
     scalaVersion := "2.10.4",
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
-    resolvers += Classpaths.typesafeReleases,
-    resolvers += Classpaths.typesafeSnapshots
-  ) ++ AkkaSettings.projectSettings ++ ScalariformSettings.projectSettings
+    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
+  ) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(
-      id = "ama_akka",
+      id = "ama-addons",
       base = file("."),
       settings = projectSettings
-    )
-}
+    ).aggregate(ama_startup).dependsOn(ama_startup)
 
-object AkkaSettings {
-
-  lazy val projectSettings = Seq(
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.2"
-  )
+  lazy val ama_startup = RootProject(file("../ama-startup"))
 }
 
 object ScalariformSettings {

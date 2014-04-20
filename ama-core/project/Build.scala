@@ -12,12 +12,12 @@ object Build extends Build {
   ) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(
-      id = "ama_core",
+      id = "ama-core",
       base = file("."),
       settings = projectSettings
     ).aggregate(ama_addons).dependsOn(ama_addons)
 
-  lazy val ama_addons = RootProject(file("../ama_addons"))
+  lazy val ama_addons = RootProject(file("../ama-addons"))
 
 }
 

@@ -15,5 +15,5 @@ object Build extends Build {
       settings = projectSettings
     ).aggregate(ama_core).dependsOn(ama_core)
 
-  lazy val ama_core = RootProject(file("ama_core"))
+  lazy val ama_core = RootProject(file("ama-core"))
 }
