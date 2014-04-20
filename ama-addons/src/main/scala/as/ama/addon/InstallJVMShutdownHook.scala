@@ -2,7 +2,7 @@ package as.ama.addon
 
 import akka.actor._
 import as.jvm.JVMShutdownHook
-import as.ama.addon.lifecycle._
+import as.ama.addon.lifecycle.ShutdownSystem
 import as.ama.startup.InitializationResult
 import as.ama.startup.AmaConfig
 
@@ -25,7 +25,7 @@ class InstallJVMShutdownHook(amaConfig: AmaConfig) extends Actor with ActorLoggi
    */
   override def preStart() {
     try {
-      val shutdownSystemMessage = new LifecycleListener.ShutdownSystem(Right("JVM shutdown hook was triggered"))
+      val shutdownSystemMessage = new ShutdownSystem(Right("JVM shutdown hook was triggered"))
       val keepHookForTimeInMs = amaConfig.config.getInt(keepHookForTimeInMsConfigKey)
       val shutdownHook = new JVMShutdownHook(amaConfig.broadcaster, shutdownSystemMessage, keepHookForTimeInMs)
 

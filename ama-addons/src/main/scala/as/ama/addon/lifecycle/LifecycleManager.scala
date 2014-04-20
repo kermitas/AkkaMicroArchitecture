@@ -8,10 +8,9 @@ import as.jvm._
 import as.ama.startup.InitializationResult
 import as.ama.startup.AmaConfig
 
-object LifecycleListener {
+object LifecycleManager {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class ShutdownSystem(reason: Either[Exception, String]) extends IncomingMessage
 
   /**
    * Used when ShutdownSystem message will be placed on Akka's event bus (to be processed just after all log messages etc.)
@@ -20,24 +19,24 @@ object LifecycleListener {
 }
 
 /**
- * Will shutdown system on LifecycleListener.ShutdownSystem message published on broadcaster.
+ * Will shutdown system on ShutdownSystem message published on broadcaster.
  *
  * This actor is ready to be automatically initialized during ama startup. Should be defined on ama.initializeOnStartup.actors list
  * in application.conf, by default is defined in reference.conf (in ama-core project).
  */
-class LifecycleListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
+class LifecycleManager(amaConfig: AmaConfig) extends Actor with ActorLogging {
 
-  import LifecycleListener._
+  import LifecycleManager._
 
-  protected var lifecycleListenerConfig: LifecycleListenerConfig = _
+  protected var lifecycleListenerConfig: LifecycleManagerConfig = _
 
   /**
    * Will be executed when actor is created and also after actor restart (if postRestart() is not override).
    */
   override def preStart() {
     try {
-      lifecycleListenerConfig = LifecycleListenerConfig(amaConfig.config)
-      amaConfig.broadcaster ! new Broadcaster.Register(self, new LifecycleListenerClassifier)
+      lifecycleListenerConfig = LifecycleManagerConfig(amaConfig.config)
+      amaConfig.broadcaster ! new Broadcaster.Register(self, new LifecycleManagerClassifier)
 
       amaConfig.broadcaster ! new InitializationResult(Right(None))
     } catch {
@@ -55,7 +54,8 @@ class LifecycleListener(amaConfig: AmaConfig) extends Actor with ActorLogging {
       } else {
         log.info("Wait for event bus messages to be processed and then perform shutdown")
         context.system.eventStream.subscribe(self, classOf[WrappedShutdown])
-        context.system.scheduler.scheduleOnce(lifecycleListenerConfig.onShutdownWaitForEventBusMessagesToBeProcessedInMs milliseconds)(context.system.eventStream.publish(new WrappedShutdown(shutdownSystem)))(context.dispatcher)
+        val wrappedShutdownSystemMessage = new WrappedShutdown(shutdownSystem)
+        context.system.scheduler.scheduleOnce(lifecycleListenerConfig.onShutdownWaitForEventBusMessagesToBeProcessedInMs milliseconds)(context.system.eventStream.publish(wrappedShutdownSystemMessage))(context.dispatcher)
       }
     }
 

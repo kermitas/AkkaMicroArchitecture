@@ -2,7 +2,7 @@ package as.ama.addon.inputstream
 
 import akka.actor.ActorRef
 import as.io.InputStreamListenerCallback
-import as.ama.addon.lifecycle.LifecycleListener
+import as.ama.addon.lifecycle.LifecycleManager
 
 object InputStreamListenerCallbackImpl {
   sealed trait Message extends Serializable

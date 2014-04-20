@@ -6,8 +6,7 @@ import akka.actor._
 import as.ama.startup.InitializationResult
 import as.akka.broadcaster._
 import as.ama.addon.inputstream.InputStreamListenerCallbackImpl
-import as.ama.addon.lifecycle.LifecycleListener
-import as.ama.startup.AmaConfig
+import as.ama.addon.lifecycle.ShutdownSystem
 
 object Sample {
   sealed trait Message extends Serializable
@@ -76,7 +75,7 @@ class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
 
       if (inputText.isEmpty) {
         log.info("Empty input string means that we will finish!")
-        testAmaConfig.broadcaster ! new LifecycleListener.ShutdownSystem(Right("[enter] was pressed in console"))
+        testAmaConfig.broadcaster ! new ShutdownSystem(Right("[enter] was pressed in console"))
         context.stop(self)
       }
     }
