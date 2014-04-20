@@ -5,7 +5,7 @@ object Build extends Build {
 
   lazy val projectSettings =Seq(
     name := "ama-all",
-    version := "0.4.4",
+    version := "0.4.5",
     organization := "as"
   )
 
@@ -13,7 +13,8 @@ object Build extends Build {
       id = "akkamicroarchitecture", // name should be the same as folder to be 100% SBT like
       base = file("."),
       settings = projectSettings
-    ).aggregate(ama_core).dependsOn(ama_core)
+    ).aggregate(ama_core, ama_util).dependsOn(ama_core, ama_util)
 
   lazy val ama_core = RootProject(file("ama-core"))
+  lazy val ama_util = RootProject(file("ama-util"))
 }

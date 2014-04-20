@@ -4,7 +4,7 @@ import Keys._
 object Build extends Build {
 
   lazy val projectSettings = Seq(
-    name := "ama-core",
+    name := "ama-util",
     version := "0.4.5",
     organization := "as",
     scalaVersion := "2.10.4",
@@ -12,12 +12,12 @@ object Build extends Build {
   ) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(
-      id = "ama-core",
+      id = "ama-util",
       base = file("."),
       settings = projectSettings
-    ).aggregate(ama_addons).dependsOn(ama_addons)
+    ).aggregate(ama_startup).dependsOn(ama_startup)
 
-  lazy val ama_addons = RootProject(file("../ama-addons"))
+  lazy val ama_startup = RootProject(file("../ama-startup"))
 
 }
 
