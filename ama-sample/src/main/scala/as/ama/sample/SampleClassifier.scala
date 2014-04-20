@@ -11,8 +11,8 @@ import as.ama.addon.inputstream.InputStreamListenerCallbackImpl
 class SampleClassifier extends Classifier {
   override def map(message: Any, sender: ActorRef) = message match {
     case Sample.TestMessage => Some(message)
-    case s: String => Some(s)
-    case it: InputStreamListenerCallbackImpl.InputStreamText => Some(it)
+    case a: String => Some(a)
+    case a: InputStreamListenerCallbackImpl.InputStreamText => Some(a)
     case _ => None
   }
 }
