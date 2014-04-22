@@ -10,7 +10,6 @@ object StartupInitializer extends Serializable {
   sealed trait IncomingMessage extends Message
   sealed trait OutgoingMessage extends Message
   case class InitialConfiguration(commandLineArguments: Array[String], initializeOnStartupConfig: InitializeOnStartupConfig, broadcaster: ActorRef, amaConfigBuilder: AmaConfigBuilder) extends IncomingMessage with OutgoingMessage
-  case class PleaseInstantiate(initializeOnStartupActorConfig: InitializeOnStartupActorConfig, broadcaster: ActorRef) extends IncomingMessage with OutgoingMessage
   case class AllActorsWereInstantiatedCorrectly(actorsCount: Int) extends OutgoingMessage
   case object GeneralInitializationTimeout extends IncomingMessage
   case object SingleActorInitializationTimeout extends IncomingMessage
@@ -64,7 +63,6 @@ class StartupInitializer extends Actor with ActorLogging {
     case ir: InitializationResult if ir.result.isLeft => stop
 
     case ir: InitializationResult if ir.result.isRight => {
-
       numberOfCreatedActor += 1
 
       if (numberOfCreatedActor < initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs.size) {
