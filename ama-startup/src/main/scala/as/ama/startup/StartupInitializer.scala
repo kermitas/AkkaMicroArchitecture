@@ -20,6 +20,8 @@ object StartupInitializer extends Serializable {
 /**
  * Will instantiate actors defined on ama.initializeOnStartup.actors list (in reference.conf or application.conf).
  *
+ * General initialization timeout is a sum of all single actor initialization timeouts.
+ *
  * Please see documentation folder for diagrams with detailed message flows.
  *
  * Please see ama-sample for basic usage.
@@ -30,15 +32,18 @@ class StartupInitializer extends Actor with ActorLogging {
 
   protected var initialConfiguration: InitialConfiguration = _
   protected var numberOfCreatedActor = 0
-  protected var generalCancellableTimeout: Cancellable = _
-  protected var singleActorTimeout: Cancellable = _
+  protected var generalInitializationTimeout: Cancellable = _
+  protected var singleActorInitializationTimeout: Cancellable = _
+  protected var generalInitializationTimeoutInMs: Int = _
 
   override def receive = {
 
     case initialConfiguration: InitialConfiguration => {
       this.initialConfiguration = initialConfiguration
 
-      generalCancellableTimeout = context.system.scheduler.scheduleOnce(initialConfiguration.initializeOnStartupConfig.generalInitializationTimeoutInMs millis, self, GeneralInitializationTimeout)(context.dispatcher)
+      generalInitializationTimeoutInMs = initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs.foldLeft(0)(_ + _.initializationTimeoutInMs)
+
+      generalInitializationTimeout = context.system.scheduler.scheduleOnce(generalInitializationTimeoutInMs millis, self, GeneralInitializationTimeout)(context.dispatcher)
 
       log.debug("Initialization order:")
       for (initializeOnStartupActorConfig ← initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs) log.debug(s"${initializeOnStartupActorConfig.clazzName}, initializationOrder ${initializeOnStartupActorConfig.initializationOrder}")
@@ -51,12 +56,14 @@ class StartupInitializer extends Actor with ActorLogging {
     }
 
     case GeneralInitializationTimeout => {
-      val ite = new InitializationTimeoutException(s"General timeout (${initialConfiguration.initializeOnStartupConfig.generalInitializationTimeoutInMs} ms) while initializing actors on startup.")
+      val ite = new InitializationTimeoutException(s"General timeout ($generalInitializationTimeoutInMs ms) while initializing actors on startup.")
       negativeStop(ite)
     }
 
     case SingleActorInitializationTimeout => {
-      val ite = new InitializationTimeoutException(s"Timeout (${initialConfiguration.initializeOnStartupConfig.actorInitializationTimeoutInMs} ms) while initializing actor ${initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs(numberOfCreatedActor).clazzName}.")
+      val clazzName = initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs(numberOfCreatedActor).clazzName
+      val initializationTimeoutInMs = initialConfiguration.initializeOnStartupConfig.initializeOnStartupActorConfigs(numberOfCreatedActor).initializationTimeoutInMs
+      val ite = new InitializationTimeoutException(s"Timeout ($initializationTimeoutInMs ms) while initializing actor $clazzName.")
       negativeStop(ite)
     }
 
@@ -86,8 +93,8 @@ class StartupInitializer extends Actor with ActorLogging {
   }
 
   protected def stop {
-    generalCancellableTimeout.cancel()
-    if (singleActorTimeout != null) singleActorTimeout.cancel()
+    generalInitializationTimeout.cancel()
+    if (singleActorInitializationTimeout != null) singleActorInitializationTimeout.cancel()
     context.stop(self)
   }
 
@@ -98,14 +105,14 @@ class StartupInitializer extends Actor with ActorLogging {
 
   protected def instantiateActor(commandLineArguments: Array[String], initializeOnStartupActorConfig: InitializeOnStartupActorConfig, amaConfigBuilder: AmaConfigBuilder, amaRootActor: ActorRef) {
     try {
-      if (singleActorTimeout != null) singleActorTimeout.cancel()
+      if (singleActorInitializationTimeout != null) singleActorInitializationTimeout.cancel()
 
       val amaConfig = amaConfigBuilder.createAmaConfig(initializeOnStartupActorConfig.clazzName, commandLineArguments, initializeOnStartupActorConfig.config, initialConfiguration.broadcaster)
 
       val props = PropsCreator.createProps(initializeOnStartupActorConfig.clazzName, amaConfig)
       amaRootActor ! new CreateActorExecuteInActorsContext(props, initializeOnStartupActorConfig.clazzName)
 
-      singleActorTimeout = context.system.scheduler.scheduleOnce(initialConfiguration.initializeOnStartupConfig.actorInitializationTimeoutInMs milliseconds, self, SingleActorInitializationTimeout)(context.dispatcher)
+      singleActorInitializationTimeout = context.system.scheduler.scheduleOnce(initializeOnStartupActorConfig.initializationTimeoutInMs milliseconds, self, SingleActorInitializationTimeout)(context.dispatcher)
     } catch {
       case e: Exception => {
         log.error(e, s"Could not create actor ${initializeOnStartupActorConfig.clazzName}.")
