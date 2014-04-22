@@ -10,7 +10,7 @@ import as.ama.startup._
 class InitializationControllerClassifier extends Classifier {
 
   override def map(message: Any, sender: ActorRef) = message match {
-    case a: InitializationResult => Some(a)
+    case a: InitializationResult if a.result.isLeft => Some(a)
     case a: StartupInitializer.AllActorsWereInstantiatedCorrectly => Some(a)
     case _ => None
   }

@@ -32,7 +32,7 @@ trait AmaFSM[S, D] extends FSM[S, D] {
    *   case Event(true, InitializingStateData) => successOrStop { ... }
    * }
    */
-  def successOrStop(f: => State): State = {
+  def successOrStopWithFailure(f: => State): State = {
     try {
       f
     } catch {
@@ -55,7 +55,7 @@ trait AmaFSM[S, D] extends FSM[S, D] {
       log.warning(s"Stopping (failure, cause $cause), state $currentState, data $stateData")
 
       if (currentState == initialState) {
-        val e = new Exception(s"Problem while installing ${getClass.getSimpleName} actor.")
+        val e = new Exception(s"Problem while installing ${getClass.getName} actor.")
         if (cause.isInstanceOf[Exception]) e.initCause(cause.asInstanceOf[Exception])
         broadcaster ! new InitializationResult(Left(e))
       }
