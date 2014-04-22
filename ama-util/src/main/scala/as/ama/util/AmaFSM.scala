@@ -3,6 +3,26 @@ package as.ama.util
 import akka.actor.{ FSM, ActorRef }
 import as.ama.startup.InitializationResult
 
+/**
+ * Useful FSM actor in Ama world.
+ *
+ * How it works? When you will leave first state (onTransmission) it will send successful InitializationResult on broadcaster.
+ *
+ * But when something will go wrong in first state then you should stop with FSM.Failure, to do that use successOrStop().
+ *
+ * For termination use amaTerminate() and it will detect if you fial in first state, if yes it will send failure InitializationResult on broadcaster.
+ *
+ * First please define your initial state and broadcaster:
+ * amaStartWith(Initializing, amaSessionConfig.broadcaster)
+ *
+ * Then on first state use successOrStop():
+ * when(Initializing) {
+ *   case Event(true, InitializingStateData) => successOrStop { ... }
+ * }
+ *
+ * Then define onTermination like:
+ * onTermination { amaTerminate }
+ */
 trait AmaFSM[S, D] extends FSM[S, D] {
 
   protected var initialState: S = _
