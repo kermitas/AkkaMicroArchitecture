@@ -1,6 +1,6 @@
 package as.ama
 
-import akka.actor._
+import _root_.akka.actor._
 
 object Ama {
 

@@ -4,8 +4,8 @@ import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.{ Future, ExecutionContext }
 import scala.util.{ Try, Success, Failure }
-import akka.actor._
-import akka.pattern.ask
+import _root_.akka.actor._
+import _root_.akka.pattern.ask
 import com.typesafe.config._
 import com.typesafe.config.Config
 
