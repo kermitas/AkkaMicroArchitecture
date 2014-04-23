@@ -13,8 +13,7 @@ object Build extends Build {
       id = "akkamicroarchitecture", // name should be the same as folder to be 100% SBT like
       base = file("."),
       settings = projectSettings
-    ).aggregate(ama_core, ama_util).dependsOn(ama_core, ama_util)
+    ).aggregate(ama_core).dependsOn(ama_core)
 
   lazy val ama_core = RootProject(file("ama-core"))
-  lazy val ama_util = RootProject(file("ama-util"))
 }

@@ -60,11 +60,8 @@ class StartupInitializer extends Actor with FSM[StartupInitializer.State, Startu
 
   when(SingleActorInitialization) {
     case Event(GeneralInitializationTimeout, sd: SingleActorInitializationStateData)                  => generalInitializationTimeout(sd.generalInitializationTimeoutInMs, sd.ic, Some(sd.actorInitializationTimeout))
-
     case Event(SingleActorInitializationTimeout, sd: SingleActorInitializationStateData)              => singleActorInitializationTimeout(sd.initializingActorIndex, sd.ic)
-
     case Event(ir: InitializationResult, sd: SingleActorInitializationStateData) if ir.result.isLeft  => singleActorInitializationFail(ir.result.left.get, sd)
-
     case Event(ir: InitializationResult, sd: SingleActorInitializationStateData) if ir.result.isRight => singleActorInitializationSuccess(sd)
   }
 

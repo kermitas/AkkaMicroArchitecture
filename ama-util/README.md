@@ -1,1 +1,0 @@
-AkkaMicroArchitecture: ama-util project

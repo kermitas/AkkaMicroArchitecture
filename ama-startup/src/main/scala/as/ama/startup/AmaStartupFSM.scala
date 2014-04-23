@@ -1,7 +1,6 @@
-package as.ama.util
+package as.ama.startup
 
 import akka.actor.{ FSM, ActorRef }
-import as.ama.startup.InitializationResult
 
 /**
  * Useful FSM actor in Ama world.
@@ -23,7 +22,7 @@ import as.ama.startup.InitializationResult
  * Then define onTermination like:
  * onTermination { amaTerminate }
  */
-trait AmaFSM[S, D] extends FSM[S, D] {
+trait AmaStartupFSM[S, D] extends FSM[S, D] {
 
   protected var initialState: S = _
   protected var broadcaster: ActorRef = _
