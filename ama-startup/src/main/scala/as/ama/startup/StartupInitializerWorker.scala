@@ -3,7 +3,7 @@ package as.ama.startup
 import scala.language.postfixOps
 import scala.concurrent.duration._
 import akka.actor.{ Actor, FSM, ActorRef, Cancellable }
-import as.akka.util.CreateActorExecuteInActorsContext
+import as.ama.akka.CreateActorExecuteInActorsContext
 
 object StartupInitializerWorker extends Serializable {
 
@@ -14,18 +14,17 @@ object StartupInitializerWorker extends Serializable {
 
   sealed trait StateData extends Serializable
   case object WaitingForJobStateData extends StateData
-  case class InitializingActorsStateData(ic: StartupInitializer.InitialConfiguration, generalInitializationTimeout: Cancellable, generalInitializationTimeoutInMs: Int, amaRootActor: ActorRef) extends StateData
-  case class SingleActorInitializationStateData(ic: StartupInitializer.InitialConfiguration, generalInitializationTimeout: Cancellable, initializingActorIndex: Int, actorInitializationTimeout: Cancellable, generalInitializationTimeoutInMs: Int, amaRootActor: ActorRef) extends StateData
+  case class InitializingActorsStateData(si: StartupInitializer.StartInitialization, generalInitializationTimeout: Cancellable, generalInitializationTimeoutInMs: Int, amaRootActor: ActorRef) extends StateData
+  case class SingleActorInitializationStateData(si: StartupInitializer.StartInitialization, generalInitializationTimeout: Cancellable, initializingActorIndex: Int, actorInitializationTimeout: Cancellable, generalInitializationTimeoutInMs: Int, amaRootActor: ActorRef) extends StateData
 
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class InitialConfiguration(ic: StartupInitializer.InitialConfiguration, amaRootActor: ActorRef) extends IncomingMessage
-  case object GeneralInitializationTimeout extends IncomingMessage
-  case object SingleActorInitializationTimeout extends IncomingMessage
+  sealed trait InternalIncomingMessage extends IncomingMessage
+  case class StartInitialization(si: StartupInitializer.StartInitialization, amaRootActor: ActorRef) extends IncomingMessage
+  case object GeneralInitializationTimeout extends InternalIncomingMessage
+  case object SingleActorInitializationTimeout extends InternalIncomingMessage
 
-  case class InitializeActor(initializingActorIndex: Int) extends IncomingMessage
-
-  //def classifier = new StartupInitializerWorkerClassifier
+  case class InitializeActor(initializingActorIndex: Int) extends InternalIncomingMessage
 }
 
 /**
@@ -44,17 +43,17 @@ class StartupInitializerWorker extends Actor with FSM[StartupInitializerWorker.S
   startWith(WaitingForJob, WaitingForJobStateData)
 
   when(WaitingForJob) {
-    case Event(ic: InitialConfiguration, WaitingForJobStateData) => newJobArrived(ic.ic, ic.amaRootActor)
+    case Event(si: StartInitialization, WaitingForJobStateData) => newJobArrived(si.si, si.amaRootActor)
   }
 
   when(InitializingActors) {
-    case Event(GeneralInitializationTimeout, sd: SingleActorInitializationStateData)     => generalInitializationTimeout(sd.generalInitializationTimeoutInMs, sd.ic, None)
+    case Event(GeneralInitializationTimeout, sd: SingleActorInitializationStateData)     => generalInitializationTimeout(sd.generalInitializationTimeoutInMs, sd.si, None)
     case Event(InitializeActor(initializingActorIndex), sd: InitializingActorsStateData) => initializeActor(initializingActorIndex, sd)
   }
 
   when(SingleActorInitialization) {
-    case Event(GeneralInitializationTimeout, sd: SingleActorInitializationStateData)                  => generalInitializationTimeout(sd.generalInitializationTimeoutInMs, sd.ic, Some(sd.actorInitializationTimeout))
-    case Event(SingleActorInitializationTimeout, sd: SingleActorInitializationStateData)              => singleActorInitializationTimeout(sd.initializingActorIndex, sd.ic)
+    case Event(GeneralInitializationTimeout, sd: SingleActorInitializationStateData)                  => generalInitializationTimeout(sd.generalInitializationTimeoutInMs, sd.si, Some(sd.actorInitializationTimeout))
+    case Event(SingleActorInitializationTimeout, sd: SingleActorInitializationStateData)              => singleActorInitializationTimeout(sd.initializingActorIndex, sd.si)
     case Event(ir: InitializationResult, sd: SingleActorInitializationStateData) if ir.result.isLeft  => singleActorInitializationFail(ir.result.left.get, sd)
     case Event(ir: InitializationResult, sd: SingleActorInitializationStateData) if ir.result.isRight => singleActorInitializationSuccess(sd)
   }
@@ -76,41 +75,41 @@ class StartupInitializerWorker extends Actor with FSM[StartupInitializerWorker.S
 
   initialize
 
-  protected def newJobArrived(ic: StartupInitializer.InitialConfiguration, amaRootActor: ActorRef) = {
-    if (ic.initializeOnStartupConfig.initializeOnStartupActorConfigs.isEmpty) {
+  protected def newJobArrived(si: StartupInitializer.StartInitialization, amaRootActor: ActorRef) = {
+    if (si.initializeOnStartupConfig.initializeOnStartupActorConfigs.isEmpty) {
       log.debug("Noting to do")
       stay using WaitingForJobStateData
     } else {
       log.debug("Initialization order:")
-      for (initializeOnStartupActorConfig ← ic.initializeOnStartupConfig.initializeOnStartupActorConfigs) log.debug(s"${initializeOnStartupActorConfig.clazzName}, initializationOrder ${initializeOnStartupActorConfig.initializationOrder}")
+      for (initializeOnStartupActorConfig ← si.initializeOnStartupConfig.initializeOnStartupActorConfigs) log.debug(s"${initializeOnStartupActorConfig.clazzName}, initializationOrder ${initializeOnStartupActorConfig.initializationOrder}")
 
-      val generalInitializationTimeoutInMs = ic.initializeOnStartupConfig.initializeOnStartupActorConfigs.foldLeft(0)(_ + _.initializationTimeoutInMs)
+      val generalInitializationTimeoutInMs = si.initializeOnStartupConfig.initializeOnStartupActorConfigs.foldLeft(0)(_ + _.initializationTimeoutInMs)
       val generalInitializationTimeout = context.system.scheduler.scheduleOnce(generalInitializationTimeoutInMs millis, self, GeneralInitializationTimeout)(context.dispatcher)
 
       self ! new InitializeActor(0)
 
-      goto(InitializingActors) using new InitializingActorsStateData(ic, generalInitializationTimeout, generalInitializationTimeoutInMs, amaRootActor)
+      goto(InitializingActors) using new InitializingActorsStateData(si, generalInitializationTimeout, generalInitializationTimeoutInMs, amaRootActor)
     }
   }
 
   protected def initializeActor(initializingActorIndex: Int, sd: InitializingActorsStateData): State = {
-    initializeActor(sd.ic.initializeOnStartupConfig.initializeOnStartupActorConfigs(initializingActorIndex), initializingActorIndex, sd)
+    initializeActor(sd.si.initializeOnStartupConfig.initializeOnStartupActorConfigs(initializingActorIndex), initializingActorIndex, sd)
   }
 
   protected def initializeActor(initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializingActorIndex: Int, sd: InitializingActorsStateData): State = {
     try {
-      val amaConfig = sd.ic.amaConfigBuilder.createAmaConfig(initializeOnStartupActorConfig.clazzName, sd.ic.commandLineArguments, initializeOnStartupActorConfig.config, sd.ic.broadcaster, self)
+      val amaConfig = sd.si.amaConfigBuilder.createAmaConfig(initializeOnStartupActorConfig.clazzName, sd.si.commandLineArguments, initializeOnStartupActorConfig.config, sd.si.broadcaster, self)
       val props = PropsCreator.createProps(initializeOnStartupActorConfig.clazzName, amaConfig)
 
       sd.amaRootActor ! new CreateActorExecuteInActorsContext(props, initializeOnStartupActorConfig.clazzName)
 
       val actorInitializationTimeout = context.system.scheduler.scheduleOnce(initializeOnStartupActorConfig.initializationTimeoutInMs milliseconds, self, SingleActorInitializationTimeout)(context.dispatcher)
 
-      goto(SingleActorInitialization) using new SingleActorInitializationStateData(sd.ic, sd.generalInitializationTimeout, initializingActorIndex, actorInitializationTimeout, sd.generalInitializationTimeoutInMs, sd.amaRootActor)
+      goto(SingleActorInitialization) using new SingleActorInitializationStateData(sd.si, sd.generalInitializationTimeout, initializingActorIndex, actorInitializationTimeout, sd.generalInitializationTimeoutInMs, sd.amaRootActor)
     } catch {
       case e: Exception => {
         log.error(e, s"Could not create actor ${initializeOnStartupActorConfig.clazzName}.")
-        sd.ic.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(e, sd.ic)
+        sd.si.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(e, sd.si)
         stop(FSM.Failure(e))
       }
     }
@@ -120,22 +119,22 @@ class StartupInitializerWorker extends Actor with FSM[StartupInitializerWorker.S
     sd.actorInitializationTimeout.cancel()
     sd.generalInitializationTimeout.cancel()
 
-    val initializeOnStartupActorConfig = sd.ic.initializeOnStartupConfig.initializeOnStartupActorConfigs(sd.initializingActorIndex)
+    val initializeOnStartupActorConfig = sd.si.initializeOnStartupConfig.initializeOnStartupActorConfigs(sd.initializingActorIndex)
     val clazzName = initializeOnStartupActorConfig.clazzName
 
     val e = new Exception(s"Actor $clazzName initialization fail.", initializationException)
-    sd.ic.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(e, sd.ic)
+    sd.si.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(e, sd.si)
 
     stop(FSM.Failure(e))
   }
 
-  protected def singleActorInitializationTimeout(initializingActorIndex: Int, ic: StartupInitializer.InitialConfiguration) = {
-    val initializeOnStartupActorConfig = ic.initializeOnStartupConfig.initializeOnStartupActorConfigs(initializingActorIndex)
+  protected def singleActorInitializationTimeout(initializingActorIndex: Int, si: StartupInitializer.StartInitialization) = {
+    val initializeOnStartupActorConfig = si.initializeOnStartupConfig.initializeOnStartupActorConfigs(initializingActorIndex)
     val clazzName = initializeOnStartupActorConfig.clazzName
     val initializationTimeoutInMs = initializeOnStartupActorConfig.initializationTimeoutInMs
 
     val ite = new InitializationTimeoutException(s"Timeout ($initializationTimeoutInMs ms) while initializing actor $clazzName.")
-    ic.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(ite, ic)
+    si.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(ite, si)
     stop(FSM.Failure(ite))
   }
 
@@ -144,20 +143,20 @@ class StartupInitializerWorker extends Actor with FSM[StartupInitializerWorker.S
 
     val nextInitializingActorIndex = sd.initializingActorIndex + 1
 
-    if (nextInitializingActorIndex < sd.ic.initializeOnStartupConfig.initializeOnStartupActorConfigs.size) {
+    if (nextInitializingActorIndex < sd.si.initializeOnStartupConfig.initializeOnStartupActorConfigs.size) {
       self ! new InitializeActor(nextInitializingActorIndex)
-      goto(InitializingActors) using new InitializingActorsStateData(sd.ic, sd.generalInitializationTimeout, sd.generalInitializationTimeoutInMs, sd.amaRootActor)
+      goto(InitializingActors) using new InitializingActorsStateData(sd.si, sd.generalInitializationTimeout, sd.generalInitializationTimeoutInMs, sd.amaRootActor)
     } else {
       sd.generalInitializationTimeout.cancel()
-      sd.ic.broadcaster ! new StartupInitializer.AllActorsWereInstantiatedCorrectly(sd.ic)
+      sd.si.broadcaster ! new StartupInitializer.AllActorsWereInstantiatedCorrectly(sd.si)
       stop(FSM.Normal)
     }
   }
 
-  protected def generalInitializationTimeout(generalInitializationTimeoutInMs: Int, ic: StartupInitializer.InitialConfiguration, actorInitializationTimeout: Option[Cancellable]) = {
+  protected def generalInitializationTimeout(generalInitializationTimeoutInMs: Int, si: StartupInitializer.StartInitialization, actorInitializationTimeout: Option[Cancellable]) = {
     actorInitializationTimeout map { _.cancel() }
     val ite = new InitializationTimeoutException(s"General timeout ($generalInitializationTimeoutInMs ms) while initializing actors on startup.")
-    ic.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(ite, ic)
+    si.broadcaster ! new StartupInitializer.ProblemWhileInitializeActors(ite, si)
     stop(FSM.Failure(ite))
   }
 

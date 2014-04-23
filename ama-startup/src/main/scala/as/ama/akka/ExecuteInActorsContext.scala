@@ -1,4 +1,4 @@
-package as.akka.util
+package as.ama.akka
 
 import akka.actor.{ ActorContext, ActorRef }
 

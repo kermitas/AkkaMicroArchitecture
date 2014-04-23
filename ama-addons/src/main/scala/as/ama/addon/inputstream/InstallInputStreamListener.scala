@@ -4,7 +4,7 @@ import akka.actor._
 import as.io._
 import as.ama.startup.InitializationResult
 import as.ama.startup.AmaConfig
-import as.akka.util.CreateActorAndSendMessageExecuteInActorsContext
+import as.ama.akka.CreateActorAndSendMessageExecuteInActorsContext
 
 object InstallInputStreamListener {
   final val checkIfKeyWasPressedTimeIntervalInMsConfigKey = "checkIfKeyWasPressedTimeIntervalInMs"

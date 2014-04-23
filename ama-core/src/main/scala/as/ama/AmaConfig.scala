@@ -8,19 +8,23 @@ import as.ama.startup.InitializeOnStartupConfig
  */
 object AmaConfig {
 
+  final val renderConfigurationConfigKey = "renderConfiguration"
   final val commandLineConfigKey = "commandLine"
-  final val akkaConfigKey = "akka"
+  //final val akkaConfigKey = "akka"
   final val initializeOnStartupConfigKey = "initializeOnStartup"
   final val logMessagesPublishedOnBroadcasterConfigKey = "logMessagesPublishedOnBroadcaster"
 
   def apply(config: Config): AmaConfig = {
+    val renderConfiguration = if (config.hasPath(renderConfigurationConfigKey)) config.getBoolean(renderConfigurationConfigKey) else false
     val commandLineConfig = CommandLineConfig(config.getConfig(commandLineConfigKey))
-    val akkaConfig = AkkaConfig(config.getConfig(akkaConfigKey))
+
+    //val akkaConfig = AkkaConfig(config.getConfig(akkaConfigKey))
     val initializeOnStartupConfig = InitializeOnStartupConfig(config.getConfig(initializeOnStartupConfigKey))
+
     val logMessagesPublishedOnBroadcaster = config.getBoolean(logMessagesPublishedOnBroadcasterConfigKey)
 
-    new AmaConfig(commandLineConfig, akkaConfig, initializeOnStartupConfig, logMessagesPublishedOnBroadcaster)
+    new AmaConfig(renderConfiguration, commandLineConfig, initializeOnStartupConfig, logMessagesPublishedOnBroadcaster)
   }
 }
 
-case class AmaConfig(commandLineConfig: CommandLineConfig, akkaConfig: AkkaConfig, initializeOnStartupConfig: InitializeOnStartupConfig, logMessagesPublishedOnBroadcaster: Boolean) extends Serializable
+case class AmaConfig(renderConfiguration: Boolean, commandLineConfig: CommandLineConfig, initializeOnStartupConfig: InitializeOnStartupConfig, logMessagesPublishedOnBroadcaster: Boolean) extends Serializable

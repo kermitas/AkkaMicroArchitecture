@@ -7,9 +7,9 @@ object StartupInitializer extends Serializable {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
   sealed trait OutgoingMessage extends Message
-  case class InitialConfiguration(commandLineArguments: Array[String], initializeOnStartupConfig: InitializeOnStartupConfig, broadcaster: ActorRef, amaConfigBuilder: AmaConfigBuilder) extends IncomingMessage with OutgoingMessage
-  case class AllActorsWereInstantiatedCorrectly(initialConfiguration: InitialConfiguration) extends OutgoingMessage
-  case class ProblemWhileInitializeActors(exception: Exception, initialConfiguration: InitialConfiguration) extends OutgoingMessage
+  case class StartInitialization(commandLineArguments: Array[String], initializeOnStartupConfig: InitializeOnStartupConfig, broadcaster: ActorRef, amaConfigBuilder: AmaConfigBuilder) extends IncomingMessage with OutgoingMessage
+  case class AllActorsWereInstantiatedCorrectly(startInitialization: StartInitialization) extends OutgoingMessage
+  case class ProblemWhileInitializeActors(exception: Exception, startInitialization: StartInitialization) extends OutgoingMessage
 
   def classifier = new StartupInitializerClassifier
 }
@@ -23,9 +23,12 @@ class StartupInitializer extends Actor with ActorLogging {
 
   override def receive = {
 
-    case ic: InitialConfiguration => {
+    case si: StartInitialization => {
+
       // parent of this actor should be an AmaRootActor
-      context.actorOf(Props[StartupInitializerWorker]) ! new StartupInitializerWorker.InitialConfiguration(ic, context.parent)
+      val amaRootActor = context.parent
+
+      context.actorOf(Props[StartupInitializerWorker]) ! new StartupInitializerWorker.StartInitialization(si, amaRootActor)
     }
 
     case message => log.warning(s"Unhandled $message send by ${sender()}")

@@ -1,39 +1,71 @@
 package as.ama
 
-import akka.actor._
+import scala.language.postfixOps
+import scala.concurrent.duration._
+import com.typesafe.config.Config
+import _root_.akka.actor._
 import as.akka.broadcaster._
 import as.ama.startup._
 import as.ama.broadcaster.BroadcasterMessagesLogger
-import as.akka.util.ExecuteInActorsContext
+import as.ama.akka.ExecuteInActorsContext
 
 object AmaRootActor {
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
-  case class Init(amaConfig: AmaConfig, commandLineArguments: Array[String], amaConfigBuilder: AmaConfigBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]) extends IncomingMessage // will send back newly created broadcaster (ActorRef)
+  sealed trait OutgoingMessage extends Message
+  case class AutomaticDieTimeWhenSystemNotCreated(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds: Int) extends IncomingMessage
+  case object CreateBroadcaster extends IncomingMessage
+  case class CreatedBroadcaster(broadcaster: ActorRef) extends OutgoingMessage
+
+  case class Init(broadcaster: ActorRef, config: Config, originallyPassedCommandLineArguments: Array[String]) extends IncomingMessage
+  case class InitializationResult(exception: Option[Exception]) extends OutgoingMessage
+
+  sealed trait InternalIncomingMessage extends IncomingMessage
+  case object SystemNotCreatedTimeout extends InternalIncomingMessage
+
+  final val commandLineArgumentsRegex = "\"(\\\"|[^\"])*?\"|[^\\s]+"
 }
 
+// TODO should be a FSM actor!
 /**
- * MainActor (similar to main class on JVM).
- *
- * Responsibilities:
- * - start and register BroadcasterMessagesLogger if needed
- * - start and register InitializationController (that will shutdown system when any of automatically initialized actors will fail to initialize)
- * - start and register StartupInitializer (that will read configuration and initialize acotrs defined there)
+ * AmaRootActor is root actor for whole ama (created by Init message).
  */
+
 class AmaRootActor extends Actor with ActorLogging {
 
   import AmaRootActor._
 
+  protected var inactivityTimeout: Option[Cancellable] = None
+
   override def receive = {
 
-    case Init(amaConfig, commandLineArguments, amaConfigBuilder, executeWithBroadcaster) => {
+    case AutomaticDieTimeWhenSystemNotCreated(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds) => {
+      import context.dispatcher
+      inactivityTimeout = Some(context.system.scheduler.scheduleOnce(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds seconds, self, SystemNotCreatedTimeout))
+    }
+
+    case SystemNotCreatedTimeout => context.stop(self)
+
+    case CreateBroadcaster => {
+      val broadcaster = context.actorOf(Props[Broadcaster], classOf[Broadcaster].getSimpleName)
+      sender() ! new CreatedBroadcaster(broadcaster)
+    }
+
+    case Init(broadcaster, config, originallyPassedCommandLineArguments) => {
       try {
-        val broadcaster = initialize(amaConfig, commandLineArguments, amaConfigBuilder, executeWithBroadcaster)
-        sender() ! broadcaster
+        initialize(broadcaster, config, originallyPassedCommandLineArguments)
+
+        inactivityTimeout map { cancellable =>
+          cancellable.cancel()
+          inactivityTimeout = None
+        }
+
+        sender() ! new InitializationResult(None)
       } catch {
         case e: Exception => {
-          log.error(s"Problem while initializing ${classOf[Broadcaster].getSimpleName} and/or ${classOf[StartupInitializer].getSimpleName}.", e)
-          context.system.shutdown()
+          log.error(s"Problem while initializing ${getClass.getSimpleName}.", e)
+          sender() ! new InitializationResult(Some(e))
+          context.stop(self)
         }
       }
     }
@@ -43,12 +75,17 @@ class AmaRootActor extends Actor with ActorLogging {
     case message                      => log.warning(s"Unhandled $message send by ${sender()}")
   }
 
-  protected def initialize(amaConfig: AmaConfig, commandLineArguments: Array[String], amaConfigBuilder: AmaConfigBuilder, executeWithBroadcaster: Option[ExecuteWithBroadcaster]): ActorRef = {
-    log.debug(s"Command line arguments count ${commandLineArguments.length}: ${commandLineArguments.mkString(",")}")
+  protected def initialize(broadcaster: ActorRef, config: Config, originallyPassedCommandLineArguments: Array[String]) {
 
-    val broadcaster = context.actorOf(Props[Broadcaster], classOf[Broadcaster].getSimpleName)
+    if (config.hasPath(AmaConfig.renderConfigurationConfigKey) && config.getBoolean(AmaConfig.renderConfigurationConfigKey)) log.info(s"Configuration: ${config.root.render}")
 
-    executeWithBroadcaster map { _.execute(broadcaster) }
+    val amaConfig = AmaConfig(config)
+
+    val cmdArgs = prepareCommandLineArguments(originallyPassedCommandLineArguments, amaConfig.commandLineConfig)
+
+    log.debug(s"Command line arguments count ${cmdArgs.length}: ${cmdArgs.mkString(",")}")
+
+    val amaConfigBuilder: AmaConfigBuilder = Class.forName(amaConfig.initializeOnStartupConfig.amaConfigBuilderClassName).getConstructor().newInstance().asInstanceOf[AmaConfigBuilder]
 
     if (amaConfig.logMessagesPublishedOnBroadcaster) {
       val broadcasterMessagesLogger = context.actorOf(Props[BroadcasterMessagesLogger], classOf[BroadcasterMessagesLogger].getSimpleName)
@@ -61,15 +98,14 @@ class AmaRootActor extends Actor with ActorLogging {
     val startupInitializer = context.actorOf(Props[StartupInitializer], classOf[StartupInitializer].getSimpleName)
     broadcaster ! new Broadcaster.Register(startupInitializer, StartupInitializer.classifier)
 
-    broadcaster ! new StartupInitializer.InitialConfiguration(commandLineArguments, amaConfig.initializeOnStartupConfig, broadcaster, amaConfigBuilder)
-
-    broadcaster
+    broadcaster ! new StartupInitializer.StartInitialization(cmdArgs, amaConfig.initializeOnStartupConfig, broadcaster, amaConfigBuilder)
   }
-}
 
-/**
- * Allows access to newly created broadcaster just after it creation (so you can access it as first).
- */
-trait ExecuteWithBroadcaster extends Serializable {
-  def execute(broacaster: ActorRef)
+  protected def prepareCommandLineArguments(originallyPassedCommandLineArguments: Array[String], commandLineConfig: CommandLineConfig): Array[String] = {
+    if (commandLineConfig.overrideOriginallyPassedArguments) {
+      log.info(s"Overwriting command line arguments with '${commandLineConfig.arguments}'")
+      new scala.util.matching.Regex(commandLineArgumentsRegex).findAllIn(commandLineConfig.arguments.trim).toArray
+    } else
+      originallyPassedCommandLineArguments
+  }
 }

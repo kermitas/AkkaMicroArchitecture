@@ -18,8 +18,9 @@ class InitializationController(broadcaster: ActorRef) extends Actor with ActorLo
     case StartupInitializer.AllActorsWereInstantiatedCorrectly(actorsCount) => context.stop(self)
 
     case StartupInitializer.ProblemWhileInitializeActors(exception, initialConfiguration) => {
-      log.error("Will shut down system because one of automatically stated actors (during startup) failed.")
-      val e = new Exception("Shutting down system because of problem while startup initialization of one of actors.", exception)
+      val description = "Publishing ShutdownSystem message because of problem while startup initialization of one of actors."
+      log.error(description)
+      val e = new Exception(description, exception)
       broadcaster ! new ShutdownSystem(Left(e))
       context.stop(self)
     }
