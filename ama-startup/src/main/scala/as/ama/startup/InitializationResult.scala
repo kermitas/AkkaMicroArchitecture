@@ -5,7 +5,6 @@ package as.ama.startup
  *
  * Should be send to broadcaster by automatically initialized actor as soon as possible.
  *
- *
  * Correctly initialized actor should publish InitializationResult(Right(...)) on broadcaster.
  *
  * Incorrectly initialized actor should publish InitializationResult(Left(exception)) on broadcaster.

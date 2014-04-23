@@ -5,7 +5,6 @@ import as.ama.addon.lifecycle.ShutdownSystem
 
 object InitializationController {
   def classifier = new InitializationControllerClassifier
-
   def props(broadcaster: ActorRef) = Props(new InitializationController(broadcaster))
 }
 
@@ -16,14 +15,14 @@ class InitializationController(broadcaster: ActorRef) extends Actor with ActorLo
 
   override def receive = {
 
-    case ir: InitializationResult if ir.result.isLeft => {
+    case StartupInitializer.AllActorsWereInstantiatedCorrectly(actorsCount) => context.stop(self)
+
+    case StartupInitializer.ProblemWhileInitializeActors(exception, initialConfiguration) => {
       log.error("Will shut down system because one of automatically stated actors (during startup) failed.")
-      val e = new Exception("Shutting down system because of problem while startup initialization of one of actors.", ir.result.left.get)
+      val e = new Exception("Shutting down system because of problem while startup initialization of one of actors.", exception)
       broadcaster ! new ShutdownSystem(Left(e))
       context.stop(self)
     }
-
-    case StartupInitializer.AllActorsWereInstantiatedCorrectly(actorsCount) => context.stop(self)
 
     case message => log.warning(s"Unhandled $message send by ${sender()}")
   }
