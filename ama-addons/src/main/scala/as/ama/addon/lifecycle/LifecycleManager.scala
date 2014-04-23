@@ -38,9 +38,9 @@ class LifecycleManager(amaConfig: AmaConfig) extends Actor with ActorLogging {
       lifecycleListenerConfig = LifecycleManagerConfig(amaConfig.config)
       amaConfig.broadcaster ! new Broadcaster.Register(self, new LifecycleManagerClassifier)
 
-      amaConfig.broadcaster ! new InitializationResult(Right(None))
+      amaConfig.initializationResultListener ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception => amaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
+      case e: Exception => amaConfig.initializationResultListener ! new InitializationResult(Left(new Exception("Problem while installing lifecycle listener.", e)))
     }
   }
 

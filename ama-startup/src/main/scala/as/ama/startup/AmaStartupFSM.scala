@@ -5,14 +5,14 @@ import akka.actor.{ FSM, ActorRef }
 /**
  * Useful FSM actor in Ama world.
  *
- * How it works? When you will leave first state (onTransmission) it will send successful InitializationResult on broadcaster.
+ * How it works? When you will leave first state (onTransmission) it will send successful InitializationResult to initializationResultListener.
  *
  * But when something will go wrong in first state then you should stop with FSM.Failure, to do that use successOrStop().
  *
- * For termination use amaTerminate() and it will detect if you fial in first state, if yes it will send failure InitializationResult on broadcaster.
+ * For termination use amaTerminate() and it will detect if you fial in first state, if yes it will send failure InitializationResult to initializationResultListener.
  *
- * First please define your initial state and broadcaster:
- * amaStartWith(Initializing, amaSessionConfig.broadcaster)
+ * First please define your initial state and initializationResultListener:
+ * amaStartWith(Initializing, amaSessionConfig.initializationResultListener)
  *
  * Then on first state use successOrStop():
  * when(Initializing) {
@@ -25,23 +25,23 @@ import akka.actor.{ FSM, ActorRef }
 trait AmaStartupFSM[S, D] extends FSM[S, D] {
 
   protected var initialState: S = _
-  protected var broadcaster: ActorRef = _
+  protected var initializationResultListener: ActorRef = _
 
   /**
-   * We are leaving initial state so initialization went ok, sending successful InitializationResult on broadcaster.
+   * We are leaving initial state so initialization went ok, sending successful InitializationResult to initializationResultListener.
    */
   onTransition {
-    case fromState -> toState => if (fromState == initialState) broadcaster ! new InitializationResult(Right(None))
+    case fromState -> toState => if (fromState == initialState) initializationResultListener ! new InitializationResult(Right(None))
   }
 
   /**
    * Remember to call this method before fsm initialize, for example:
    *
-   * amaStartWith(Initializing, amaSessionConfig.broadcaster)
+   * amaStartWith(Initializing, amaSessionConfig.initializationResultListener)
    */
-  def amaStartWith(initialState: S, broadcaster: ActorRef) {
+  def amaStartWith(initialState: S, initializationResultListener: ActorRef) {
     this.initialState = initialState
-    this.broadcaster = broadcaster
+    this.initializationResultListener = initializationResultListener
   }
 
   /**
@@ -60,7 +60,7 @@ trait AmaStartupFSM[S, D] extends FSM[S, D] {
   }
 
   /**
-   * When terminating in first state with failure then it will send unsuccessful InitializationResult on broadcaster.
+   * When terminating in first state with failure then it will send unsuccessful InitializationResult to initializationResultListener.
    *
    * Usage example:
    * onTermination { amaTerminate }
@@ -76,7 +76,7 @@ trait AmaStartupFSM[S, D] extends FSM[S, D] {
       if (currentState == initialState) {
         val e = new Exception(s"Problem while installing ${getClass.getName} actor.")
         if (cause.isInstanceOf[Exception]) e.initCause(cause.asInstanceOf[Exception])
-        broadcaster ! new InitializationResult(Left(e))
+        initializationResultListener ! new InitializationResult(Left(e))
       }
     }
   }

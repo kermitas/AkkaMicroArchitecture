@@ -31,9 +31,9 @@ class InstallInputStreamListener(amaConfig: AmaConfig) extends Actor with ActorL
 
       context.parent ! new CreateActorAndSendMessageExecuteInActorsContext(Props[InputStreamListener], classOf[InputStreamListener].getSimpleName, initMessage, self)
 
-      amaConfig.broadcaster ! new InitializationResult(Right(None))
+      amaConfig.initializationResultListener ! new InitializationResult(Right(None))
     } catch {
-      case e: Exception => amaConfig.broadcaster ! new InitializationResult(Left(new Exception("Problem while installing key press detector.", e)))
+      case e: Exception => amaConfig.initializationResultListener ! new InitializationResult(Left(new Exception("Problem while installing key press detector.", e)))
     } finally {
       context.stop(self)
     }
