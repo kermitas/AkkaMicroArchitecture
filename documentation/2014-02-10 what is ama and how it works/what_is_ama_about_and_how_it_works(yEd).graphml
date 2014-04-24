@@ -17,7 +17,7 @@
     <node id="n0">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-228.2687253786102" y="509.61177483444635"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-228.2687253786102" y="298.0681325930671"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -37,7 +37,7 @@
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="396.6108398437509" width="694.8793446828345" x="99.65592787638701" y="732.1802027069"/>
+              <y:Geometry height="396.6108398437508" width="694.8793446828345" x="99.65592787638701" y="520.6365604655208"/>
               <y:Fill color="#CAECFF80" transparent="false"/>
               <y:BorderStyle color="#666699" type="dotted" width="1.0"/>
               <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.4609375" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="694.8793446828345" x="0.0" y="0.0">AkkaMicroArchitecture</y:NodeLabel>
@@ -66,7 +66,7 @@
             <y:ProxyAutoBoundsNode>
               <y:Realizers active="0">
                 <y:GroupNode>
-                  <y:Geometry height="288.0641380374917" width="268.2304687500005" x="335.3053431049315" y="808.8815269089918"/>
+                  <y:Geometry height="288.0641380374916" width="268.2304687500005" x="335.3053431049315" y="597.3378846676126"/>
                   <y:Fill color="#F5F5F5" transparent="false"/>
                   <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
                   <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="38.921875" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="268.2304687500005" x="0.0" y="0.0">Broadcaster
@@ -93,7 +93,7 @@ pub-sub actor</y:NodeLabel>
             <node id="n1::n0::n0">
               <data key="d6">
                 <y:GenericNode configuration="com.yworks.flowchart.terminator">
-                  <y:Geometry height="29.0" width="224.02589339019187" x="356.62191535639744" y="999.2355339607873"/>
+                  <y:Geometry height="29.0" width="224.02589339019187" x="356.62191535639744" y="787.691891719408"/>
                   <y:Fill color="#E8EEF7" color2="#339966" transparent="false"/>
                   <y:BorderStyle color="#000000" type="line" width="1.0"/>
                   <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="108.66015625" x="57.682868570095934" y="5.515625">ShutdownSystem<y:LabelModel>
@@ -109,7 +109,7 @@ pub-sub actor</y:NodeLabel>
             <node id="n1::n0::n1">
               <data key="d6">
                 <y:GenericNode configuration="com.yworks.flowchart.terminator">
-                  <y:Geometry height="22.75" width="48.5" x="444.7188464264938" y="904.322326225219"/>
+                  <y:Geometry height="22.75" width="48.5" x="444.7188464264938" y="692.7786839838398"/>
                   <y:Fill color="#E8EEF7" color2="#339966" transparent="false"/>
                   <y:BorderStyle color="#000000" type="line" width="1.0"/>
                   <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="39.8125" x="4.34375" y="2.390625">String<y:LabelModel>
@@ -127,7 +127,7 @@ pub-sub actor</y:NodeLabel>
         <node id="n1::n1">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.terminator">
-              <y:Geometry height="28.0" width="101.75" x="148.92049290837002" y="985.18655036315"/>
+              <y:Geometry height="28.0" width="101.75" x="148.92049290837002" y="773.6429081217707"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="71.693359375" x="15.0283203125" y="5.015625">YourActor<y:LabelModel>
@@ -143,7 +143,7 @@ pub-sub actor</y:NodeLabel>
         <node id="n1::n2">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.terminator">
-              <y:Geometry height="28.0" width="190.27913006396602" x="104.65592787638701" y="808.8815269089918"/>
+              <y:Geometry height="28.0" width="190.27913006396602" x="104.65592787638701" y="597.3378846676126"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#808080" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#808080" visible="true" width="147.09765625" x="21.59073690698301" y="5.015625">StartupInitializerWorker<y:LabelModel>
@@ -159,7 +159,7 @@ pub-sub actor</y:NodeLabel>
         <node id="n1::n3">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.terminator">
-              <y:Geometry height="28.0" width="143.0" x="646.5352725592215" y="997.1401563566199"/>
+              <y:Geometry height="28.0" width="143.0" x="646.5352725592215" y="785.5965141152406"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#808080" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#808080" visible="true" width="109.240234375" x="16.8798828125" y="5.015625">LifecycleManager<y:LabelModel>
@@ -175,7 +175,7 @@ pub-sub actor</y:NodeLabel>
         <node id="n1::n4">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.terminator">
-              <y:Geometry height="29.0" width="142.0" x="250.43367863000827" y="877.11325115338"/>
+              <y:Geometry height="29.0" width="142.0" x="250.43367863000827" y="665.5696089120008"/>
               <y:Fill color="#E8EEF7" color2="#339966" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="130.462890625" x="5.7685546875" y="5.515625">Broadcaster.Register<y:LabelModel>
@@ -196,14 +196,14 @@ pub-sub actor</y:NodeLabel>
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="1146.35617783598" width="1502.0377614989936" x="-98.909916839966" y="1336.8764488051143"/>
+              <y:Geometry height="1316.8747729465063" width="1502.0377614989936" x="-98.909916839966" y="1166.357853694588"/>
               <y:Fill color="#CAECFF80" transparent="false"/>
               <y:BorderStyle color="#666699" type="dotted" width="1.0"/>
               <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#99CCFF" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.4609375" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="1502.0377614989936" x="0.0" y="0.0">AkkaMicroArchitecture</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="5" bottomF="5.0" left="5" leftF="5.0" right="5" rightF="5.0" top="5" topF="5.0"/>
-              <y:BorderInsets bottom="12" bottomF="12.32181101831884" left="30" leftF="30.014771009484832" right="0" rightF="0.0" top="16" topF="16.34495553602528"/>
+              <y:BorderInsets bottom="12" bottomF="12.32181101831884" left="30" leftF="30.014771009484832" right="0" rightF="0.0" top="0" topF="0.0"/>
             </y:GroupNode>
             <y:GroupNode>
               <y:Geometry height="50.0" width="50.0" x="390.1259765625" y="229.0"/>
@@ -284,7 +284,7 @@ pub-sub actor</y:NodeLabel>
             <node id="n2::n0::n2">
               <data key="d6">
                 <y:GenericNode configuration="com.yworks.flowchart.terminator">
-                  <y:Geometry height="29.0" width="329.30502345415834" x="701.7652662414482" y="1883.3678805473442"/>
+                  <y:Geometry height="29.0" width="329.30502345415834" x="729.9710852069654" y="1946.9943016664256"/>
                   <y:Fill color="#E8EEF7" color2="#339966" transparent="false"/>
                   <y:BorderStyle color="#000000" type="line" width="1.0"/>
                   <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="318.853515625" x="5.2257539145791725" y="5.515625">StartupInitializer.AllActorsWereInstantiatedCorrectly<y:LabelModel>
@@ -349,7 +349,7 @@ published here<y:LabelModel>
             <node id="n2::n0::n6">
               <data key="d6">
                 <y:GenericNode configuration="com.yworks.flowchart.terminator">
-                  <y:Geometry height="29.0" width="329.30502345415834" x="701.7652662414482" y="1765.6265821605068"/>
+                  <y:Geometry height="29.0" width="329.30502345415834" x="701.7652662414482" y="1786.7809463846447"/>
                   <y:Fill color="#E8EEF7" color2="#339966" transparent="false"/>
                   <y:BorderStyle color="#000000" type="line" width="1.0"/>
                   <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="278.822265625" x="25.241378914579172" y="5.515625">StartupInitializer.ProblemWhileInitializeActors<y:LabelModel>
@@ -431,7 +431,7 @@ published here<y:LabelModel>
         <node id="n2::n5">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.process">
-              <y:Geometry height="39.13956503198301" width="91.10907586206918" x="63.92750508680513" y="1379.6823418411395"/>
+              <y:Geometry height="39.13956503198301" width="91.10907586206918" x="102.71050616439129" y="1192.818791194588"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="custom" textColor="#000000" visible="true" width="86.53515625" x="2.286959806034588" y="3.601032515991392">Main
@@ -608,7 +608,7 @@ published here<y:LabelModel>
         <node id="n2::n16">
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.terminator">
-              <y:Geometry height="28.0" width="60.047895689655206" x="407.0711689673397" y="1441.5600285349374"/>
+              <y:Geometry height="28.0" width="60.047895689655206" x="356.30069482940866" y="1434.7906319832132"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="31.251953125" x="14.397971282327603" y="5.015625">Ama<y:LabelModel>
@@ -762,7 +762,7 @@ will just finish its work.<y:LabelModel>
     <node id="n10">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="39.25" width="235.1733535181237" x="-160.70178726220576" y="980.4075012726646"/>
+          <y:Geometry height="39.25" width="235.1733535181237" x="-160.70178726220576" y="768.8638590312853"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="custom" textColor="#000000" visible="true" width="221.453125" x="6.860114259061845" y="3.65625">Defined in your application.conf
@@ -780,7 +780,7 @@ to be initialized during startup.<y:LabelModel>
     <node id="n11">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="76.47068965517246" width="334.2422222920009" x="-195.485339051369" y="1154.4278657588336"/>
+          <y:Geometry height="76.47068965517246" width="334.2422222920009" x="-195.485339051369" y="942.8842235174543"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" textColor="#000000" visible="true" width="327.37890625" x="3.4316580210004304" y="8.297844827586232">Send InitializationResult to initializationResultListener
@@ -800,7 +800,7 @@ and your initialization will be treated failed).<y:LabelModel>
     <node id="n12">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="129.16666666666663" width="235.78560341151388" x="203.54087692425134" y="577.3767128320507"/>
+          <y:Geometry height="129.16666666666663" width="235.78560341151388" x="203.54087692425134" y="365.8330705906714"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="115.75" modelName="custom" textColor="#000000" visible="true" width="229.744140625" x="3.0207313932569377" y="6.708333333333371">How to subscribe to broadcaster?
@@ -824,7 +824,7 @@ if you are interested in this message.<y:LabelModel>
     <node id="n13">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="81.75" width="294.7953134328359" x="322.1905635440252" y="1149.8300640225305"/>
+          <y:Geometry height="81.75" width="294.7953134328359" x="322.1905635440252" y="938.2864217811511"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="73.84375" modelName="custom" textColor="#000000" visible="true" width="285.07421875" x="4.860547341417941" y="3.953125">If you want to communicate with
@@ -845,7 +845,7 @@ message.<y:LabelModel>
     <node id="n14">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="69.25" width="277.6437130103089" x="-448.3482550849111" y="1320.470175515134"/>
+          <y:Geometry height="69.25" width="277.6437130103089" x="-448.3482550849111" y="1143.4906809888705"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" textColor="#0000FF" visible="true" width="265.7890625" x="5.927325255154415" y="4.6875">This diagram describes more or
@@ -864,7 +864,7 @@ do on startup.<y:LabelModel>
     <node id="n15">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="49.25" width="225.45625586353697" x="828.5017487719067" y="985.18655036315"/>
+          <y:Geometry height="49.25" width="225.45625586353697" x="828.5017487719067" y="773.6429081217707"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="custom" textColor="#000000" visible="true" width="210.970703125" x="7.24277636926854" y="1.671875">LifecycleManager is listening for
@@ -883,7 +883,7 @@ once received will perform his job.<y:LabelModel>
     <node id="n16">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="56.75" width="225.54207675906184" x="828.4159278763818" y="885.6019486210515"/>
+          <y:Geometry height="56.75" width="225.54207675906184" x="828.4159278763818" y="674.0583063796723"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="custom" textColor="#000000" visible="true" width="214.8671875" x="5.337444629530864" y="5.421875">If your classifier indicates that
@@ -945,7 +945,7 @@ to see if you are interested in this message.<y:LabelModel>
     <node id="n19">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.58454157782515" width="523.0866261660249" x="295.3991326963245" y="-28.454118939768023"/>
+          <y:Geometry height="53.58454157782515" width="523.0866261660249" x="295.3991326963245" y="-239.99776118114727"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="20" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="27.28125" modelName="custom" textColor="#0000FF" visible="true" width="482.291015625" x="20.397805270512436" y="13.151645788912575">What AkkaMicroArchitecture (ama) is all about?<y:LabelModel>
@@ -962,7 +962,7 @@ to see if you are interested in this message.<y:LabelModel>
     <node id="n20">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="56.75" width="465.06578181634444" x="-248.9562013588261" y="119.04636965137553"/>
+          <y:Geometry height="56.75" width="465.06578181634444" x="-248.9562013588261" y="-92.49727259000372"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.25" modelName="custom" textColor="#0000FF" visible="true" width="449.4609375" x="7.80242215817222" y="7.75">It allows you to quickly prepare project where all actors
@@ -980,7 +980,7 @@ will communicate using common bus (broadcaster).<y:LabelModel>
     <node id="n21">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="91.67516844349683" width="621.6657306436371" x="246.10958045751835" y="119.04636965137553"/>
+          <y:Geometry height="91.67516844349683" width="621.6657306436371" x="246.10958045751835" y="-92.49727259000372"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="78.5" modelName="custom" textColor="#0000FF" visible="true" width="598.7265625" x="11.469584071818474" y="6.587584221748415">Ama will automatically instantiate your actor during startup.
@@ -1000,7 +1000,7 @@ Just define it in your application.conf under ama.initializeOnStartup.actors
     <node id="n22">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="69.25000000000006" width="438.59025089950046" x="897.7753111011554" y="119.04636965137553"/>
+          <y:Geometry height="69.25000000000006" width="438.59025089950046" x="897.7753111011554" y="-92.49727259000372"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="custom" textColor="#0000FF" visible="true" width="412.9296875" x="12.830281699750117" y="4.687500000000028">Some useful services are automatically registerred
@@ -1019,7 +1019,7 @@ ama.initializeOnStartup.actors list).<y:LabelModel>
     <node id="n23">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="91.67516844349683" width="436.1659653025829" x="900.1995966980729" y="318.87380082974926"/>
+          <y:Geometry height="91.67516844349683" width="436.1659653025829" x="900.1995966980729" y="107.33015858837001"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="78.5" modelName="custom" textColor="#0000FF" visible="true" width="426.5703125" x="4.797826401291445" y="6.587584221748443">If you are wonder what reference.conf (in ama-core)
@@ -1039,7 +1039,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n24">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-284.8647508658539" y="-51.15293171719472"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-284.8647508658539" y="-262.69657395857394"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1056,7 +1056,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n25">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1348.6214169227264" y="442.83822463900515"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1348.6214169227264" y="231.2945823976259"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1073,7 +1073,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n26">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-284.9570122305895" y="442.06452227960847"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-284.9570122305895" y="230.52088003822922"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1090,7 +1090,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n27">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1347.625488279703" y="-50.873055309145826"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1347.625488279703" y="-262.4166975505251"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1107,7 +1107,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n28">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-227.50158348075945" y="1261.7956806002928"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-227.50158348075945" y="1050.2520383589135"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1124,7 +1124,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n29">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1056.3637458261392" y="1261.4283643477918"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1056.3637458261392" y="1049.8847221064125"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1141,7 +1141,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n30">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1055.9748950634394" y="509.6658187374919"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1055.9748950634394" y="298.1221764961127"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1158,7 +1158,7 @@ https://github.com/typesafehub/config.<y:LabelModel>
     <node id="n31">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="102.64906560513293" width="302.68164179104474" x="-215.7460773853847" y="511.8978747831256"/>
+          <y:Geometry height="102.64906560513293" width="302.68164179104474" x="-215.7460773853847" y="300.35423254174634"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="97.125" modelName="custom" textColor="#0000FF" visible="true" width="281.5078125" x="10.58691464552237" y="2.762032802566466">This diagram describes interaction
@@ -1179,7 +1179,7 @@ see ama-sample project.<y:LabelModel>
     <node id="n32">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-460.6704586717636" y="1318.1973169945584"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="-460.6704586717636" y="1141.2178224682948"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1196,7 +1196,7 @@ see ama-sample project.<y:LabelModel>
     <node id="n33">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1552.4031946059085" y="1318.1973169945584"/>
+          <y:Geometry height="4.4879054678895045" width="23.772516990825807" x="1552.4031946059085" y="1141.2178224682948"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="9.886258495412903" y="0.24395273394475225">
@@ -1268,7 +1268,7 @@ after installation done.<y:LabelModel>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#C0C0C0" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#C0C0C0" visible="true" width="48.607421875" x="-24.30370447932529" y="65.17911920247707">creates<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#C0C0C0" visible="true" width="48.607421875" x="-24.30370447932529" y="65.17911709781663">creates<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -1433,7 +1433,7 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="442.13511810410586" y="362.49991551026"/>
+            <y:Point x="442.13511810410586" y="150.95627326888075"/>
           </y:Path>
           <y:LineStyle color="#C0C0C0" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -1444,8 +1444,8 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-366.15819588912626" y="383.6990254157788"/>
-            <y:Point x="-214.51163255804897" y="813.8877268245925"/>
+            <y:Point x="-366.15819588912626" y="172.15538317439956"/>
+            <y:Point x="-214.51163255804897" y="602.3440845832133"/>
           </y:Path>
           <y:LineStyle color="#C0C0C0" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -1465,7 +1465,7 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:QuadCurveEdge straightness="0.1">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="943.7896194431247" y="250.61444429490837"/>
+            <y:Point x="943.7896194431247" y="39.07080205352912"/>
             <y:Point x="-613.022822754798" y="500.32650319829435"/>
             <y:Point x="-432.7792990756833" y="2049.7227879350708"/>
           </y:Path>
@@ -1690,7 +1690,7 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#99CC00" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#99CC00" visible="true" width="48.607421875" x="-196.94673902592686" y="26.801416491868622">creates<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#99CC00" visible="true" width="48.607421875" x="-172.203954854658" y="28.42616214058239">creates<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2020,11 +2020,11 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="83.8327586206895" y="876.6586206896552"/>
+            <y:Point x="83.8327586206895" y="665.1149784482759"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="114.794921875" x="-113.18627551505588" y="-67.8127660360974">InitializationResult<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="114.794921875" x="-113.18627551505588" y="-67.81276814075795">InitializationResult<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2036,7 +2036,7 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#99CC00" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#99CC00" visible="true" width="48.607421875" x="101.71743391806797" y="12.67529279123164">creates<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#99CC00" visible="true" width="48.607421875" x="77.7987544017825" y="92.40720894864216">creates<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2046,11 +2046,11 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="381.3944517793549" y="1348.4372710129314"/>
+            <y:Point x="341.9063052276307" y="1302.179727909483"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="157.076171875" x="39.16916016294272" y="-31.097918527002093">CreateNewAmaRootActor<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="157.076171875" x="3.7762737051705813" y="29.023815381742224">CreateNewAmaRootActor<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2060,11 +2060,11 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="381.52432246900986" y="1387.2147171336212"/>
+            <y:Point x="369.536849408665" y="1193.5817699353454"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="138.51953125" x="-221.77097041019852" y="-58.501952201749646">CreatedAmaRootActor<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="138.51953125" x="-77.4196554326004" y="-134.13130392353332">CreatedAmaRootActor<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2074,11 +2074,11 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-128.80133081896628" y="1385.1444100215522"/>
+            <y:Point x="-137.40410560344907" y="1185.8702990301729"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="116.83984375" x="-159.316715569938" y="-15.129873376279193">CreateBroadcaster<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="116.83984375" x="-230.67672418444621" y="136.19679953940613">CreateBroadcaster<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2088,11 +2088,11 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
       <data key="d10">
         <y:BezierEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-83.31098599138014" y="1424.1361341594834"/>
+            <y:Point x="-21.963329741380193" y="1274.5042645474146"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="124.45703125" x="-73.64089721345694" y="-124.31371757203601">CreatedBroadcaster<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="124.45703125" x="-76.80083255566808" y="-141.59559270197315">CreatedBroadcaster<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2106,7 +2106,7 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="23.18359375" x="-59.50087737381911" y="64.48422427674404">Init<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="23.18359375" x="-46.68304945428977" y="111.15670842039754">Init<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
@@ -2120,7 +2120,7 @@ console<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" an
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="114.794921875" x="31.030292108395486" y="-46.52747140617612">InitializationResult<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="centered" modelPosition="center" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="114.794921875" x="77.26712574339163" y="-186.70728218439785">InitializationResult<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
         </y:BezierEdge>
       </data>
