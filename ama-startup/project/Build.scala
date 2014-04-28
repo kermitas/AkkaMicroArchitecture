@@ -3,11 +3,11 @@ import Keys._
 
 object Build extends Build {
 
-  lazy val projectSettings = Seq(
+  lazy val projectSettings = Defaults.defaultSettings ++ Seq(
     name := "ama-startup",
     version := "0.4.5",
     organization := "as",
-    scalaVersion := "2.10.4",
+    scalaVersion := "2.11.0",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
   ) ++ ScalariformSettings.projectSettings
 

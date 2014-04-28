@@ -5,11 +5,11 @@ object Build extends Build {
 
   lazy val mc = "as.ama.Main" // here main class is set
 
-  lazy val projectSettings = Seq(
+  lazy val projectSettings = Defaults.defaultSettings ++ Seq(
     name := "ama-sample",
     version := "0.4.5",
     organization := "as",
-    scalaVersion := "2.10.4",
+    scalaVersion := "2.11.0",
     mainClass in (Compile,run) := Some(mc),
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,

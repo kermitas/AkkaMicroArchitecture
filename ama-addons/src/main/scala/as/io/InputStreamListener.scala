@@ -2,6 +2,7 @@ package as.io
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
+import scala.io.StdIn
 import akka.actor._
 
 object InputStreamListener {
@@ -99,7 +100,7 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
    */
   protected def nonBlockingReadLine(): Option[String] = {
     try {
-      val line = if (Console.in.ready()) Console.readLine() else null
+      val line = if (Console.in.ready()) StdIn.readLine() else null
 
       if (line != null)
         Some(line)
