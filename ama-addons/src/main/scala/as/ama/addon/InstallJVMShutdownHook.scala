@@ -1,9 +1,8 @@
 package as.ama.addon
 
-import akka.actor._
+import akka.actor.{ Actor, ActorLogging }
 import as.jvm.JVMShutdownHook
 import as.ama.addon.lifecycle.ShutdownSystem
-import as.ama.startup.InitializationResult
 import as.ama.startup.AmaConfig
 
 object InstallJVMShutdownHook {

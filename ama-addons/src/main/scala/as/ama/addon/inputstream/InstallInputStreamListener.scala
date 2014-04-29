@@ -1,8 +1,7 @@
 package as.ama.addon.inputstream
 
-import akka.actor._
-import as.io._
-import as.ama.startup.InitializationResult
+import akka.actor.{ Actor, ActorLogging, Props }
+import as.io.InputStreamListener
 import as.ama.startup.AmaConfig
 import as.ama.akka.CreateActorAndSendMessageExecuteInActorsContext
 

@@ -2,10 +2,9 @@ package as.ama.addon.lifecycle
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import akka.actor._
-import as.akka.broadcaster._
-import as.jvm._
-import as.ama.startup.InitializationResult
+import akka.actor.{ Actor, ActorLogging }
+import as.akka.broadcaster.Broadcaster
+import as.jvm.{ JVMSystemExitDaemon, JVMRuntimeHaltDaemon }
 import as.ama.startup.AmaConfig
 
 object LifecycleManager {

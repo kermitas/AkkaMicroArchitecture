@@ -2,9 +2,8 @@ package as.ama.sample
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import akka.actor._
-import as.ama.startup.InitializationResult
-import as.akka.broadcaster._
+import akka.actor.{ Actor, ActorLogging }
+import as.akka.broadcaster.Broadcaster
 import as.ama.addon.inputstream.InputStreamText
 import as.ama.addon.lifecycle.ShutdownSystem
 
