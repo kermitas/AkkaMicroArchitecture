@@ -9,9 +9,9 @@ object Build extends Build {
     name := "ama-sample",
     version := "0.4.5",
     organization := "as",
-    scalaVersion := "2.11.0",
-    mainClass in (Compile,run) := Some(mc),
+    scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
+    mainClass in (Compile,run) := Some(mc),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots
   ) ++ AkkaSettings.projectSettings ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings

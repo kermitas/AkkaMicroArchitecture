@@ -7,7 +7,7 @@ object Build extends Build {
     name := "ama-akka",
     version := "0.4.5",
     organization := "as",
-    scalaVersion := "2.11.0",
+    scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots

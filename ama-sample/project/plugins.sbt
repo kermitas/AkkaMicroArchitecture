@@ -12,7 +12,7 @@ addSbtPlugin("org.xerial.sbt" % "sbt-pack" % "0.5.1")
 
 // need to include scala-reflect again because sbt-pack uses older Scala
 
-libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.11.0"
+libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.10.4"
 
 // ===============
 
