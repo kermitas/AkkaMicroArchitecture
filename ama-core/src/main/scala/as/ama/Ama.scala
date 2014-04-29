@@ -1,6 +1,7 @@
 package as.ama
 
 import _root_.akka.actor._
+import java.math.BigInteger
 
 object Ama {
 
@@ -23,13 +24,14 @@ class Ama extends Actor with ActorLogging {
 
   import Ama._
 
-  protected var amaRootActorNumber = -1
+  protected var amaRootActorNumber = new BigInteger("-1")
 
   override def receive = {
 
     case cnara @ CreateNewAmaRootActor(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds) => {
-      amaRootActorNumber += 1
-      val amaRootActor = context.actorOf(Props[AmaRootActor], name = classOf[AmaRootActor].getSimpleName + "-" + amaRootActorNumber)
+      amaRootActorNumber = amaRootActorNumber.add(BigInteger.ONE)
+
+      val amaRootActor = context.actorOf(Props[AmaRootActor], name = classOf[AmaRootActor].getSimpleName + "-" + amaRootActorNumber.toString)
       amaRootActor ! new AmaRootActor.AutomaticDieTimeWhenSystemNotCreated(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds)
       sender() ! new CreatedAmaRootActor(amaRootActor, cnara)
     }
