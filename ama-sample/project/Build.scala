@@ -11,6 +11,7 @@ object Build extends Build {
     organization := "as",
     scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
+    incOptions := incOptions.value.withNameHashing(true),
     mainClass in (Compile,run) := Some(mc),
     resolvers += Classpaths.typesafeReleases,
     resolvers += Classpaths.typesafeSnapshots

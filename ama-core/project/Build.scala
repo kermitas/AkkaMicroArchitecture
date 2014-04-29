@@ -8,7 +8,8 @@ object Build extends Build {
     version := "0.4.5",
     organization := "as",
     scalaVersion := "2.10.4",
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
+    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
+    incOptions := incOptions.value.withNameHashing(true)
   ) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(

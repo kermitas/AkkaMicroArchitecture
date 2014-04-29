@@ -6,9 +6,7 @@ object Build extends Build {
   lazy val projectSettings = Defaults.defaultSettings ++  Seq(
     name := "ama-all",
     version := "0.4.5",
-    organization := "as",
-    scalaVersion := "2.10.4",
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation")
+    organization := "as"
   )
 
   lazy val root = Project(
