@@ -32,9 +32,9 @@ class InstallJVMShutdownHook(amaConfig: AmaConfig) extends Actor with ActorLoggi
       Runtime.getRuntime.addShutdownHook(shutdownHook)
       log.debug("Installed JVM shutdown hook.")
 
-      amaConfig.initializationResultListener ! new InitializationResult(Right(None))
+      amaConfig.sendInitializationResult()
     } catch {
-      case e: Exception => amaConfig.initializationResultListener ! new InitializationResult(Left(new Exception("Problem while installing JVM shutdown hook.", e)))
+      case e: Exception => amaConfig.sendInitializationResult(new Exception("Problem while installing JVM shutdown hook.", e))
     } finally {
       context.stop(self)
     }

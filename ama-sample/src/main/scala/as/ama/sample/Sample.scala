@@ -58,9 +58,9 @@ class Sample(testAmaConfig: TestAmaConfig) extends Actor with ActorLogging {
       testAmaConfig.broadcaster ! s"==================> Config: testString from amaConfig = ${testAmaConfig.testString}. <=================="
 
       // remember always to send back how your initialization goes
-      testAmaConfig.initializationResultListener ! new InitializationResult(Right(None))
+      testAmaConfig.sendInitializationResult()
     } catch {
-      case e: Exception => testAmaConfig.initializationResultListener ! new InitializationResult(Left(new Exception("Problem while installing sample actor.", e)))
+      case e: Exception => testAmaConfig.sendInitializationResult(new Exception("Problem while installing sample actor.", e))
     }
   }
 
