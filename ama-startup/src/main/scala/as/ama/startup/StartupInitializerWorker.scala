@@ -98,7 +98,7 @@ class StartupInitializerWorker extends Actor with FSM[StartupInitializerWorker.S
 
   protected def initializeActor(initializeOnStartupActorConfig: InitializeOnStartupActorConfig, initializingActorIndex: Int, sd: InitializingActorsStateData): State = {
     try {
-      val amaConfig = sd.si.amaConfigBuilder.createAmaConfig(initializeOnStartupActorConfig.clazzName, sd.si.commandLineArguments, initializeOnStartupActorConfig.config, sd.si.broadcaster, self)
+      val amaConfig = sd.si.amaConfigBuilder.createAmaConfig(initializeOnStartupActorConfig.clazzName, sd.si.commandLineArguments, initializeOnStartupActorConfig.config, sd.si.broadcaster, self, sd.amaRootActor)
       val props = PropsCreator.createProps(initializeOnStartupActorConfig.clazzName, amaConfig)
 
       sd.amaRootActor ! new CreateActorExecuteInActorsContext(props, initializeOnStartupActorConfig.clazzName)
