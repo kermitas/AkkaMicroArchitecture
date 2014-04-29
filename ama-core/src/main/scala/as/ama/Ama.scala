@@ -5,6 +5,7 @@ import java.math.BigInteger
 
 object Ama {
 
+  protected var amaRootActorNumber = new BigInteger("-1")
   protected var ama: ActorRef = _
 
   def apply(actorSystem: ActorSystem): ActorRef = synchronized {
@@ -18,20 +19,20 @@ object Ama {
   case class CreateNewAmaRootActor(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds: Int) extends IncomingMessage
   case class CreatedAmaRootActor(amaRootActor: ActorRef, cnara: CreateNewAmaRootActor) extends OutgoingMessage
 
+  def getNextNameOfAmaRootActor: String = {
+    amaRootActorNumber = amaRootActorNumber.add(BigInteger.ONE)
+    classOf[AmaRootActor].getSimpleName + "-" + amaRootActorNumber.toString
+  }
 }
 
 class Ama extends Actor with ActorLogging {
 
   import Ama._
 
-  protected var amaRootActorNumber = new BigInteger("-1")
-
   override def receive = {
 
     case cnara @ CreateNewAmaRootActor(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds) => {
-      amaRootActorNumber = amaRootActorNumber.add(BigInteger.ONE)
-
-      val amaRootActor = context.actorOf(Props[AmaRootActor], name = classOf[AmaRootActor].getSimpleName + "-" + amaRootActorNumber.toString)
+      val amaRootActor = context.actorOf(Props[AmaRootActor], name = getNextNameOfAmaRootActor)
       amaRootActor ! new AmaRootActor.AutomaticDieTimeWhenSystemNotCreated(amaRootActorAutomaticDieIfAmaSystemNotCreatedInSeconds)
       sender() ! new CreatedAmaRootActor(amaRootActor, cnara)
     }
