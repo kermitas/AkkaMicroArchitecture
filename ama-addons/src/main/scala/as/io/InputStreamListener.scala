@@ -2,7 +2,7 @@ package as.io
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import akka.actor._
+import akka.actor.{ Actor, FSM }
 
 object InputStreamListener {
   sealed trait State extends Serializable
@@ -99,12 +99,13 @@ class InputStreamListener extends Actor with FSM[InputStreamListener.State, Inpu
    */
   protected def nonBlockingReadLine(): Option[String] = {
     try {
-      val line = if (Console.in.ready()) Console.readLine() else null
+      val line = if (System.in.available > 0) System.console.readLine else null
 
-      if (line != null)
+      if (line != null) {
         Some(line)
-      else
+      } else {
         None
+      }
     } catch {
       case e: Exception => None
     }

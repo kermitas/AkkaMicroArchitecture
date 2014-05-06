@@ -7,15 +7,10 @@ object Build extends Build {
 
   lazy val projectSettings = Defaults.defaultSettings ++ Seq(
     name := "ama-sample",
-    version := "0.4.5",
+    version := "0.4.6",
     organization := "as",
-    scalaVersion := "2.10.4",
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
-    incOptions := incOptions.value.withNameHashing(true),
-    mainClass in (Compile,run) := Some(mc),
-    resolvers += Classpaths.typesafeReleases,
-    resolvers += Classpaths.typesafeSnapshots
-  ) ++ AkkaSettings.projectSettings ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings
+    mainClass in (Compile,run) := Some(mc)
+  ) ++ ScalaSettings.projectSettings ++ AkkaSettings.projectSettings ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings
 
   lazy val root = Project(
       id = "ama-sample",
@@ -26,8 +21,20 @@ object Build extends Build {
   lazy val ama_all = RootProject(file("../"))
 }
 
-object AkkaSettings {
+object ScalaSettings {
 
+  lazy val projectSettings = Seq(
+    scalaVersion := "2.11.0",
+    crossScalaVersions := Seq("2.10.4", "2.11.0"),
+    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
+    incOptions := incOptions.value.withNameHashing(true),
+
+    resolvers += Classpaths.typesafeReleases,
+    resolvers += Classpaths.typesafeSnapshots
+  )
+}
+
+object AkkaSettings {
   lazy val projectSettings = Seq(
     libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.2",
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
@@ -46,7 +53,6 @@ object PackSettings {
 }
 
 object ScalariformSettings {
-
   lazy val projectSettings = {
     import com.typesafe.sbt.SbtScalariform._
     import scalariform.formatter.preferences._

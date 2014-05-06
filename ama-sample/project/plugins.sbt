@@ -10,9 +10,10 @@ resolvers += "sbt-pack repository" at "http://repo1.maven.org/maven2/"
 
 addSbtPlugin("org.xerial.sbt" % "sbt-pack" % "0.5.1")
 
-// need to include scala-reflect again because sbt-pack uses older Scala
+// I am not sure but this line helps to avoid macro errors thrown by SBT while opening project.
+// In this line I include scala-reflect again because sbt-pack uses older Scala (that is how I understand this).
 
-libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.10.4"
+libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
 
 // ===============
 
