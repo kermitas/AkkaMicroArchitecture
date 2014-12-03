@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 
-object AmaAllProject {
+object AmaProject {
 
   lazy final val projectName = "ama"
 

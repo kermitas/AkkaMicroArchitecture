@@ -3,7 +3,7 @@ import Keys._
 
 object AmaAkkaProject {
 
-  lazy final val projectName = AmaAllProject.projectName + "-akka"
+  lazy final val projectName = AmaProject.projectName + "-akka"
 
   def apply(version: String) =
     Project(

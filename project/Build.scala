@@ -9,7 +9,7 @@ object Build extends sbt.Build {
   lazy val amaAddons  = AmaAddonsProject(version, amaStartup)
   lazy val amaCore    = AmaCoreProject(version, amaAddons)
 
-  lazy val amaAll     = AmaAllProject(version, amaCore)
+  lazy val ama        = AmaProject(version, amaCore)
 
-  lazy val amaSample  = AmaSampleProject(version, amaAll)
+  lazy val amaSample  = AmaSampleProject(version, ama)
 }
