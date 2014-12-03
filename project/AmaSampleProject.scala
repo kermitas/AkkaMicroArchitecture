@@ -17,7 +17,7 @@ object AmaSampleProject {
 
       settings     = CommonSettings(projectName, version) ++
                      AkkaSlf4JSettings() ++
-                     Slf4jSettings() ++
+                     LogbackClassicSettings() ++
                      mainClassSettings(mainClassFullyQualifiedName) ++
                      PackSettings(mainClassFullyQualifiedName) ++
                      AssemblySettings(mainClassFullyQualifiedName)
