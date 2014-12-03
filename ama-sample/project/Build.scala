@@ -5,9 +5,9 @@ object Build extends Build {
 
   lazy val mc = "as.ama.Main" // here main class is set
 
-  lazy val projectSettings = Defaults.defaultSettings ++ Seq(
+  lazy val projectSettings = Seq(
     name := "ama-sample",
-    version := "0.4.6",
+    version := "0.4.7",
     organization := "as",
     mainClass in (Compile,run) := Some(mc)
   ) ++ ScalaSettings.projectSettings ++ AkkaSettings.projectSettings ++ PackSettings.projectSettings(mc) ++ ScalariformSettings.projectSettings
@@ -24,8 +24,8 @@ object Build extends Build {
 object ScalaSettings {
 
   lazy val projectSettings = Seq(
-    scalaVersion := "2.11.0",
-    crossScalaVersions := Seq("2.10.4", "2.11.0"),
+    scalaVersion := "2.11.2",
+    crossScalaVersions := Seq("2.10.4", "2.11.2"),
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     incOptions := incOptions.value.withNameHashing(true),
 
@@ -36,8 +36,9 @@ object ScalaSettings {
 
 object AkkaSettings {
   lazy val projectSettings = Seq(
-    libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.2",
-    libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
+    libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.3.7",
+    //libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
+    libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.7"
   )
 }
 

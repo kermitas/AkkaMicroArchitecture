@@ -1,11 +1,21 @@
+// This file contains a list of SBT plugins.
+
 // ===============
 
-resolvers += "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-
+resolvers += Resolver.sonatypeRepo("snapshots")
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.7.0-SNAPSHOT")
 
 // ===============
 
-addSbtPlugin("com.danieltrinh" % "sbt-scalariform" % "1.3.0-SNAPSHOT")
+resolvers += Classpaths.sbtPluginSnapshots
+addSbtPlugin("com.danieltrinh" % "sbt-scalariform" % "1.3.0")
+
+// ===============
+
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.5-SNAPSHOT")
+
+// ===============
+
+addSbtPlugin("com.orrsella" % "sbt-stats" % "1.0.5")
 
 // ===============

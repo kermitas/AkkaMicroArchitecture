@@ -2,9 +2,9 @@ import sbt._
 import Keys._
 
 object Build extends Build {
-  lazy val projectSettings = Defaults.defaultSettings ++ Seq(
+  lazy val projectSettings = Seq(
     name := "ama-startup",
-    version := "0.4.6",
+    version := "0.4.7",
     organization := "as"
   ) ++ ScalaSettings.projectSettings ++ ScalariformSettings.projectSettings
 
@@ -19,8 +19,8 @@ object Build extends Build {
 
 object ScalaSettings {
   lazy val projectSettings = Seq(
-    scalaVersion := "2.11.0",
-    crossScalaVersions := Seq("2.10.4", "2.11.0"),
+    scalaVersion := "2.11.2",
+    crossScalaVersions := Seq("2.10.4", "2.11.2"),
     scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
     incOptions := incOptions.value.withNameHashing(true)
   )

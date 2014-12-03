@@ -13,6 +13,21 @@ object Ama {
     ama
   }
 
+  // TODO: should be changed into something like this
+  /*
+  def apply(actorSystem: ActorSystem, timeoutInMilliseconds: Int): ActorRef = {
+    try {
+      actorSystem.actorOf(Props[CompilationManager], name = classOf[CompilationManager].getSimpleName)
+    } catch {
+      case e: InvalidActorNameException => {
+        val actorSelection = actorSystem.actorSelection("/user/" + classOf[CompilationManager].getSimpleName)
+        val future: Future[ActorRef] = actorSelection.resolveOne(timeoutInMilliseconds milliseconds)
+        Await.result(future, timeoutInMilliseconds milliseconds)
+      }
+    }
+  }
+  */
+
   sealed trait Message extends Serializable
   sealed trait IncomingMessage extends Message
   sealed trait OutgoingMessage extends Message
