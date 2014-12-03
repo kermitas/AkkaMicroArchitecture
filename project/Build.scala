@@ -1,28 +1,15 @@
-import sbt._
-import Keys._
+object Build extends sbt.Build {
 
-object Build extends Build {
+  lazy final val version     = "0.4.8"
 
-  lazy val projectSettings =  Seq(
-    name := "ama-all",
-    version := "0.4.7",
-    organization := "as"
-  ) ++ ScalaSettings.projectSettings
+  // --- projects definition
 
-  lazy val root = Project(
-      id = "akkamicroarchitecture", // name should be the same as folder to be 100% SBT like
-      base = file("."),
-      settings = projectSettings
-    ).aggregate(ama_core).dependsOn(ama_core)
+  lazy val amaAkka    = AmaAkkaProject(version)
+  lazy val amaStartup = AmaStartupProject(version, amaAkka)
+  lazy val amaAddons  = AmaAddonsProject(version, amaStartup)
+  lazy val amaCore    = AmaCoreProject(version, amaAddons)
 
-  lazy val ama_core = RootProject(file("ama-core"))
-}
+  lazy val amaAll     = AmaAllProject(version, amaCore)
 
-object ScalaSettings {
-  lazy val projectSettings = Seq(
-    scalaVersion := "2.11.2",
-    crossScalaVersions := Seq("2.10.4", "2.11.2"),
-    scalacOptions ++= Seq("-feature", "-unchecked", "-deprecation"),
-    incOptions := incOptions.value.withNameHashing(true)
-  )
+  lazy val amaSample  = AmaSampleProject(version, amaAll)
 }
