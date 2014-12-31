@@ -1,7 +1,6 @@
 package as.ama.sample
 
-import akka.actor.ActorRef
-import as.akka.broadcaster.Classifier
+import as.akka.broadcaster.{ MessageWithSender, Classifier }
 import as.ama.addon.inputstream.InputStreamText
 
 /**
@@ -9,10 +8,10 @@ import as.ama.addon.inputstream.InputStreamText
  * in this message.
  */
 class SampleClassifier extends Classifier {
-  override def map(message: Any, sender: ActorRef) = message match {
-    case Sample.TestMessage => Some(message)
-    case a: String          => Some(a)
-    case a: InputStreamText => Some(a)
+  override def map(messageWithSender: MessageWithSender[Any]) = messageWithSender.message match {
+    case Sample.TestMessage => Some(messageWithSender)
+    case a: String          => Some(messageWithSender)
+    case a: InputStreamText => Some(messageWithSender)
     case _                  => None
   }
 }

@@ -38,6 +38,8 @@ class ClassifyingForwarder extends Actor with ActorLogging {
       context.stop(self)
     }
 
-    case messageToForward: Any => classifier.map(messageToForward, sender()).foreach(listener.tell(_, sender()))
+    case messageToForward: Any => classifier.map(new MessageWithSender(messageToForward, sender())).foreach { messageWithSender =>
+      listener.tell(messageWithSender.message, messageWithSender.messageSender)
+    }
   }
 }

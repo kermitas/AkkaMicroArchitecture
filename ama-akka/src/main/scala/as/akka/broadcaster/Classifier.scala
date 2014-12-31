@@ -10,5 +10,5 @@ import akka.actor._
  * Please see ama-sample project for more details.
  */
 trait Classifier extends Serializable {
-  def map(a: Any, sender: ActorRef): Option[Any]
+  def map(messageWithSender: MessageWithSender[Any]): Option[MessageWithSender[Any]]
 }
