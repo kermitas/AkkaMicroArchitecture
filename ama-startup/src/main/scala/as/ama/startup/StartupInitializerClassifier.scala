@@ -1,15 +1,14 @@
 package as.ama.startup
 
-import akka.actor.ActorRef
-import as.akka.broadcaster.Classifier
+import as.akka.broadcaster.{ Classifier, MessageWithSender }
 
 /**
  * List of messages that StartupInitializer is interested in.
  */
 class StartupInitializerClassifier extends Classifier {
 
-  override def map(message: Any, sender: ActorRef) = message match {
-    case a: StartupInitializer.StartInitialization => Some(a)
+  override def map(messageWithSender: MessageWithSender[Any]) = messageWithSender.message match {
+    case a: StartupInitializer.StartInitialization => Some(messageWithSender)
     case _                                         => None
   }
 }
