@@ -1,6 +1,6 @@
 object Build extends sbt.Build {
 
-  lazy final val version     = "0.4.8"
+  lazy final val version     = "0.5.0"
 
   // --- projects definition
 
