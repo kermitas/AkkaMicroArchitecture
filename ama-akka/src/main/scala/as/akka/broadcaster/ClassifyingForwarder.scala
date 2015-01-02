@@ -1,6 +1,7 @@
 package as.akka.broadcaster
 
-import akka.actor._
+import akka.actor.{ ActorRef, Actor, ActorLogging, Terminated }
+import akka.util.MessageWithSender
 
 /**
  * For each subscriber instance of ClassifyingForwarder actor will be created.

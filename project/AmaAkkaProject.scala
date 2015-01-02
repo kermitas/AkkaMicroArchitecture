@@ -11,6 +11,7 @@ object AmaAkkaProject {
       base     = file(projectName),
 
       settings = CommonSettings(projectName, version) ++
-                 AkkaSettings()
+                 AkkaSettings() ++
+                 AkkaUtilsSettings()
     )
 }
