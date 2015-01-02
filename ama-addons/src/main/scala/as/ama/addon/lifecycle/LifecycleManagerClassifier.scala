@@ -1,6 +1,7 @@
 package as.ama.addon.lifecycle
 
-import as.akka.broadcaster.{ MessageWithSender, Classifier }
+import as.akka.broadcaster.Classifier
+import akka.util.MessageWithSender
 
 /**
  * List of messages that will go to LifecycleManager.

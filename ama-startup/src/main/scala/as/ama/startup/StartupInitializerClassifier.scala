@@ -1,6 +1,7 @@
 package as.ama.startup
 
-import as.akka.broadcaster.{ Classifier, MessageWithSender }
+import as.akka.broadcaster.Classifier
+import akka.util.MessageWithSender
 
 /**
  * List of messages that StartupInitializer is interested in.

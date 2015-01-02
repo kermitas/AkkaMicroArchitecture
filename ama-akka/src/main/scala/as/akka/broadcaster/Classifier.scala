@@ -1,6 +1,6 @@
 package as.akka.broadcaster
 
-import akka.actor._
+import akka.util.MessageWithSender
 
 /**
  * Extends this class to define your classifier.

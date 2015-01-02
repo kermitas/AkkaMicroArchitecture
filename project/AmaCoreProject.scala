@@ -15,5 +15,6 @@ object AmaCoreProject {
       delegates    = Seq(amaAddons),
 
       settings     = CommonSettings(projectName, version)
+
     )
 }
